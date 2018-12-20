@@ -1,0 +1,628 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8A460D0521CB487A00327259 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A460D0421CB487A00327259 /* AppDelegate.swift */; };
+		8A460D0A21CB487A00327259 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A460D0821CB487A00327259 /* Main.storyboard */; };
+		8A460D0D21CB487A00327259 /* Fottos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8A460D0B21CB487A00327259 /* Fottos.xcdatamodeld */; };
+		8A460D0F21CB487B00327259 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A460D0E21CB487B00327259 /* Assets.xcassets */; };
+		8A460D1221CB487B00327259 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A460D1021CB487B00327259 /* LaunchScreen.storyboard */; };
+		8A460D1D21CB487B00327259 /* FottosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A460D1C21CB487B00327259 /* FottosTests.swift */; };
+		8A460D2821CB487B00327259 /* FottosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A460D2721CB487B00327259 /* FottosUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8A460D1921CB487B00327259 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A460CF921CB487A00327259 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8A460D0021CB487A00327259;
+			remoteInfo = Fottos;
+		};
+		8A460D2421CB487B00327259 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A460CF921CB487A00327259 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8A460D0021CB487A00327259;
+			remoteInfo = Fottos;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8A460D0121CB487A00327259 /* Fottos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fottos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A460D0421CB487A00327259 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8A460D0921CB487A00327259 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8A460D0C21CB487A00327259 /* Fottos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Fottos.xcdatamodel; sourceTree = "<group>"; };
+		8A460D0E21CB487B00327259 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8A460D1121CB487B00327259 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8A460D1321CB487B00327259 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A460D1821CB487B00327259 /* FottosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FottosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A460D1C21CB487B00327259 /* FottosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FottosTests.swift; sourceTree = "<group>"; };
+		8A460D1E21CB487B00327259 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A460D2321CB487B00327259 /* FottosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FottosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A460D2721CB487B00327259 /* FottosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FottosUITests.swift; sourceTree = "<group>"; };
+		8A460D2921CB487B00327259 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8A460CFE21CB487A00327259 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A460D1521CB487B00327259 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A460D2021CB487B00327259 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8A460CF821CB487A00327259 = {
+			isa = PBXGroup;
+			children = (
+				8A460D0321CB487A00327259 /* Fottos */,
+				8A460D1B21CB487B00327259 /* FottosTests */,
+				8A460D2621CB487B00327259 /* FottosUITests */,
+				8A460D0221CB487A00327259 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8A460D0221CB487A00327259 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8A460D0121CB487A00327259 /* Fottos.app */,
+				8A460D1821CB487B00327259 /* FottosTests.xctest */,
+				8A460D2321CB487B00327259 /* FottosUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8A460D0321CB487A00327259 /* Fottos */ = {
+			isa = PBXGroup;
+			children = (
+				8A460D0421CB487A00327259 /* AppDelegate.swift */,
+				8A460D3521CB488500327259 /* View Controllers */,
+				8A460D3621CB48AD00327259 /* Models */,
+				8A460D3721CB48C300327259 /* Extras */,
+			);
+			path = Fottos;
+			sourceTree = "<group>";
+		};
+		8A460D1B21CB487B00327259 /* FottosTests */ = {
+			isa = PBXGroup;
+			children = (
+				8A460D1C21CB487B00327259 /* FottosTests.swift */,
+				8A460D1E21CB487B00327259 /* Info.plist */,
+			);
+			path = FottosTests;
+			sourceTree = "<group>";
+		};
+		8A460D2621CB487B00327259 /* FottosUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8A460D2721CB487B00327259 /* FottosUITests.swift */,
+				8A460D2921CB487B00327259 /* Info.plist */,
+			);
+			path = FottosUITests;
+			sourceTree = "<group>";
+		};
+		8A460D3521CB488500327259 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A460D1021CB487B00327259 /* LaunchScreen.storyboard */,
+				8A460D0821CB487A00327259 /* Main.storyboard */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		8A460D3621CB48AD00327259 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8A460D0B21CB487A00327259 /* Fottos.xcdatamodeld */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8A460D3721CB48C300327259 /* Extras */ = {
+			isa = PBXGroup;
+			children = (
+				8A460D0E21CB487B00327259 /* Assets.xcassets */,
+				8A460D1321CB487B00327259 /* Info.plist */,
+			);
+			path = Extras;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8A460D0021CB487A00327259 /* Fottos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A460D2C21CB487B00327259 /* Build configuration list for PBXNativeTarget "Fottos" */;
+			buildPhases = (
+				8A460CFD21CB487A00327259 /* Sources */,
+				8A460CFE21CB487A00327259 /* Frameworks */,
+				8A460CFF21CB487A00327259 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Fottos;
+			productName = Fottos;
+			productReference = 8A460D0121CB487A00327259 /* Fottos.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8A460D1721CB487B00327259 /* FottosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A460D2F21CB487B00327259 /* Build configuration list for PBXNativeTarget "FottosTests" */;
+			buildPhases = (
+				8A460D1421CB487B00327259 /* Sources */,
+				8A460D1521CB487B00327259 /* Frameworks */,
+				8A460D1621CB487B00327259 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8A460D1A21CB487B00327259 /* PBXTargetDependency */,
+			);
+			name = FottosTests;
+			productName = FottosTests;
+			productReference = 8A460D1821CB487B00327259 /* FottosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8A460D2221CB487B00327259 /* FottosUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A460D3221CB487B00327259 /* Build configuration list for PBXNativeTarget "FottosUITests" */;
+			buildPhases = (
+				8A460D1F21CB487B00327259 /* Sources */,
+				8A460D2021CB487B00327259 /* Frameworks */,
+				8A460D2121CB487B00327259 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8A460D2521CB487B00327259 /* PBXTargetDependency */,
+			);
+			name = FottosUITests;
+			productName = FottosUITests;
+			productReference = 8A460D2321CB487B00327259 /* FottosUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8A460CF921CB487A00327259 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "Novus Mobile";
+				TargetAttributes = {
+					8A460D0021CB487A00327259 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					8A460D1721CB487B00327259 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 8A460D0021CB487A00327259;
+					};
+					8A460D2221CB487B00327259 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 8A460D0021CB487A00327259;
+					};
+				};
+			};
+			buildConfigurationList = 8A460CFC21CB487A00327259 /* Build configuration list for PBXProject "Fottos" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8A460CF821CB487A00327259;
+			productRefGroup = 8A460D0221CB487A00327259 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8A460D0021CB487A00327259 /* Fottos */,
+				8A460D1721CB487B00327259 /* FottosTests */,
+				8A460D2221CB487B00327259 /* FottosUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8A460CFF21CB487A00327259 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A460D1221CB487B00327259 /* LaunchScreen.storyboard in Resources */,
+				8A460D0F21CB487B00327259 /* Assets.xcassets in Resources */,
+				8A460D0A21CB487A00327259 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A460D1621CB487B00327259 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A460D2121CB487B00327259 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8A460CFD21CB487A00327259 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A460D0521CB487A00327259 /* AppDelegate.swift in Sources */,
+				8A460D0D21CB487A00327259 /* Fottos.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A460D1421CB487B00327259 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A460D1D21CB487B00327259 /* FottosTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A460D1F21CB487B00327259 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A460D2821CB487B00327259 /* FottosUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8A460D1A21CB487B00327259 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8A460D0021CB487A00327259 /* Fottos */;
+			targetProxy = 8A460D1921CB487B00327259 /* PBXContainerItemProxy */;
+		};
+		8A460D2521CB487B00327259 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8A460D0021CB487A00327259 /* Fottos */;
+			targetProxy = 8A460D2421CB487B00327259 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		8A460D0821CB487A00327259 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8A460D0921CB487A00327259 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		8A460D1021CB487B00327259 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8A460D1121CB487B00327259 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8A460D2A21CB487B00327259 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8A460D2B21CB487B00327259 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8A460D2D21CB487B00327259 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J2EY74W5G9;
+				INFOPLIST_FILE = Fottos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = novusmobile.com.Fottos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8A460D2E21CB487B00327259 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J2EY74W5G9;
+				INFOPLIST_FILE = Fottos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = novusmobile.com.Fottos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8A460D3021CB487B00327259 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J2EY74W5G9;
+				INFOPLIST_FILE = FottosTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = novusmobile.com.FottosTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fottos.app/Fottos";
+			};
+			name = Debug;
+		};
+		8A460D3121CB487B00327259 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J2EY74W5G9;
+				INFOPLIST_FILE = FottosTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = novusmobile.com.FottosTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fottos.app/Fottos";
+			};
+			name = Release;
+		};
+		8A460D3321CB487B00327259 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J2EY74W5G9;
+				INFOPLIST_FILE = FottosUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = novusmobile.com.FottosUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Fottos;
+			};
+			name = Debug;
+		};
+		8A460D3421CB487B00327259 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J2EY74W5G9;
+				INFOPLIST_FILE = FottosUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = novusmobile.com.FottosUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Fottos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8A460CFC21CB487A00327259 /* Build configuration list for PBXProject "Fottos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A460D2A21CB487B00327259 /* Debug */,
+				8A460D2B21CB487B00327259 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A460D2C21CB487B00327259 /* Build configuration list for PBXNativeTarget "Fottos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A460D2D21CB487B00327259 /* Debug */,
+				8A460D2E21CB487B00327259 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A460D2F21CB487B00327259 /* Build configuration list for PBXNativeTarget "FottosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A460D3021CB487B00327259 /* Debug */,
+				8A460D3121CB487B00327259 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A460D3221CB487B00327259 /* Build configuration list for PBXNativeTarget "FottosUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A460D3321CB487B00327259 /* Debug */,
+				8A460D3421CB487B00327259 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8A460D0B21CB487A00327259 /* Fottos.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8A460D0C21CB487A00327259 /* Fottos.xcdatamodel */,
+			);
+			currentVersion = 8A460D0C21CB487A00327259 /* Fottos.xcdatamodel */;
+			path = Fottos.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 8A460CF921CB487A00327259 /* Project object */;
+}
