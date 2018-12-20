@@ -11,7 +11,6 @@ import UIKit
 class CategoryCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         configureAll()
     }
     

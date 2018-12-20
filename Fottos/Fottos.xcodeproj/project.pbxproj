@@ -17,6 +17,7 @@
 		8A460D3A21CB546000327259 /* ExploreCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A460D3921CB546000327259 /* ExploreCollectionViewController.swift */; };
 		8A460D3E21CB556C00327259 /* Explore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A460D3C21CB556C00327259 /* Explore.storyboard */; };
 		8A460D4021CB564000327259 /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A460D3F21CB564000327259 /* CategoryCollectionViewCell.swift */; };
+		8AF0450C21CC213C00B5EE38 /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF0450B21CC213C00B5EE38 /* ExploreViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		8A460D3921CB546000327259 /* ExploreCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreCollectionViewController.swift; sourceTree = "<group>"; };
 		8A460D3D21CB556C00327259 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Fottos/View Controllers/Base.lproj/Explore.storyboard"; sourceTree = "<group>"; };
 		8A460D3F21CB564000327259 /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryCollectionViewCell.swift; path = Fottos/CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		8AF0450B21CC213C00B5EE38 /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 				8A460D3C21CB556C00327259 /* Explore.storyboard */,
 				8A460D3F21CB564000327259 /* CategoryCollectionViewCell.swift */,
 				8A460D3921CB546000327259 /* ExploreCollectionViewController.swift */,
+				8AF0450B21CC213C00B5EE38 /* ExploreViewController.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 			files = (
 				8A460D4021CB564000327259 /* CategoryCollectionViewCell.swift in Sources */,
 				8A460D0521CB487A00327259 /* AppDelegate.swift in Sources */,
+				8AF0450C21CC213C00B5EE38 /* ExploreViewController.swift in Sources */,
 				8A460D0D21CB487A00327259 /* Fottos.xcdatamodeld in Sources */,
 				8A460D3A21CB546000327259 /* ExploreCollectionViewController.swift in Sources */,
 			);
