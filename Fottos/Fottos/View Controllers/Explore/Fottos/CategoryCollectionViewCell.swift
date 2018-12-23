@@ -9,6 +9,10 @@
 import UIKit
 
 class CategoryCollectionViewCell: UICollectionViewCell {
+    
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         configureAll()
@@ -18,6 +22,12 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     
     private func configureAll() {
         configureCell()
+    }
+    
+    override func prepareForReuse() {
+        if imageView != nil {
+            imageView.image = nil
+        }
     }
     
     private func configureCell() {
