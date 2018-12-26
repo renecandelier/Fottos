@@ -51,3 +51,9 @@ extension UIImageView {
         }
     }
 }
+
+func asyncMain(_ block: @escaping () -> Void) {
+    DispatchQueue.main.async {
+        block()
+    }
+}
