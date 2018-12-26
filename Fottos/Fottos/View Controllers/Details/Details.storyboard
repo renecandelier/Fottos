@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ebc-Sf-YMB">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Item-->
+        <scene sceneID="coU-eR-aOl">
+            <objects>
+                <viewController id="Ebc-Sf-YMB" customClass="DetailViewController" customModule="Fottos" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0Wc-5X-O86">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ua-mO-3bX">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <connections>
+                                    <segue destination="VQ2-zG-zMa" kind="embed" identifier="SlideshowCollectionViewController" id="SFa-c2-XOo"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TLV-gy-hzh">
+                                <rect key="frame" x="303" y="42" width="56" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="BeH-IG-yJM"/>
+                                    <constraint firstAttribute="width" constant="56" id="IxA-bp-hyE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="dismissView:" destination="Ebc-Sf-YMB" eventType="touchUpInside" id="Htp-RP-rIC"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="2ua-mO-3bX" firstAttribute="top" secondItem="0Wc-5X-O86" secondAttribute="top" id="ESw-8E-GKE"/>
+                            <constraint firstItem="2ua-mO-3bX" firstAttribute="leading" secondItem="XOf-Jk-q4s" secondAttribute="leading" id="JXk-uZ-j7A"/>
+                            <constraint firstItem="2ua-mO-3bX" firstAttribute="trailing" secondItem="XOf-Jk-q4s" secondAttribute="trailing" id="KEi-E8-JIB"/>
+                            <constraint firstItem="XOf-Jk-q4s" firstAttribute="trailing" secondItem="TLV-gy-hzh" secondAttribute="trailing" constant="16" id="LMY-gU-t5B"/>
+                            <constraint firstItem="TLV-gy-hzh" firstAttribute="top" secondItem="XOf-Jk-q4s" secondAttribute="top" constant="22" id="lvg-k9-jGR"/>
+                            <constraint firstItem="2ua-mO-3bX" firstAttribute="bottom" secondItem="XOf-Jk-q4s" secondAttribute="bottom" id="ohd-6u-h6O"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="XOf-Jk-q4s"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="3vu-wK-5Av" appends="YES" id="Z5Y-RT-cSj"/>
+                        </connections>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="j1F-X7-X6G"/>
+                    <navigationItem key="navigationItem" id="vmd-tK-TlP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wlk-op-FU9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="3vu-wK-5Av">
+                    <connections>
+                        <action selector="swipeDismissView:" destination="Ebc-Sf-YMB" id="Rwe-Aq-8JH"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1325.5999999999999" y="959.37031484257875"/>
+        </scene>
+        <!--Slideshow-->
+        <scene sceneID="6fz-uh-lm4">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Slideshow" id="VQ2-zG-zMa" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vjL-IW-wfy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1922" y="959"/>
+        </scene>
+    </scenes>
+</document>

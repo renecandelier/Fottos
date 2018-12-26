@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UITextFieldDelegate {
+class SearchViewController: UIViewController {
 
     @IBOutlet weak var searchTextField: UITextField!
     
@@ -16,23 +16,23 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchTextField.delegate = self
+//        searchTextField.delegate = self
     }
     
-    func shouldResignKeyBoard(_ textField:UITextField) -> Bool {
-        if let text = textField.text, text.isEmpty {
-            return false
-        }
-        return true
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if shouldResignKeyBoard(textField) {
-            textField.resignFirstResponder()
-        }
-//        searchNewPhotos(textField.text)
-        return true
-    }
+//    func shouldResignKeyBoard(_ textField:UITextField) -> Bool {
+//        if let text = textField.text, text.isEmpty {
+//            return false
+//        }
+//        return true
+//    }
+//    
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        if shouldResignKeyBoard(textField) {
+//            textField.resignFirstResponder()
+//        }
+////        searchNewPhotos(textField.text)
+//        return true
+//    }
 
 }
 
