@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol Photo {
+    var url: String? { get }
+}
+
 struct PhotoDownload: RequestType {
     
     private let imagePrefix = "image"

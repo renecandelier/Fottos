@@ -1,5 +1,5 @@
 //
-//  ExploreViewController.swift
+//  SlideshowCollectionViewController.swift
 //  Fottos
 //
 //  Created by Rene Candelier on 12/20/18.
@@ -7,16 +7,15 @@
 //
 
 import UIKit
-private let reuseIdentifier = "CategoryCollectionViewCell"
 
 class DetailViewController: UIViewController {
     
-    var photos = [Photo]()
+    var photos: [Photo]?
     
     var currentPage = 0
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "SlideshowCollectionViewController" {
+        if segue.identifier == SlideshowCollectionViewController.className {
             if let slideshowCollectionViewController = segue.destination as? SlideshowCollectionViewController {
                 slideshowCollectionViewController.currentPage = currentPage
                 slideshowCollectionViewController.photos = photos

@@ -64,33 +64,38 @@ public protocol RequestType {
 }
 
 public extension RequestType {
-    public func execute (dispatcher: NetworkDispatcher = URLSessionNetworkDispatcher.instance,
+    public func execute(dispatcher: NetworkDispatcher = URLSessionNetworkDispatcher.instance,
         completionHandler: @escaping NetworkCompletionHandler) {
         
         guard let requestData = requestData else { return completionHandler(nil, nil, nil, ApiError.invalidRequestData) }
         
         dispatcher.dispatch(requestData: requestData) { (responseData, response, error) in
-            do {
-                
-                if let error = error { completionHandler(nil, nil, nil, error); return  }
-                
-                guard let responseData = responseData else { return completionHandler(nil, nil, nil, error) }
-                
-                if requestData.dataType == .Data {
-                    completionHandler(nil, responseData, response, nil)
-                    return
-                }
-                
-                let json = try? JSONSerialization.jsonObject(with: responseData, options: []) as? JsonDictionary ?? [:]
-                DispatchQueue.main.async {
-                    completionHandler(json, nil, nil, error)
-                }
-                
-            } catch let error {
-                DispatchQueue.main.async {
-                    completionHandler(nil, nil, nil, error)
-                }
+            if let error = error { completionHandler(nil, nil, nil, error); return  }
+            guard let responseData = responseData else { return completionHandler(nil, nil, nil, error) }
+            
+            if requestData.dataType == .Data {
+                completionHandler(nil, responseData, response, nil)
+                return
             }
+            
+            do {
+                let json = try self.getJson(responseData)
+                completionHandler(json, nil, nil, nil)
+            } catch let jsonError {
+                completionHandler(nil, nil, nil, jsonError)
+            }
+        }
+    }
+    
+    func getJson(_ data: Data) throws -> JsonDictionary? {
+        do {
+            
+            let json = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDictionary ?? [:]
+            
+            return json
+            
+        } catch let error {
+            throw error
         }
     }
 }

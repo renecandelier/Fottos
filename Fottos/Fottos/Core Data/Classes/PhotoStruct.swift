@@ -8,16 +8,21 @@
 
 import Foundation
 
-struct Photo {
+struct PhotoStruct: Photo {
     let farm: Int?
     let server: String?
     let imageId: String?
     let secret: String?
     let title: String?
+    let total: String?
     
     var imageURL: URL? {
         guard let url = buildURL(), url.isValid else { return .none }
         return url
+    }
+    
+    var url: String? {
+        return imageURL?.absoluteString
     }
     
     private func buildURL() -> URL? {
@@ -25,14 +30,14 @@ struct Photo {
         return URL(string:"https://farm\(farm).staticflickr.com/\(server)/\(imageId)_\(secret).jpg")
     }
     
-    static func createPhoto(_ photo: PhotoDictionary) -> Photo {
+    static func createPhoto(_ photo: PhotoDictionary) -> PhotoStruct {
         let imageId = photo[Keys.photoId] as? String ?? emptyString
         let secret = photo[Keys.secret] as? String ?? emptyString
         let server = photo[Keys.server] as? String ?? emptyString
         let farm = photo[Keys.farm] as? Int ?? 0
         let title = photo[Keys.title] as? String ?? emptyString
         
-        return Photo(farm: farm, server: server, imageId: imageId, secret: secret, title: title)
+        return PhotoStruct(farm: farm, server: server, imageId: imageId, secret: secret, title: title, total: "")
     }
 }
 

@@ -13,7 +13,7 @@
         <scene sceneID="6MB-PR-Kmc">
             <objects>
                 <collectionViewController id="RbL-ZC-qGw" userLabel="Thumbnail" customClass="ThumbnailCollectionViewController" customModule="Fottos" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="C6G-vd-S1b">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="C6G-vd-S1b">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -57,7 +57,7 @@
                             <outlet property="delegate" destination="RbL-ZC-qGw" id="rED-YG-LZt"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Favorites" id="IjN-j2-8uS">
+                    <navigationItem key="navigationItem" title="Favorites" largeTitleDisplayMode="never" id="IjN-j2-8uS">
                         <barButtonItem key="backBarButtonItem" title=" " id="ocg-Qa-MgS"/>
                     </navigationItem>
                 </collectionViewController>

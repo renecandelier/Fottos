@@ -38,46 +38,29 @@
                                                 <bool key="isElement" value="YES"/>
                                             </accessibility>
                                         </imageView>
-                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bpl-82-GKc">
-                                            <rect key="frame" x="0.0" y="0.0" width="306" height="67"/>
-                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="kkj-Dy-1ZF">
-                                                <rect key="frame" x="0.0" y="0.0" width="306" height="67"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SPORTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbv-dK-4rM">
-                                                        <rect key="frame" x="20" y="20" width="266" height="27.5"/>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="hbv-dK-4rM" firstAttribute="centerY" secondItem="kkj-Dy-1ZF" secondAttribute="centerY" id="HWy-kU-jdm"/>
-                                                    <constraint firstAttribute="trailing" secondItem="hbv-dK-4rM" secondAttribute="trailing" constant="20" symbolic="YES" id="hqs-yf-XtT"/>
-                                                    <constraint firstItem="hbv-dK-4rM" firstAttribute="leading" secondItem="kkj-Dy-1ZF" secondAttribute="leading" constant="20" symbolic="YES" id="rpz-nn-6NU"/>
-                                                </constraints>
-                                            </view>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="67" id="hdc-eW-gow"/>
-                                            </constraints>
-                                            <blurEffect style="extraLight"/>
-                                        </visualEffectView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SPORTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbv-dK-4rM">
+                                            <rect key="frame" x="20" y="20" width="266" height="23"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="Bpl-82-GKc" firstAttribute="leading" secondItem="dyG-Fn-W1o" secondAttribute="leading" id="3z3-DI-q4C"/>
-                                    <constraint firstAttribute="trailing" secondItem="Bpl-82-GKc" secondAttribute="trailing" id="P69-Xo-5pU"/>
-                                    <constraint firstItem="Bpl-82-GKc" firstAttribute="top" secondItem="dyG-Fn-W1o" secondAttribute="top" id="R9M-cM-NfX"/>
-                                    <constraint firstAttribute="trailing" secondItem="SC7-qZ-hVE" secondAttribute="trailing" id="Seq-oq-L4r"/>
-                                    <constraint firstItem="SC7-qZ-hVE" firstAttribute="top" secondItem="dyG-Fn-W1o" secondAttribute="top" id="Y71-HJ-UFP"/>
-                                    <constraint firstAttribute="bottom" secondItem="SC7-qZ-hVE" secondAttribute="bottom" id="lQQ-jI-ERU"/>
-                                    <constraint firstItem="SC7-qZ-hVE" firstAttribute="leading" secondItem="dyG-Fn-W1o" secondAttribute="leading" id="rAf-xO-g5z"/>
+                                    <constraint firstItem="SC7-qZ-hVE" firstAttribute="top" secondItem="dyG-Fn-W1o" secondAttribute="top" id="Gpz-dZ-w3e"/>
+                                    <constraint firstItem="hbv-dK-4rM" firstAttribute="leading" secondItem="dyG-Fn-W1o" secondAttribute="leadingMargin" constant="4" id="SEo-Nt-LFP"/>
+                                    <constraint firstAttribute="trailing" secondItem="SC7-qZ-hVE" secondAttribute="trailing" id="SEw-A5-GSX"/>
+                                    <constraint firstItem="SC7-qZ-hVE" firstAttribute="centerX" secondItem="hbv-dK-4rM" secondAttribute="centerX" id="abq-9K-izm"/>
+                                    <constraint firstAttribute="bottom" secondItem="SC7-qZ-hVE" secondAttribute="bottom" id="eMJ-fQ-Mjq"/>
+                                    <constraint firstItem="hbv-dK-4rM" firstAttribute="top" secondItem="dyG-Fn-W1o" secondAttribute="topMargin" id="pdq-HZ-6a7"/>
+                                    <constraint firstItem="SC7-qZ-hVE" firstAttribute="leading" secondItem="dyG-Fn-W1o" secondAttribute="leading" id="qii-0C-8Ae"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="SC7-qZ-hVE" id="270-eK-eAj"/>
                                     <outlet property="titleLabel" destination="hbv-dK-4rM" id="arO-sd-Gzk"/>
-                                    <segue destination="fep-Zh-mom" kind="show" identifier="ThumbnailCollectionViewController" id="219-D5-SMp">
-                                        <segue key="commit" inheritsFrom="parent" id="tyq-OF-uzt"/>
-                                        <segue key="preview" inheritsFrom="commit" id="RG6-T5-8YJ"/>
+                                    <segue destination="fep-Zh-mom" kind="show" identifier="ThumbnailCollectionViewController" id="2VB-NM-b1s">
+                                        <segue key="commit" inheritsFrom="parent" id="yyv-PC-L3E"/>
+                                        <segue key="preview" inheritsFrom="commit" id="rka-IG-wJU"/>
                                     </segue>
                                 </connections>
                             </collectionViewCell>
@@ -106,9 +89,11 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="h0f-AI-CT2" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LFs-4S-kNU">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="LFs-4S-kNU">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.100070335" green="0.73665314910000002" blue="0.61070448160000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -121,6 +106,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="219-D5-SMp"/>
+        <segue reference="2VB-NM-b1s"/>
     </inferredMetricsTieBreakers>
 </document>
