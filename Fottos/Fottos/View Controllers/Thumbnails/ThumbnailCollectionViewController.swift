@@ -8,29 +8,28 @@
 
 import UIKit
 
-private let reuseIdentifier = "CategoryCollectionViewCell"
 
-class ThumbnailCollectionViewController: UICollectionViewController {
-
-    var photos = [Photo]()
-    var selectedPhoto: Photo?
+class ThumbnailCollectionViewController: UICollectionViewController, UICollectionViewDataSourcePrefetching, ThumbnailViewModelDelegate {
+    
+    var viewModel: ThumbnailViewModel!
     var searchText: String?
+    var preLoadedPhotos: [Photo]? 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.contentInset = UIEdgeInsets(top: 20.0, left: 8.0, bottom: 20.0, right: 8.0)
         
+//        self.navigationController?.navigationItem.largeTitleDisplayMode = .never
+//        self.navigationController?.navigationBar.prefersLargeTitles = false
+        viewModel = ThumbnailViewModel(searchText: searchText, delegate: self, photos: preLoadedPhotos ?? [])
+        collectionView.prefetchDataSource = self
         setupCollectionView()
-        
-//        if let searchText = searchText {
-//            fetchImages(searchTerm: searchText)
-//        }
-        fetchImages(searchTerm: searchText ?? "car")
-
         setNavigationTitle(searchText)
+        
     }
     
     func setupCollectionView() {
+        collectionView.contentInset = UIEdgeInsets(top: 20.0, left: 8.0, bottom: 20.0, right: 8.0)
+
         let flow = collectionViewLayout as! UICollectionViewFlowLayout
         
         let itemSpacing: CGFloat = 2
@@ -49,51 +48,71 @@ class ThumbnailCollectionViewController: UICollectionViewController {
         navigationItem.title = title
     }
     
-    func fetchImages(searchTerm: String) {
-        let photoSearch = PhotoSearch(searchTerm: searchTerm, page: 1, amountPerPage: 25)
-        photoSearch.fetchPhotos { [weak self] (newPhotos, error) in
-            if error != nil {
-                // TODO: Handle error
-            }
-            
-            guard let self = self else { return }
-            guard let newPhotos = newPhotos else { return }
-            
-            self.photos += newPhotos
-            self.updateCollectionView()
+    func updateCollectionView() {
+       asyncMain {
+            self.collectionView.reloadData()
         }
     }
     
-    func updateCollectionView() {
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-            //            self.collectionView.setContentOffset(CGPoint(x: 0, y: -56), animated: false)
+    func reloadContent() {
+         updateCollectionView()
+    }
+    
+    // MARK: Prefetching
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        
+        if indexPaths.contains(where: isLoadingCell), let searchText = searchText {
+//            DispatchQueue.global(qos: .background).async {
+                self.viewModel.fetchImages(searchTerm: searchText)
+//            }
         }
-    }    // MARK: UICollectionViewDataSource
+    }
+    
+    func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?) {
+        
+        guard let newIndexPathsToReload = newIndexPathsToReload else {
+//            indicatorView.stopAnimating()
+//            tableView.isHidden = false
+            updateCollectionView()
+            return
+        }
+        
+//        let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
+//        collectionView.reloadItems(at: newIndexPathsToReload)
+    }
+    
+    func onFetchFailed(with reason: Error?) {
+        
+    }
+    
+    // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return viewModel.totalCount
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CategoryCollectionViewCell
         
-        if let url = photos[indexPath.row].imageURL, let imageView = cell.imageView {
-            imageView.dowloadFromServer(url: url)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as! CategoryCollectionViewCell
+
+        if isLoadingCell(for: indexPath) {
+            cell.configure(with: .none)
+        } else {
+            cell.configure(with: viewModel.photo(at: indexPath.row))
         }
+
         return cell
     }
     
     // MARK: UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedPhoto = photos[indexPath.row]
-
-        performSegue(withIdentifier: "DetailViewController", sender: self)
+        performSegue(withIdentifier: DetailViewController.className, sender: self)
     }
     
     // MARK: - Navigation
@@ -103,13 +122,25 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DetailViewController" {
+        if segue.identifier == DetailViewController.className {
             if let detailViewController = segue.destination as? DetailViewController {
                 let cellRow = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
                 detailViewController.currentPage = cellRow
-                detailViewController.photos = photos
+                detailViewController.photos = viewModel.photos
             }
         }
     }
 
+}
+
+private extension ThumbnailCollectionViewController {
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        return indexPath.row >= viewModel.currentCount
+    }
+    
+    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
+        let indexPathsForVisibleRows = collectionView.indexPathsForVisibleItems
+        let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
+        return indexPaths
+    }
 }

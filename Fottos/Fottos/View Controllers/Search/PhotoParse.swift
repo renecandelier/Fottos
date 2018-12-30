@@ -11,13 +11,15 @@ import Foundation
 typealias PhotoDictionary = [String: Any]
 
 struct PhotoParser {
-    static func parse(_ photoJson: PhotoDictionary) -> [Photo]? {
+    static func parse(_ photoJson: PhotoDictionary) -> PagedPhotoResponse? {
         
         guard let photosDictionary = photoJson[Keys.photos] as? PhotoDictionary,
             let photosArray = photosDictionary[Keys.photo] as? [PhotoDictionary] else { return .none }
         
-        let photos = photosArray.compactMap { Photo.createPhoto($0) }
-        
-        return photos
+        let total = Int(photosDictionary[Keys.total] as? String ?? "0")!
+        let page = photosDictionary[Keys.page] as? Int ?? 0
+        let photos = photosArray.compactMap { PhotoStruct.createPhoto($0) }
+        let pagedPhotoResponse = PagedPhotoResponse(total: total, page: page, photos: photos)
+        return pagedPhotoResponse
     }
 }

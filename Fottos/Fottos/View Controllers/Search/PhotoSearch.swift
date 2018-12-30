@@ -31,7 +31,7 @@ struct PhotoSearch: RequestType {
         return url
     }
     
-    func fetchPhotos(completion: @escaping ([Photo]?, Error?) -> Void) {
+    func fetchPhotos(completion: @escaping (PagedPhotoResponse?, Error?) -> Void) {
         
         if searchTerm.isEmpty { return completion(.none, ApiError.invalidSearchTerm) }
         
@@ -39,10 +39,10 @@ struct PhotoSearch: RequestType {
             
             if let error = error { return completion(nil, error) }
             
-            guard let photoDictionary = json, let photos = PhotoParser.parse(photoDictionary)
+            guard let photoDictionary = json, let pagedPhotoResponse = PhotoParser.parse(photoDictionary)
                 else { return  completion(nil, ApiError.parsingFailure)}
             
-            completion(photos, .none)
+            completion(pagedPhotoResponse, .none)
         }
     }
     

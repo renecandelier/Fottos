@@ -31,7 +31,9 @@
                                     <constraint firstAttribute="width" constant="56" id="IxA-bp-hyE"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                <state key="normal" title="Done"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" red="0.100070335" green="0.73665314910000002" blue="0.61070448160000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="dismissView:" destination="Ebc-Sf-YMB" eventType="touchUpInside" id="Htp-RP-rIC"/>
                                 </connections>

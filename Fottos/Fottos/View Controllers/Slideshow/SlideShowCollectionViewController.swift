@@ -1,5 +1,5 @@
 //
-//  ExploreViewController.swift
+//  SlideshowCollectionViewController.swift
 //  Fottos
 //
 //  Created by Rene Candelier on 12/20/18.
@@ -7,7 +7,7 @@
 //
 
 import UIKit
-private let reuseIdentifier = "CategoryCollectionViewCell"
+import CoreData
 
 class SlideshowCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -16,12 +16,14 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
     let itemHeight = CGFloat(322)
     var itemWidth = CGFloat(0)
     
-    var photos = [Photo]()
-    
+    var photos: [Photo]?
+    var mainContext: NSManagedObjectContext?
+
     var currentPage = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mainContext = Store.shareInstance?.persistentContainer.viewContext
         setCollectionViewLayout()
     }
     
@@ -62,15 +64,21 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return photos?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CategoryCollectionViewCell
-        if let url = photos[indexPath.row].imageURL {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SlideshowCollectionViewCell.className, for: indexPath) as! SlideshowCollectionViewCell
+        cell.mainContext = mainContext
+        let photo = photos?[indexPath.row]
+        cell.photo = photo
+    
+        
+        if let photoURL = photos?[indexPath.row].url, let url = URL(string: photoURL), url.isValid {
             cell.imageView.dowloadFromServer(url: url)
         }
+        
         return cell
     }
     
