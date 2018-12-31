@@ -10,12 +10,12 @@
 import Foundation
 import CoreData
 
-public class Like: NSManagedObject, Photo, ManagedObjectType {
+public class Favorite: NSManagedObject, Photo, ManagedObjectType {
     
-    static func fetchAll(context: NSManagedObjectContext) -> [Like]? {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Like")
+    static func fetchAll(context: NSManagedObjectContext) -> [Favorite]? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: self.className)
         do {
-            let records = try context.fetch(fetchRequest) as? [Like]
+            let records = try context.fetch(fetchRequest) as? [Favorite]
             return records
         } catch let error as NSError {
             print(error.description)
@@ -24,8 +24,8 @@ public class Like: NSManagedObject, Photo, ManagedObjectType {
     }
     
     static func addNew(context: NSManagedObjectContext, photo image: Photo) {
-        Like.create(inContext: context) { like in
-            like.url = image.url
+        Favorite.create(inContext: context) { favorite in
+            favorite.url = image.url
         }
     }
     

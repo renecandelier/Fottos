@@ -13,7 +13,7 @@ struct PhotoStruct: Photo {
     let server: String?
     let imageId: String?
     let secret: String?
-    let title: String?
+    var title: String?
     let total: String?
     
     var imageURL: URL? {

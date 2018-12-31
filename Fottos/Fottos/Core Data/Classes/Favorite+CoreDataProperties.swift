@@ -11,12 +11,12 @@ import Foundation
 import CoreData
 
 
-extension Like {
+extension Favorite {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Like> {
-        return NSFetchRequest<Like>(entityName: "Like")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Favorite> {
+        return NSFetchRequest<Favorite>(entityName: "Favorite")
     }
 
     @NSManaged public var url: String?
-
+    @NSManaged public var title: String?
 }

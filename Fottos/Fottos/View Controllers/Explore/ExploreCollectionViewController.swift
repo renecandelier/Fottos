@@ -11,13 +11,13 @@ import CoreData
 
 class ExploreCollectionViewController: UICollectionViewController {
     
-    var categories = ["Cars", "Food", "Sports", "Fashion"]
+    var categories = ["Travel", "Cars", "Sneakers", "Food", "Sports", "Fashion", "Fitness", "Drinks", "Nature"]
     var mainContext: NSManagedObjectContext?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         mainContext = Store.shareInstance?.persistentContainer.viewContext
-
+        navigationController?.hideShadow()
         collectionView.contentInset = UIEdgeInsets(top: 20.0, left: 8.0, bottom: 0.0, right: 8.0)
     }
     

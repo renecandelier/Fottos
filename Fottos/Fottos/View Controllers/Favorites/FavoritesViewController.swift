@@ -20,11 +20,12 @@ class FavoritesViewController: UIViewController {
         if let photos = fetchFavoritePhoto() {
             thumbnailCollectionViewController?.viewModel.loadPreloadedPhotos(photos)
         }
+        navigationController?.hideShadow()
     }
     
     func fetchFavoritePhoto() -> [Photo]? {
         guard let mainContext = mainContext else { return .none }
-        return Like.fetchAll(context: mainContext)
+        return Favorite.fetchAll(context: mainContext)
     }
     
     override func viewWillAppear(_ animanted: Bool) {

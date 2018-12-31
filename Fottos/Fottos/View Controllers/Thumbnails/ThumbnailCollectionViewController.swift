@@ -17,9 +17,6 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        self.navigationController?.navigationItem.largeTitleDisplayMode = .never
-//        self.navigationController?.navigationBar.prefersLargeTitles = false
         viewModel = ThumbnailViewModel(searchText: searchText, delegate: self, photos: preLoadedPhotos ?? [])
         collectionView.prefetchDataSource = self
         setupCollectionView()

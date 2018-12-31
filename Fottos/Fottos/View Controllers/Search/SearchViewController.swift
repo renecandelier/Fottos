@@ -9,6 +9,12 @@
 import UIKit
 import CoreData
 
+extension UINavigationController {
+    func hideShadow() {
+        self.navigationBar.setValue(true, forKey: "hidesShadow")
+    }
+}
+
 class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
     var recentSearchTerms = [String]()
@@ -27,24 +33,28 @@ class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchB
         super.viewDidLoad()
         updateRecentSearchTerms()
         mainContext = Store.shareInstance?.persistentContainer.viewContext
-
+        setupSearchBar()
+    }
+    
+    // MARK: Search Bar
+    
+    fileprivate func setupSearchBar() {
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationController?.hideShadow()
+        definesPresentationContext = true
+        
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.dimsBackgroundDuringPresentation = false
-        
-//        searchController.searchBar.sizeToFit()
-        navigationItem.hidesSearchBarWhenScrolling = false
-
-        definesPresentationContext = true
         searchController.hidesNavigationBarDuringPresentation = false
-        self.navigationItem.searchController = searchController
+        searchController.searchBar.placeholder = "Food, Sneakers, Cats..."
         
-//        if #available(iOS 11.0, *) {
-//        } else {
-//            // For iOS 10 and earlier, we place the search bar in the table view's header.
-//            tableView.tableHeaderView = searchController.searchBar
-//        }
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+        } else {
+            tableView.tableHeaderView = searchController.searchBar
+        }
     }
     
     func updateRecentSearchTerms() {
@@ -64,11 +74,17 @@ class SearchViewController: UIViewController, UISearchResultsUpdating, UISearchB
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchText = searchBar.text ?? ""
         if !searchText.isEmpty {
-            self.navigationItem.searchController?.searchBar.text = nil
-            self.navigationItem.searchController?.searchBar.resignFirstResponder()
+            resetSearchBar(searchBar)
             createSearch(context: mainContext, title: searchText)
             performSegue(withIdentifier: ThumbnailCollectionViewController.className, sender: self)
         }
+    }
+    
+    func resetSearchBar(_ searchBar: UISearchBar) {
+        navigationItem.searchController?.searchBar.text = nil
+        searchBar.endEditing(true)
+        searchBar.showsCancelButton = false
+        navigationItem.searchController?.searchBar.resignFirstResponder()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -96,7 +112,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SearchViewController.className, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: self.className, for: indexPath)
+        cell.textLabel?.textColor = #colorLiteral(red: 0.1019607843, green: 0.7366531491, blue: 0.6107044816, alpha: 1)
         cell.textLabel?.text = recentSearchTerms[indexPath.row]
         return cell
     }
