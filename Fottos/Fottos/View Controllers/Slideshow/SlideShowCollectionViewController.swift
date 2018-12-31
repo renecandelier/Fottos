@@ -75,8 +75,9 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         cell.photo = photo
     
         
-        if let photoURL = photos?[indexPath.row].url, let url = URL(string: photoURL), url.isValid {
+        if let photo = photos?[indexPath.row], let photoURL = photos?[indexPath.row].url, let url = URL(string: photoURL), url.isValid {
             cell.imageView.dowloadFromServer(url: url)
+            cell.titleLabel.text = photo.title ?? ""
         }
         
         return cell
@@ -84,8 +85,10 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
     
     // MARK: UICollectionViewDelegate
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt : IndexPath) {
+        if let selectedCell = collectionView.cellForItem(at: didSelectItemAt) as? SlideshowCollectionViewCell {
+            selectedCell.titleLabel.isHidden = !selectedCell.titleLabel.isHidden
+        }
     }
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {

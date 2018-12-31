@@ -13,6 +13,7 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var titleLabel: UILabel!
     
     var photo: Photo?
     var mainContext: NSManagedObjectContext?
@@ -33,7 +34,8 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         photo = nil
-        likeButton.setImage(UIImage(named: "LikeOutlined"), for: .normal)
+        titleLabel.isHidden = true
+//        likeButton.setImage(UIImage(named: "LikeOutlined"), for: .normal)
         if imageView != nil {
             imageView.image = nil
         }
@@ -63,7 +65,7 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
     
     func createPhoto(context: NSManagedObjectContext?, photo: Photo) {
         guard let context = context else { return }
-        Like.addNew(context: context, photo: photo)
+        Favorite.addNew(context: context, photo: photo)
         Store.shareInstance?.saveContext()
     }
 }

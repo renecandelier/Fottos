@@ -33,26 +33,26 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SC7-qZ-hVE">
                                             <rect key="frame" x="0.0" y="0.0" width="306" height="332"/>
-                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                             <accessibility key="accessibilityConfiguration" identifier="Category Image">
                                                 <bool key="isElement" value="YES"/>
                                             </accessibility>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SPORTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbv-dK-4rM">
-                                            <rect key="frame" x="20" y="20" width="266" height="23"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbv-dK-4rM">
+                                            <rect key="frame" x="12" y="28" width="274" height="30"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </view>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="SC7-qZ-hVE" firstAttribute="top" secondItem="dyG-Fn-W1o" secondAttribute="top" id="Gpz-dZ-w3e"/>
+                                    <constraint firstItem="hbv-dK-4rM" firstAttribute="top" secondItem="dyG-Fn-W1o" secondAttribute="topMargin" id="HH7-Or-hwC"/>
                                     <constraint firstItem="hbv-dK-4rM" firstAttribute="leading" secondItem="dyG-Fn-W1o" secondAttribute="leadingMargin" constant="4" id="SEo-Nt-LFP"/>
                                     <constraint firstAttribute="trailing" secondItem="SC7-qZ-hVE" secondAttribute="trailing" id="SEw-A5-GSX"/>
-                                    <constraint firstItem="SC7-qZ-hVE" firstAttribute="centerX" secondItem="hbv-dK-4rM" secondAttribute="centerX" id="abq-9K-izm"/>
                                     <constraint firstAttribute="bottom" secondItem="SC7-qZ-hVE" secondAttribute="bottom" id="eMJ-fQ-Mjq"/>
-                                    <constraint firstItem="hbv-dK-4rM" firstAttribute="top" secondItem="dyG-Fn-W1o" secondAttribute="topMargin" id="pdq-HZ-6a7"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="hbv-dK-4rM" secondAttribute="trailing" constant="12" id="f4Z-YI-fPu"/>
                                     <constraint firstItem="SC7-qZ-hVE" firstAttribute="leading" secondItem="dyG-Fn-W1o" secondAttribute="leading" id="qii-0C-8Ae"/>
                                 </constraints>
                                 <connections>
@@ -94,6 +94,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.100070335" green="0.73665314910000002" blue="0.61070448160000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.1019607843" green="0.73665314910000002" blue="0.61070448160000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="0.1019607843" green="0.73665314910000002" blue="0.61070448160000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

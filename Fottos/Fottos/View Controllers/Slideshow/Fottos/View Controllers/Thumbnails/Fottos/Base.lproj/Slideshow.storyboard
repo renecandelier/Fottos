@@ -39,37 +39,52 @@
                                             </accessibility>
                                             <gestureRecognizers/>
                                         </imageView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="TFG-BX-VgK">
-                                            <rect key="frame" x="215" y="394" width="80" height="80"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="fZE-m7-AQT">
+                                            <rect key="frame" x="217" y="435" width="74" height="35"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ix3-el-E3o">
-                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lph-gP-vJs">
+                                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <inset key="contentEdgeInsets" minX="28" minY="28" maxX="20" maxY="20"/>
                                                     <state key="normal" image="LikeOutlined"/>
                                                     <connections>
-                                                        <action selector="likeButtonTapped:" destination="Fuh-gX-FMP" eventType="touchUpInside" id="UfK-ud-e5K"/>
+                                                        <action selector="likeButtonTapped:" destination="Fuh-gX-FMP" eventType="touchUpInside" id="CdW-CV-dpt"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTE-8C-FEe">
+                                                    <rect key="frame" x="39" y="0.0" width="35" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="35" id="SEn-0q-dSX"/>
+                                                        <constraint firstAttribute="height" constant="35" id="VCe-xx-sdk"/>
+                                                    </constraints>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                                    <state key="normal" image="share"/>
+                                                </button>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="80" id="Az4-yl-sba"/>
-                                                <constraint firstAttribute="height" constant="80" id="tcX-2Y-WFZ"/>
-                                            </constraints>
                                         </stackView>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbd-jn-ZZ8">
+                                            <rect key="frame" x="20" y="444" width="189" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="TFG-BX-VgK" secondAttribute="bottom" id="591-r9-JBX"/>
                                     <constraint firstAttribute="trailing" secondItem="QCu-t5-cFM" secondAttribute="trailing" id="6wc-yz-DdY"/>
                                     <constraint firstItem="QCu-t5-cFM" firstAttribute="top" secondItem="Fuh-gX-FMP" secondAttribute="top" id="EYf-6C-uat"/>
-                                    <constraint firstAttribute="bottom" secondItem="QCu-t5-cFM" secondAttribute="bottom" id="k50-R3-dvd"/>
+                                    <constraint firstItem="fZE-m7-AQT" firstAttribute="leading" secondItem="wbd-jn-ZZ8" secondAttribute="trailing" constant="8" id="GBD-ES-ijm"/>
+                                    <constraint firstAttribute="bottom" secondItem="QCu-t5-cFM" secondAttribute="bottom" id="Ndc-Xv-7cI"/>
+                                    <constraint firstAttribute="bottom" secondItem="wbd-jn-ZZ8" secondAttribute="bottom" constant="12" id="TTE-AF-z1J"/>
+                                    <constraint firstAttribute="trailing" secondItem="fZE-m7-AQT" secondAttribute="trailing" constant="4" id="i1u-Hq-qOt"/>
+                                    <constraint firstAttribute="bottom" secondItem="fZE-m7-AQT" secondAttribute="bottom" constant="4" id="key-ov-EQt"/>
                                     <constraint firstItem="QCu-t5-cFM" firstAttribute="leading" secondItem="Fuh-gX-FMP" secondAttribute="leading" id="pa3-sN-aRU"/>
-                                    <constraint firstAttribute="trailing" secondItem="TFG-BX-VgK" secondAttribute="trailing" id="v0x-6e-ZWn"/>
+                                    <constraint firstItem="wbd-jn-ZZ8" firstAttribute="leading" secondItem="Fuh-gX-FMP" secondAttribute="leading" constant="20" id="qRx-uw-uh8"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="QCu-t5-cFM" id="NTK-5V-eCa"/>
-                                    <outlet property="likeButton" destination="ix3-el-E3o" id="jgV-Ns-Pjd"/>
+                                    <outlet property="likeButton" destination="Lph-gP-vJs" id="Tca-Vs-9kS"/>
+                                    <outlet property="titleLabel" destination="wbd-jn-ZZ8" id="BG5-30-he6"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -86,5 +101,6 @@
     </scenes>
     <resources>
         <image name="LikeOutlined" width="180" height="180"/>
+        <image name="share" width="180" height="180"/>
     </resources>
 </document>

@@ -58,7 +58,9 @@ struct PhotoSearch: RequestType {
             URLQueryItem(name: "format", value: "json"),
             URLQueryItem(name: "per_page", value: amountPerPage.toString),
             URLQueryItem(name: "page", value: page.toString),
-            URLQueryItem(name: "text", value: searchTerm)
+            URLQueryItem(name: "text", value: searchTerm),
+            URLQueryItem(name: "content_type", value: "1"),
+            URLQueryItem(name: "media", value: "photos")
         ]
         return queryItems
     }

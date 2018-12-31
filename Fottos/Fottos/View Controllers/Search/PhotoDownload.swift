@@ -11,6 +11,7 @@ import UIKit
 
 protocol Photo {
     var url: String? { get }
+    var title: String? { get set }
 }
 
 struct PhotoDownload: RequestType {
