@@ -9,43 +9,61 @@
 import UIKit
 import CoreData
 
-class FavoritesViewController: UIViewController {
+class FavoritesViewController: UIViewController, FavoritesViewModelDelegate {
+
+    // MARK:- Outlets
+    
+    @IBOutlet weak var emptyFavoritresLabel: UILabel!
+    
+    // MARK:- Properties
 
     var mainContext: NSManagedObjectContext?
     weak var thumbnailCollectionViewController: ThumbnailCollectionViewController?
+    var viewModel: FavoritesViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mainContext = Store.shareInstance?.persistentContainer.viewContext
-        if let photos = fetchFavoritePhoto() {
-            thumbnailCollectionViewController?.viewModel.loadPreloadedPhotos(photos)
-        }
+        createViewModel()
+        viewModel?.updateThumbnails()
         navigationController?.hideShadow()
     }
     
-    func fetchFavoritePhoto() -> [Photo]? {
-        guard let mainContext = mainContext else { return .none }
-        return Favorite.fetchAll(context: mainContext)
+    func createViewModel() {
+        viewModel = FavoritesViewModel(delegate: self, context: mainContext)
     }
     
     override func viewWillAppear(_ animanted: Bool) {
         super.viewWillAppear(animanted)
-        if let photos = fetchFavoritePhoto() {
-            thumbnailCollectionViewController?.viewModel.loadPreloadedPhotos(photos)
+        viewModel?.updateThumbnails()
+    }
+    
+    // MARK:- FavoritesViewModelDelegate
+    
+    func updateThumnails(photos: [Photo]?) {
+        updateEmptyFavoritesLabel()
+        guard let photos = photos, !photos.isEmpty else {
+            return
         }
+        thumbnailCollectionViewController?.viewModel.loadPreloadedPhotos(photos)
+    }
+    
+    func updateEmptyFavoritesLabel() {
+        emptyFavoritresLabel.isHidden = !(viewModel?.favoritePhotos?.isEmpty ?? false)
+        emptyFavoritresLabel.text = viewModel?.emptySearchTermsPlaceholder ?? ""
     }
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ThumbnailCollectionViewController.className {
+            
             guard let destinationThumbnailCollectionViewController = segue.destination as? ThumbnailCollectionViewController else {
-                    // TODO: Handle no favorites
                     return
             }
+            
             self.thumbnailCollectionViewController = destinationThumbnailCollectionViewController
-            destinationThumbnailCollectionViewController.preLoadedPhotos = fetchFavoritePhoto()
+            destinationThumbnailCollectionViewController.preLoadedPhotos = viewModel?.favoritePhotos
         }
     }
 

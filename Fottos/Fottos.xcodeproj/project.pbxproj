@@ -12,6 +12,9 @@
 		8A050F9421D00FB80045953C /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A050F9321D00FB80045953C /* FavoritesViewController.swift */; };
 		8A2D043921D5C30F00CD344E /* Fottos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8A2D043721D5C30F00CD344E /* Fottos.xcdatamodeld */; };
 		8A40624921D99E0500CE62A8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A40624821D99E0500CE62A8 /* SettingsViewController.swift */; };
+		8A40624B21DA849800CE62A8 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A40624A21DA849800CE62A8 /* SearchViewModel.swift */; };
+		8A40624D21DA98E800CE62A8 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A40624C21DA98E800CE62A8 /* FavoritesViewModel.swift */; };
+		8A40624F21DAA3DA00CE62A8 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A40624E21DAA3DA00CE62A8 /* SettingsViewModel.swift */; };
 		8A460D0521CB487A00327259 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A460D0421CB487A00327259 /* AppDelegate.swift */; };
 		8A460D0A21CB487A00327259 /* HomeTabBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A460D0821CB487A00327259 /* HomeTabBar.storyboard */; };
 		8A460D1221CB487B00327259 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A460D1021CB487B00327259 /* LaunchScreen.storyboard */; };
@@ -72,6 +75,9 @@
 		8A050F9321D00FB80045953C /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		8A2D043821D5C30F00CD344E /* Fottos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Fottos.xcdatamodel; sourceTree = "<group>"; };
 		8A40624821D99E0500CE62A8 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		8A40624A21DA849800CE62A8 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		8A40624C21DA98E800CE62A8 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		8A40624E21DAA3DA00CE62A8 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		8A460D0121CB487A00327259 /* Fottos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fottos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A460D0421CB487A00327259 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A460D0921CB487A00327259 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/HomeTabBar.storyboard; sourceTree = "<group>"; };
@@ -155,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				8A050F9321D00FB80045953C /* FavoritesViewController.swift */,
+				8A40624C21DA98E800CE62A8 /* FavoritesViewModel.swift */,
 				8AABBA0021D43E8700C5CA92 /* Favorites.swift */,
 			);
 			path = Favorites;
@@ -164,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				8A40624821D99E0500CE62A8 /* SettingsViewController.swift */,
+				8A40624E21DAA3DA00CE62A8 /* SettingsViewModel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -328,6 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				8AF0450F21CD56FE00B5EE38 /* SearchViewController.swift */,
+				8A40624A21DA849800CE62A8 /* SearchViewModel.swift */,
 				8AF0451F21CED0C200B5EE38 /* PhotoDownload.swift */,
 				8AF0451321CD6DCE00B5EE38 /* PhotoSearch.swift */,
 				8AF0451D21CECF5000B5EE38 /* PhotoParse.swift */,
@@ -488,6 +497,7 @@
 				8AABBA0721D44FE000C5CA92 /* Store.swift in Sources */,
 				8AABB9FF21D3F8B800C5CA92 /* SlideshowCollectionViewCell.swift in Sources */,
 				8AF0451021CD56FE00B5EE38 /* SearchViewController.swift in Sources */,
+				8A40624F21DAA3DA00CE62A8 /* SettingsViewModel.swift in Sources */,
 				8AF0451821CDEFD600B5EE38 /* NetworkDispatcher.swift in Sources */,
 				8A460D0521CB487A00327259 /* AppDelegate.swift in Sources */,
 				8AF0450C21CC213C00B5EE38 /* DetailViewController.swift in Sources */,
@@ -498,12 +508,14 @@
 				8AF0450E21CC812300B5EE38 /* RequestData.swift in Sources */,
 				8AC1669C21D5C3BF0094D9E2 /* Favorite+CoreDataClass.swift in Sources */,
 				8AABBA0121D43E8700C5CA92 /* Favorites.swift in Sources */,
+				8A40624D21DA98E800CE62A8 /* FavoritesViewModel.swift in Sources */,
 				8AF0451421CD6DCE00B5EE38 /* PhotoSearch.swift in Sources */,
 				8A2D043921D5C30F00CD344E /* Fottos.xcdatamodeld in Sources */,
 				8AC166A421D7ABAE0094D9E2 /* Named.swift in Sources */,
 				8AF0452021CED0C200B5EE38 /* PhotoDownload.swift in Sources */,
 				8AC1669F21D65E4D0094D9E2 /* ThumbnailViewModel.swift in Sources */,
 				8A40624921D99E0500CE62A8 /* SettingsViewController.swift in Sources */,
+				8A40624B21DA849800CE62A8 /* SearchViewModel.swift in Sources */,
 				8AC1669D21D5C3BF0094D9E2 /* Favorite+CoreDataProperties.swift in Sources */,
 				8AF0451E21CECF5000B5EE38 /* PhotoParse.swift in Sources */,
 				8AF0451A21CDF57800B5EE38 /* Endpoint.swift in Sources */,
@@ -700,15 +712,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = J2EY74W5G9;
 				INFOPLIST_FILE = Fottos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = novusmobile.com.Fottos;
+				PRODUCT_BUNDLE_IDENTIFIER = novusmobile.com.Fotos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Dev Fotos";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -718,15 +731,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = J2EY74W5G9;
 				INFOPLIST_FILE = Fottos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = novusmobile.com.Fottos;
+				PRODUCT_BUNDLE_IDENTIFIER = novusmobile.com.Fotos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Fottos PROD";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

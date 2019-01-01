@@ -8,19 +8,26 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: UIViewController, SettingsViewModelDelegate, UITableViewDelegate, UITableViewDataSource {
 
+    // MARK: - Properties
+    
+    var viewModel: SettingsViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = SettingsViewModel(delegate: self)
         navigationController?.hideShadow()
     }
+    
+    // MARK: - Data Source
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return viewModel.optionsCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -29,7 +36,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
+    // MARK: - Table View Delegate
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        imageCache.removeAllObjects()
+        showAlert()
+    }
 
+    func showAlert() {
+        let alert = UIAlertController(title: "Cache", message: "All cache has been cleared.", preferredStyle: .alert)
+        let dismiss = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(dismiss)
+        present(alert, animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 
