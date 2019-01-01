@@ -11,22 +11,35 @@ import CoreData
 
 class SlideshowCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
-    var photo: Photo?
-    var mainContext: NSManagedObjectContext?
+    // MARK: - Properties
+    let filledHeart = UIImage(imageLiteralResourceName: "Like")
+    let outlinedHeart = UIImage(imageLiteralResourceName: "LikeOutlined")
+    var context: NSManagedObjectContext?
 
+    var photo: Photo? {
+        didSet {
+            loadHeartImage()
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         addShadow()
+    }
+    
+    // MARK: - Configuration
+    
+    private func addDoubleTap() {
         let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(updateLikeButtonImage))
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
         self.addGestureRecognizer(doubleTapGestureRecognizer)
     }
-    
-    // MARK: - Configuration
     
     private func configureAll() {
         addShadow()
@@ -35,37 +48,29 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         photo = nil
         titleLabel.isHidden = true
-//        likeButton.setImage(UIImage(named: "LikeOutlined"), for: .normal)
+        likeButton.setImage(outlinedHeart, for: .normal)
         if imageView != nil {
             imageView.image = nil
         }
     }
     
     @IBAction func likeButtonTapped(_ sender: UIButton) {
-        updateLikeButtonImage()
+        //        updateLikeButtonImage()
+    }
+    
+    func rotateLikeImage(_ likeImage: UIImage?) -> UIImage {
+        
+        return likeImage == outlinedHeart ? filledHeart : outlinedHeart
+    }
+    
+    func loadHeartImage() {
+        guard let context = context, let photo = photo else { return }
+        let heartImage = Favorite.isPhotoSaved(context: context, photo: photo) ? filledHeart : outlinedHeart
+        likeButton.setImage(heartImage, for: .normal)
     }
     
     @objc
     func updateLikeButtonImage() {
         likeButton.setImage(rotateLikeImage(likeButton.currentImage), for: .normal)
-    }
-    
-    func rotateLikeImage(_ likeImage: UIImage?) -> UIImage {
-        
-        if likeImage == UIImage(named: "LikeOutlined") {
-                if let context = Store.shareInstance?.persistentContainer.viewContext, let photo = photo {
-                    createPhoto(context: context, photo: photo)
-                }
-            return UIImage(named: "Like")!
-        } else {
-            return UIImage(named: "LikeOutlined")!
-        }
-        
-    }
-    
-    func createPhoto(context: NSManagedObjectContext?, photo: Photo) {
-        guard let context = context else { return }
-        Favorite.addNew(context: context, photo: photo)
-        Store.shareInstance?.saveContext()
     }
 }

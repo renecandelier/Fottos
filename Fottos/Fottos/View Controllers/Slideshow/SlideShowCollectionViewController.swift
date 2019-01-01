@@ -9,27 +9,30 @@
 import UIKit
 import CoreData
 
-class SlideshowCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class SlideshowCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, SlideshowViewModelDelegate {
     
     let collectionMargin = CGFloat(16)
     let itemSpacing = CGFloat(10)
     var itemHeight = CGFloat(322)
     var itemWidth = CGFloat(0)
     
-    var photos: [Photo]?
-    var mainContext: NSManagedObjectContext?
-
-    var currentPage = 0
+    // MARK: - Properties
     
+    var mainContext: NSManagedObjectContext?
+    var viewModel: SlideshowViewModel!
+    var currentPage = 0
+    var photos: [Photo]?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         mainContext = Store.shareInstance?.persistentContainer.viewContext
+        viewModel = SlideshowViewModel(photos: photos, currentPage: currentPage, delegate: self, context: mainContext)
         setCollectionViewLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        scrollToItem(currentPage)
+        scrollToItem(viewModel?.currentPage ?? 0)
     }
     
     func setCollectionViewLayout() {
@@ -65,27 +68,32 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos?.count ?? 0
+        return viewModel?.photos?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SlideshowCollectionViewCell.className, for: indexPath) as! SlideshowCollectionViewCell
-        cell.mainContext = mainContext
-        let photo = photos?[indexPath.row]
-        cell.photo = photo
-    
         
-        if let photo = photos?[indexPath.row], let photoURL = photos?[indexPath.row].url, let url = URL(string: photoURL), url.isValid {
-            cell.imageView.dowloadFromServer(url: url) { (image) in
-                if let image = image {
+        cell.context = mainContext
+        let photo = viewModel?.photoAtIndex(indexPath.row)
+        cell.photo = photo
+        
+        if let photoURL = photo?.url, let url = URL(string: photoURL), url.isValid {
+            cell.titleLabel.text = photo?.title ?? ""
+            cell.imageView.dowloadFromServer(url: url) { image in
+                guard let image = image else { return }
                     cell.imageView.image = image
-                }
             }
-            cell.titleLabel.text = photo.title ?? ""
         }
         
         return cell
+    }
+    
+    @IBAction func likeButtonTapped(_ sender: UIButton) {
+        let cell = sender.superview?.superview as! SlideshowCollectionViewCell
+        cell.updateLikeButtonImage()
+        viewModel.savePhoto(cell.photo)
     }
     
     // MARK: UICollectionViewDelegate
@@ -100,13 +108,13 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
 
         let pageWidth = Float(itemWidth + itemSpacing)
         let targetXContentOffset = Float(targetContentOffset.pointee.x)
-        let contentWidth = Float(collectionView!.contentSize.width  )
-        var newPage = Float(currentPage)
+        let contentWidth = Float(collectionView.contentSize.width  )
+        var newPage = Float(viewModel.currentPage)
 
         if velocity.x == 0 {
             newPage = floor( (targetXContentOffset - Float(pageWidth) / 2) / Float(pageWidth)) + 1.0
         } else {
-            newPage = Float(velocity.x > 0 ? currentPage + 1 : currentPage - 1)
+            newPage = Float(velocity.x > 0 ? viewModel.currentPage + 1 : viewModel.currentPage - 1)
             if newPage < 0 {
                 newPage = 0
             }
@@ -115,7 +123,7 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
             }
         }
 
-        currentPage = Int(newPage)
+        viewModel.currentPage = Int(newPage)
         let point = CGPoint (x: CGFloat(newPage * pageWidth), y: targetContentOffset.pointee.y)
         targetContentOffset.pointee = point
     }

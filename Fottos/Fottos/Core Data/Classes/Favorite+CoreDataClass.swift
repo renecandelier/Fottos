@@ -12,24 +12,35 @@ import CoreData
 
 public class Favorite: NSManagedObject, Photo, ManagedObjectType {
     
-    static func fetchAll(context: NSManagedObjectContext) -> [Favorite]? {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: self.className)
-        do {
-            let records = try context.fetch(fetchRequest) as? [Favorite]
-            return records
-        } catch let error as NSError {
-            print(error.description)
-        }
-        return .none
+    static func fetchAll(context: NSManagedObjectContext) -> [Photo] {
+        return fetch(inContext: context)
     }
     
     static func addNew(context: NSManagedObjectContext, photo image: Photo) {
+
+        guard !isPhotoSaved(context: context, photo: image) else {
+            remove(context: context, url: image.url)
+            return
+        }
+
         Favorite.create(inContext: context) { favorite in
             favorite.url = image.url
         }
     }
     
-    static func remove(context: NSManagedObjectContext, photoID: String) {
+    static func isPhotoSaved(context: NSManagedObjectContext, photo: Photo) -> Bool {
+        guard let url = photo.url, Favorite.getPhoto(context: context, url: url) != nil else { return false }
         
+        return true
+    }
+    
+    private static func getPhoto(context: NSManagedObjectContext, url: String) -> Photo? {
+        let allSavedPhotos = Favorite.fetchAll(context: context)
+        return allSavedPhotos.filter { $0.url == url }.first
+    }
+    
+    static func remove(context: NSManagedObjectContext, url: String?) {
+        guard let url = url, let photo = getPhoto(context: context, url: url) as? Favorite else { return }
+        context.delete(photo)
     }
 }

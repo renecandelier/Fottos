@@ -37,9 +37,9 @@ final class ThumbnailViewModel {
         
     }
     
-    func loadPreloadedPhotos(_ photos: [Photo]) {
-        self.totalPhotos = photos.count
-        self.photos = photos
+    func loadPreloadedPhotos(_ photos: [Photo]?) {
+        self.totalPhotos = photos?.count ?? 0
+        self.photos = photos ?? []
         self.delegate?.reloadCollectionView()
     }
     

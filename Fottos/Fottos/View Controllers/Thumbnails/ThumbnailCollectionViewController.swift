@@ -14,7 +14,7 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
     var viewModel: ThumbnailViewModel!
     var searchText: String?
     var preLoadedPhotos: [Photo]?
-    var indexCache = [Int: UIImage]()
+    var indexCache: [Int: UIImage] = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()
