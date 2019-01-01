@@ -31,7 +31,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="306" height="332"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SC7-qZ-hVE">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SC7-qZ-hVE">
                                             <rect key="frame" x="0.0" y="0.0" width="306" height="332"/>
                                             <accessibility key="accessibilityConfiguration" identifier="Category Image">
                                                 <bool key="isElement" value="YES"/>

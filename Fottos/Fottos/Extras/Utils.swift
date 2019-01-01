@@ -40,21 +40,24 @@ struct Keys {
     }
     private init () {}
 }
+
 let imageCache = NSCache<NSString, UIImage>()
 
 extension UIImageView {
-    func dowloadFromServer(url: URL) {
+    func dowloadFromServer(url: URL, indexPath: IndexPath? = nil, completion:  @escaping (UIImage?) -> Void) {
         
         if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
-            self.image = cachedImage
+            asyncMain {
+                completion(cachedImage)
+            }
             return
         }
-        let photo = PhotoDownload(url: url)
-        photo.dowloadFromServer { (image, error) in
+        
+        PhotoDownload(url: url).dowloadFromServer { (image, error) in
             if let image = image {
-                DispatchQueue.main.async() {
+                asyncMain() {
                     imageCache.setObject(image, forKey: url.absoluteString as NSString)
-                    self.image = image
+                    completion(image)
                 }
             }
         }
@@ -78,5 +81,11 @@ extension UICollectionViewCell {
         layer.shadowOpacity = 0.3
         layer.shadowOffset = CGSize(width: 0, height: 0)
         layer.shadowRadius = contentView.layer.cornerRadius
+    }
+}
+
+extension UINavigationController {
+    func hideShadow() {
+        self.navigationBar.setValue(true, forKey: "hidesShadow")
     }
 }

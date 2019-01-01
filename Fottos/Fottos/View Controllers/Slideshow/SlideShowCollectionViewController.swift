@@ -13,7 +13,7 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
     
     let collectionMargin = CGFloat(16)
     let itemSpacing = CGFloat(10)
-    let itemHeight = CGFloat(322)
+    var itemHeight = CGFloat(322)
     var itemWidth = CGFloat(0)
     
     var photos: [Photo]?
@@ -36,8 +36,9 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
         itemWidth =  UIScreen.main.bounds.width - collectionMargin * 2.0
-        
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+        itemHeight =  UIScreen.main.bounds.width - collectionMargin * 2.0
+
+        layout.sectionInset = UIEdgeInsets(top: itemHeight/2, left: 0, bottom: itemHeight/2, right: 0)
         layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
         layout.headerReferenceSize = CGSize(width: collectionMargin, height: 0)
         layout.footerReferenceSize = CGSize(width: collectionMargin, height: 0)
@@ -76,7 +77,11 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
     
         
         if let photo = photos?[indexPath.row], let photoURL = photos?[indexPath.row].url, let url = URL(string: photoURL), url.isValid {
-            cell.imageView.dowloadFromServer(url: url)
+            cell.imageView.dowloadFromServer(url: url) { (image) in
+                if let image = image {
+                    cell.imageView.image = image
+                }
+            }
             cell.titleLabel.text = photo.title ?? ""
         }
         

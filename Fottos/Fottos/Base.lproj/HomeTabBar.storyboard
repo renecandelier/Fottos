@@ -49,7 +49,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsViewController" id="aIW-DY-fbx">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsViewController" id="aIW-DY-fbx">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aIW-DY-fbx" id="abp-1w-7T3">
@@ -190,21 +190,32 @@
                                     <segue destination="DIR-Th-Pq7" kind="embed" identifier="ThumbnailCollectionViewController" id="9Fk-LQ-2Qt"/>
                                 </connections>
                             </containerView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bj6-sr-huK">
+                                <rect key="frame" x="186.33333333333334" y="358" width="41.666666666666657" height="20.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="highlightedColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="bj6-sr-huK" firstAttribute="centerX" secondItem="lgy-aR-PIh" secondAttribute="centerX" id="3BJ-FQ-2iJ"/>
                             <constraint firstItem="GN1-LM-fMh" firstAttribute="leading" secondItem="vPf-bZ-LSR" secondAttribute="leading" id="Cty-7D-X0o"/>
                             <constraint firstItem="GN1-LM-fMh" firstAttribute="trailing" secondItem="vPf-bZ-LSR" secondAttribute="trailing" id="D2d-w2-GH4"/>
                             <constraint firstItem="GN1-LM-fMh" firstAttribute="bottom" secondItem="vPf-bZ-LSR" secondAttribute="bottom" id="QWB-Sm-VXt"/>
                             <constraint firstItem="GN1-LM-fMh" firstAttribute="top" secondItem="lgy-aR-PIh" secondAttribute="top" id="soc-Dh-oy2"/>
+                            <constraint firstItem="bj6-sr-huK" firstAttribute="centerY" secondItem="lgy-aR-PIh" secondAttribute="centerY" id="zSd-mv-rES"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vPf-bZ-LSR"/>
                     </view>
                     <navigationItem key="navigationItem" title="Favorites" id="3zI-SJ-YPm"/>
+                    <connections>
+                        <outlet property="emptyFavoritresLabel" destination="bj6-sr-huK" id="I1m-yP-bv3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dbZ-uW-RKo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-533" y="2219"/>
+            <point key="canvasLocation" x="-533.33333333333337" y="2218.2065217391305"/>
         </scene>
         <!--Menu-->
         <scene sceneID="TUt-HQ-bwq">

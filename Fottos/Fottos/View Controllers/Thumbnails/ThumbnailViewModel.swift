@@ -11,7 +11,7 @@ import Foundation
 protocol ThumbnailViewModelDelegate: class {
     func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?)
     func onFetchFailed(with reason: Error?)
-    func reloadContent()
+    func reloadCollectionView()
 }
 
 final class ThumbnailViewModel {
@@ -28,8 +28,9 @@ final class ThumbnailViewModel {
         
         self.photos = photos
         self.delegate = delegate
-        if let searchText = searchText {
-            fetchImages(searchTerm: searchText)
+        self.searchText = searchText
+        if searchText != nil {
+            fetchImages()
         } else {
             loadPreloadedPhotos(photos)
         }
@@ -39,7 +40,7 @@ final class ThumbnailViewModel {
     func loadPreloadedPhotos(_ photos: [Photo]) {
         self.totalPhotos = photos.count
         self.photos = photos
-        self.delegate?.reloadContent()
+        self.delegate?.reloadCollectionView()
     }
     
     var currentCount: Int {
@@ -54,22 +55,20 @@ final class ThumbnailViewModel {
         return photos[index]
     }
     
-    func fetchImages(searchTerm: String) {
-        guard !isFetchInProgress else {
-            return
-        }
+    func fetchImages() {
+        guard !isFetchInProgress, let searchText = searchText else { return }
         isFetchInProgress = true
         
-        let photoSearch = PhotoSearch(searchTerm: searchTerm, page: currentPage, amountPerPage: 25)
+        let photoSearch = PhotoSearch(searchTerm: searchText, page: currentPage, amountPerPage: 25)
         photoSearch.fetchPhotos { [weak self] (pagedPhotoResponse, error) in
             guard let self = self else { return }
+
+            self.isFetchInProgress = false
 
             if error != nil {
                 self.isFetchInProgress = false
                 self.delegate?.onFetchFailed(with: error)
             }
-            
-            self.isFetchInProgress = false
             
             guard let pagedPhotoResponse = pagedPhotoResponse else { return }
             

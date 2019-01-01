@@ -13,15 +13,15 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
     
     var viewModel: ThumbnailViewModel!
     var searchText: String?
-    var preLoadedPhotos: [Photo]? 
-    
+    var preLoadedPhotos: [Photo]?
+    var indexCache = [Int: UIImage]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = ThumbnailViewModel(searchText: searchText, delegate: self, photos: preLoadedPhotos ?? [])
         collectionView.prefetchDataSource = self
         setupCollectionView()
         setNavigationTitle(searchText)
-        
     }
     
     func setupCollectionView() {
@@ -45,38 +45,30 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
         navigationItem.title = title
     }
     
-    func updateCollectionView() {
-       asyncMain {
+    func reloadCollectionView() {
+        asyncMain {
             self.collectionView.reloadData()
         }
-    }
-    
-    func reloadContent() {
-         updateCollectionView()
     }
     
     // MARK: Prefetching
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         
-        if indexPaths.contains(where: isLoadingCell), let searchText = searchText {
-//            DispatchQueue.global(qos: .background).async {
-                self.viewModel.fetchImages(searchTerm: searchText)
-//            }
+        if indexPaths.contains(where: isLoadingCell) {
+            self.viewModel.fetchImages()
         }
     }
     
     func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?) {
         
         guard let newIndexPathsToReload = newIndexPathsToReload else {
-//            indicatorView.stopAnimating()
-//            tableView.isHidden = false
-            updateCollectionView()
+            reloadCollectionView()
             return
         }
         
 //        let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
-//        collectionView.reloadItems(at: newIndexPathsToReload)
+//        collectionView.reloadItems(at: indexPathsToReload)
     }
     
     func onFetchFailed(with reason: Error?) {
@@ -96,11 +88,58 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as! CategoryCollectionViewCell
-
+    
+        
         if isLoadingCell(for: indexPath) {
             cell.configure(with: .none)
         } else {
-            cell.configure(with: viewModel.photo(at: indexPath.row))
+            
+            
+            if let imageDownloaded = indexCache[indexPath.row] {
+                cell.imageView.image = imageDownloaded
+//                cell.configure(with: self.viewModel.photo(at: indexPath.row))
+            } else {
+                if let photoURL = viewModel.photo(at: indexPath.row).url, let url = URL(string: photoURL), url.isValid {
+                    
+                    cell.imageView.dowloadFromServer(url: url, indexPath: indexPath, completion: { image in
+                        asyncMain {
+
+                        if let image = image {
+                            if let updateCell = self.collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell {
+                                
+                                    updateCell.imageView?.image = image
+//                                    cell.configure(with: self.viewModel.photo(at: indexPath.row))
+
+                            } else {
+                                self.reloadCollectionView()
+                                
+                                
+//                                        let visibleRows = (collectionView.visibleCells as! [CategoryCollectionViewCell])
+                                
+                                
+//                                let visibleIndexPaths = collectionView.indexPathsForVisibleItems
+//                                for indexPath in visibleIndexPaths {
+//                                    if let imageCell = collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell, imageCell.imageView.image == nil {
+//                                        self.collectionView.reloadItems(at: [indexPath])
+//                                    }
+//                                }
+                                
+                                
+                                
+
+//.filter { $0.imageView.image == nil }
+                                print("not showing image at \(indexPath.row)")
+                            }
+                            self.indexCache[indexPath.row] = image
+
+                        }
+                        }
+                    })
+                    
+                }
+                
+            }
+            
         }
 
         return cell
@@ -138,6 +177,6 @@ private extension ThumbnailCollectionViewController {
     func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
         let indexPathsForVisibleRows = collectionView.indexPathsForVisibleItems
         let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
-        return indexPaths
+        return Array(indexPathsIntersection)
     }
 }
