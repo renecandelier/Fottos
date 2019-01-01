@@ -46,6 +46,7 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
     }
     
     func reloadCollectionView() {
+        indexCache.removeAll()
         asyncMain {
             self.collectionView.reloadData()
         }
@@ -57,6 +58,7 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
         
         if indexPaths.contains(where: isLoadingCell) {
             self.viewModel.fetchImages()
+            indexCache.removeAll()
         }
     }
     
