@@ -10,7 +10,6 @@
 import Foundation
 import CoreData
 
-
 public class Search: NSManagedObject, ManagedObjectType {
     
     static func addNew(context: NSManagedObjectContext, title: String) {

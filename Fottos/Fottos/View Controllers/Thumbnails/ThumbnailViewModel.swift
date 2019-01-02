@@ -25,21 +25,15 @@ final class ThumbnailViewModel {
     private weak var delegate: ThumbnailViewModelDelegate?
 
     init(searchText: String?, delegate: ThumbnailViewModelDelegate?, photos: [Photo] = []) {
-        
         self.photos = photos
         self.delegate = delegate
         self.searchText = searchText
-        if searchText != nil {
-            fetchImages()
-        } else {
-            loadPreloadedPhotos(photos)
-        }
-        
+        loadPhotos(photos)
     }
     
-    func loadPreloadedPhotos(_ photos: [Photo]) {
-        self.totalPhotos = photos.count
-        self.photos = photos
+    func loadPreloadedPhotos(_ photos: [Photo]?) {
+        self.totalPhotos = photos?.count ?? 0
+        self.photos = photos ?? []
         self.delegate?.reloadCollectionView()
     }
     
@@ -55,16 +49,28 @@ final class ThumbnailViewModel {
         return photos[index]
     }
     
-    func fetchImages() {
+    func loadPhotos(_ photos: [Photo]? = nil) {
+        
+        guard let photos = photos, !photos.isEmpty else {
+            downloadPhotos()
+            return
+        }
+        loadPreloadedPhotos(photos)
+    }
+    
+    func downloadPhotos() {
+        
         guard !isFetchInProgress, let searchText = searchText else { return }
+        
         isFetchInProgress = true
         
         let photoSearch = PhotoSearch(searchTerm: searchText, page: currentPage, amountPerPage: 25)
+        
         photoSearch.fetchPhotos { [weak self] (pagedPhotoResponse, error) in
             guard let self = self else { return }
-
+            
             self.isFetchInProgress = false
-
+            
             if error != nil {
                 self.isFetchInProgress = false
                 self.delegate?.onFetchFailed(with: error)

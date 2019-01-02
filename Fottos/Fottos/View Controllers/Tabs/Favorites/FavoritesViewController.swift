@@ -38,17 +38,15 @@ class FavoritesViewController: UIViewController, FavoritesViewModelDelegate {
         viewModel?.updateThumbnails()
     }
     
-    // MARK:- FavoritesViewModelDelegate
+    // MARK: - FavoritesViewModelDelegate
     
     func updateThumnails(photos: [Photo]?) {
-        updateEmptyFavoritesLabel()
-        guard let photos = photos, !photos.isEmpty else {
-            return
-        }
         thumbnailCollectionViewController?.viewModel.loadPreloadedPhotos(photos)
+        updateEmptyFavoritesLabel()
     }
     
     func updateEmptyFavoritesLabel() {
+        thumbnailCollectionViewController?.reloadCollectionView()
         emptyFavoritresLabel.isHidden = !(viewModel?.favoritePhotos?.isEmpty ?? false)
         emptyFavoritresLabel.text = viewModel?.emptySearchTermsPlaceholder ?? ""
     }

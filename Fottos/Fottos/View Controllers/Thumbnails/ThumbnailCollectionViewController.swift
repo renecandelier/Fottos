@@ -14,7 +14,7 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
     var viewModel: ThumbnailViewModel!
     var searchText: String?
     var preLoadedPhotos: [Photo]?
-    var indexCache = [Int: UIImage]()
+    var indexCache: [Int: UIImage] = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +22,11 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
         collectionView.prefetchDataSource = self
         setupCollectionView()
         setNavigationTitle(searchText)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        indexCache.removeAll()
     }
     
     func setupCollectionView() {
@@ -56,19 +61,17 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         
         if indexPaths.contains(where: isLoadingCell) {
-            self.viewModel.fetchImages()
+            viewModel.loadPhotos()
         }
     }
     
     func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?) {
         
-        guard let newIndexPathsToReload = newIndexPathsToReload else {
-            reloadCollectionView()
-            return
-        }
-        
-//        let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
-//        collectionView.reloadItems(at: indexPathsToReload)
+//        guard let newIndexPathsToReload = newIndexPathsToReload else {
+//            return
+//        }
+        reloadCollectionView()
+
     }
     
     func onFetchFailed(with reason: Error?) {
@@ -88,64 +91,48 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as! CategoryCollectionViewCell
-    
         
-        if isLoadingCell(for: indexPath) {
-            cell.configure(with: .none)
+        
+        //        if isLoadingCell(for: indexPath) {
+        //            cell.configure(with: .none)
+        //        } else {
+        //                cell.configure(with: self.viewModel.photo(at: indexPath.row))
+
+        
+        if let imageDownloaded = indexCache[indexPath.row] {
+            cell.imageView.image = imageDownloaded
         } else {
-            
-            
-            if let imageDownloaded = indexCache[indexPath.row] {
-                cell.imageView.image = imageDownloaded
-//                cell.configure(with: self.viewModel.photo(at: indexPath.row))
-            } else {
+            if !isLoadingCell(for: indexPath) {
                 if let photoURL = viewModel.photo(at: indexPath.row).url, let url = URL(string: photoURL), url.isValid {
                     
                     cell.imageView.dowloadFromServer(url: url, indexPath: indexPath, completion: { image in
                         asyncMain {
-
-                        if let image = image {
-                            if let updateCell = self.collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell {
-                                
+                            
+                            if let image = image {
+                                if let updateCell = self.collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell {
+                                    
                                     updateCell.imageView?.image = image
-//                                    cell.configure(with: self.viewModel.photo(at: indexPath.row))
-
-                            } else {
-                                self.reloadCollectionView()
+                                    //                                    cell.configure(with: self.viewModel.photo(at: indexPath.row))
+                                    
+                                } else {
+                                    //                                self.reloadCollectionView()
+                                    
+                                    
+                                    print("not showing image at \(indexPath.row)")
+                                }
+                                self.indexCache[indexPath.row] = image
                                 
-                                
-//                                        let visibleRows = (collectionView.visibleCells as! [CategoryCollectionViewCell])
-                                
-                                
-//                                let visibleIndexPaths = collectionView.indexPathsForVisibleItems
-//                                for indexPath in visibleIndexPaths {
-//                                    if let imageCell = collectionView.cellForItem(at: indexPath) as? CategoryCollectionViewCell, imageCell.imageView.image == nil {
-//                                        self.collectionView.reloadItems(at: [indexPath])
-//                                    }
-//                                }
-                                
-                                
-                                
-
-//.filter { $0.imageView.image == nil }
-                                print("not showing image at \(indexPath.row)")
                             }
-                            self.indexCache[indexPath.row] = image
-
-                        }
                         }
                     })
                     
                 }
-                
             }
-            
         }
-
         return cell
     }
     
-    // MARK: UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         performSegue(withIdentifier: DetailViewController.className, sender: self)

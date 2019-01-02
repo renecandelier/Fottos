@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Favorites {
+struct LoadPerPage {
     
     private static let favorites = "Favorites"
     
@@ -29,12 +29,12 @@ struct Favorites {
     }
     
     static func getAllFavorites() -> [PhotoStruct]? {
-        guard let favorites = UserDefaults.standard.array(forKey: Favorites.favorites) as? [PhotoStruct] else { return .none }
+        guard let favorites = UserDefaults.standard.array(forKey: LoadPerPage.favorites) as? [PhotoStruct] else { return .none }
         return favorites
     }
     
     private static func updateFavorites(_ photos: [PhotoStruct]) {
-        UserDefaults.standard.set(photos, forKey: Favorites.favorites)
+        UserDefaults.standard.set(photos, forKey: LoadPerPage.favorites)
     }
     
 }

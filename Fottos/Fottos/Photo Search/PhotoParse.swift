@@ -16,9 +16,9 @@ struct PhotoParser {
         guard let photosDictionary = photoJson[Keys.photos] as? PhotoDictionary,
             let photosArray = photosDictionary[Keys.photo] as? [PhotoDictionary] else { return .none }
         
-        let total = Int(photosDictionary[Keys.total] as? String ?? "0")!
+        let total = Int(photosDictionary[Keys.total] as? String ?? "0") ?? 0
         let page = photosDictionary[Keys.page] as? Int ?? 0
-        let photos = photosArray.compactMap { PhotoStruct.createPhoto($0) }
+        let photos = photosArray.compactMap { PhotoStruct($0) }
         let pagedPhotoResponse = PagedPhotoResponse(total: total, page: page, photos: photos)
         return pagedPhotoResponse
     }

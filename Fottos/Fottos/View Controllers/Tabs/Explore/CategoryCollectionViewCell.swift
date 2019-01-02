@@ -10,6 +10,7 @@ import UIKit
 
 class CategoryCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Outlets
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -41,7 +42,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     func clean() {
         imageView.image = nil
         imageView.backgroundColor = UIColor.groupTableViewBackground
-//        titleLabel.text = ""
     }
     
     override func prepareForReuse() {
