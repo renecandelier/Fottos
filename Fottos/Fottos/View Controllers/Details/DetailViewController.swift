@@ -32,13 +32,9 @@ class DetailViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SlideshowCollectionViewController.className {
-            if let slideshowCollectionViewController = segue.destination as? SlideshowCollectionViewController {
-//                let context = Store.shareInstance?.persistentContainer.viewContext
-//                let viewModel = SlideshowViewModel(delegate: slideshowCollectionViewController, context: context)
-//                slideshowCollectionViewController.viewModel = viewModel
-                slideshowCollectionViewController.currentPage = currentPage
-                slideshowCollectionViewController.photos = photos
-            }
+            guard let slideshowCollectionViewController = segue.destination as? SlideshowCollectionViewController else { return }
+            slideshowCollectionViewController.currentPage = currentPage
+            slideshowCollectionViewController.photos = photos
         }
     }
 }

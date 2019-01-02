@@ -39,7 +39,7 @@ public class Favorite: NSManagedObject, Photo, ManagedObjectType {
         return allSavedPhotos.filter { $0.url == url }.first
     }
     
-    static func remove(context: NSManagedObjectContext, url: String?) {
+    private static func remove(context: NSManagedObjectContext, url: String?) {
         guard let url = url, let photo = getPhoto(context: context, url: url) as? Favorite else { return }
         context.delete(photo)
     }

@@ -12,12 +12,17 @@ import CoreData
 class ExploreCollectionViewController: UICollectionViewController {
     
     var categories = ["Travel", "Cars", "Sneakers", "Food", "Sports", "Fashion", "Fitness", "Drinks", "Nature"]
+    
     var mainContext: NSManagedObjectContext?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         mainContext = Store.shareInstance?.persistentContainer.viewContext
         navigationController?.hideShadow()
+        addInsets()
+    }
+    
+    func addInsets() {
         collectionView.contentInset = UIEdgeInsets(top: 20.0, left: 8.0, bottom: 0.0, right: 8.0)
     }
     
@@ -27,7 +32,7 @@ class ExploreCollectionViewController: UICollectionViewController {
         }
     }
     
-    // MARK: UICollectionViewDataSource
+    // MARK: - UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -44,7 +49,7 @@ class ExploreCollectionViewController: UICollectionViewController {
         return cell
     }
     
-    // MARK: UICollectionViewDelegate
+    // MARK: - UICollectionViewDelegate
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        performSegue(withIdentifier: ThumbnailCollectionViewController.className, sender: self)

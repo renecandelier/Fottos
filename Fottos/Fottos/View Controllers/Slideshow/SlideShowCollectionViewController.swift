@@ -39,10 +39,9 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
         itemWidth =  UIScreen.main.bounds.width - collectionMargin * 2.0
-        itemHeight =  UIScreen.main.bounds.width - collectionMargin * 2.0
-
+        itemHeight = (collectionView.bounds.height - collectionMargin - itemWidth)
         layout.sectionInset = UIEdgeInsets(top: itemHeight/2, left: 0, bottom: itemHeight/2, right: 0)
-        layout.itemSize = CGSize(width: itemWidth, height: itemHeight)
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         layout.headerReferenceSize = CGSize(width: collectionMargin, height: 0)
         layout.footerReferenceSize = CGSize(width: collectionMargin, height: 0)
 
@@ -78,12 +77,12 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         cell.context = mainContext
         let photo = viewModel?.photoAtIndex(indexPath.row)
         cell.photo = photo
-        
+        cell.doubleTap = updatePhoto
         if let photoURL = photo?.url, let url = URL(string: photoURL), url.isValid {
             cell.titleLabel.text = photo?.title ?? ""
             cell.imageView.dowloadFromServer(url: url) { image in
                 guard let image = image else { return }
-                    cell.imageView.image = image
+                cell.imageView.image = image
             }
         }
         
@@ -94,6 +93,10 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         let cell = sender.superview?.superview as! SlideshowCollectionViewCell
         cell.updateLikeButtonImage()
         viewModel.savePhoto(cell.photo)
+    }
+    
+    func updatePhoto(_ photo: Photo?) {
+        viewModel.savePhoto(photo)
     }
     
     // MARK: UICollectionViewDelegate

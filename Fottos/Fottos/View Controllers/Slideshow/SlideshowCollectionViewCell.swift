@@ -18,31 +18,30 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
     // MARK: - Properties
+    
     let filledHeart = UIImage(imageLiteralResourceName: "Like")
     let outlinedHeart = UIImage(imageLiteralResourceName: "LikeOutlined")
     var context: NSManagedObjectContext?
-
+    var doubleTap: ((_ : Photo?) -> Void)?
+    
     var photo: Photo? {
         didSet {
             loadHeartImage()
         }
     }
     
+    // MARK: - Configuration
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         addShadow()
+        addDoubleTap()
     }
-    
-    // MARK: - Configuration
     
     private func addDoubleTap() {
-        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(updateLikeButtonImage))
+        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(updateSavedPhoto))
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
         self.addGestureRecognizer(doubleTapGestureRecognizer)
-    }
-    
-    private func configureAll() {
-        addShadow()
     }
     
     override func prepareForReuse() {
@@ -54,23 +53,27 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    @IBAction func likeButtonTapped(_ sender: UIButton) {
-        //        updateLikeButtonImage()
-    }
-    
     func rotateLikeImage(_ likeImage: UIImage?) -> UIImage {
-        
         return likeImage == outlinedHeart ? filledHeart : outlinedHeart
     }
     
     func loadHeartImage() {
         guard let context = context, let photo = photo else { return }
         let heartImage = Favorite.isPhotoSaved(context: context, photo: photo) ? filledHeart : outlinedHeart
-        likeButton.setImage(heartImage, for: .normal)
+        setHeartImage(heartImage)
     }
     
     @objc
+    func updateSavedPhoto() {
+        doubleTap?(photo)
+        updateLikeButtonImage()
+    }
+    
     func updateLikeButtonImage() {
-        likeButton.setImage(rotateLikeImage(likeButton.currentImage), for: .normal)
+        setHeartImage(rotateLikeImage(likeButton.currentImage))
+    }
+    
+    func setHeartImage(_ image: UIImage) {
+        likeButton.setImage(image, for: .normal)
     }
 }
