@@ -58,7 +58,7 @@ extension Endpoint {
         }
     }
     
-    func getQueryItems(_ queryDictionary: [String: String]?) -> [URLQueryItem]? {
+    private func getQueryItems(_ queryDictionary: [String: String]?) -> [URLQueryItem]? {
         guard let queryDictionary = queryDictionary else { return .none }
         var quertItems = [URLQueryItem]()
         
@@ -70,7 +70,7 @@ extension Endpoint {
         return quertItems
     }
     
-    var componentsURL: URL? {
+    private var componentsURL: URL? {
         var components = URLComponents()
         components.path = path
         components.host = host
@@ -83,7 +83,7 @@ extension Endpoint {
         return URL(string: populatedEndPoint)
     }
     
-    var populatedEndPoint: String {
+    private var populatedEndPoint: String {
         var populatedEndPoint = path
         
         if let replacementTokens = replacementTokens {

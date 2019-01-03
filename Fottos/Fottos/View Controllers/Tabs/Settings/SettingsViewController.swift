@@ -7,16 +7,19 @@
 //
 
 import UIKit
+import CoreData
 
-class SettingsViewController: UIViewController, SettingsViewModelDelegate, UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Properties
     
     var viewModel: SettingsViewModel!
+    var context: NSManagedObjectContext?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = SettingsViewModel(delegate: self)
+        context = Store.shareInstance?.persistentContainer.viewContext
+        viewModel = SettingsViewModel(delegate: self, context: context)
         navigationController?.hideShadow()
     }
     
@@ -31,33 +34,45 @@ class SettingsViewController: UIViewController, SettingsViewModelDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: self.className, for: indexPath)
-        cell.textLabel?.text = "Clear Cache"
+        var cell: UITableViewCell
+        if indexPath.row == 0 {
+             let fetchPerPageCell = tableView.dequeueReusableCell(withIdentifier: FetchPerPageUITableViewCell.className, for: indexPath) as! FetchPerPageUITableViewCell
+            fetchPerPageCell.amountSegmentControl.selectedSegmentIndex = viewModel.perPageAmount
+            cell = fetchPerPageCell
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: self.className, for: indexPath)
+        }
+        cell.textLabel?.text = viewModel.textForIndex(indexPath.row)
+
         return cell
+    }
+    
+    @IBAction func amountSegmentControlSelected(_ sender: UISegmentedControl) {
+        guard let titleAmount = sender.titleForSegment(at: sender.selectedSegmentIndex), let numberAmount = Int(titleAmount) else { return }
+        viewModel.savePerPageAmount(numberAmount)
     }
     
     // MARK: - Table View Delegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        imageCache.removeAllObjects()
-        showAlert()
-    }
-
-    func showAlert() {
-        let alert = UIAlertController(title: "Cache", message: "All cache has been cleared.", preferredStyle: .alert)
-        let dismiss = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(dismiss)
-        present(alert, animated: true, completion: nil)
+        switch indexPath.row {
+        case 1:
+            viewModel.removeAllFavorites()
+        case 2:
+            viewModel.deleteRecentSearchTerms()
+        case 3:
+            viewModel.clearPhotosCache()
+        default:
+            return
+        }
     }
     
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension SettingsViewController : SettingsViewModelDelegate {
+  
+    func presentAlert(_ alertController: UIAlertController) {
+        present(alertController, animated: true, completion: nil)
     }
-    */
-
+    
 }

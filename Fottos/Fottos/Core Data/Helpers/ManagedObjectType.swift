@@ -34,11 +34,53 @@ extension ManagedObjectType where Self: NSManagedObject {
         }
         return result
     }
+    
+    static func deleteObjects(withPredicate predicate: NSPredicate, inContext context: NSManagedObjectContext, save: Bool) {
+        let objectsToDelete = fetch(inContext: context, configurationBlock: { (request) in
+            request.predicate = predicate
+        })
+        if objectsToDelete.count > 0 {
+            context.performChangesAndWait(save: save, block: {
+                context.deleteObjects(setOfObjects: NSSet(array: objectsToDelete))
+            })
+        }
+    }
 }
 
 extension NSManagedObjectContext {
     
     func insertObject<A: NSManagedObject>() -> A {
         return A(context: self)
+    }
+    
+    func deleteObjects(setOfObjects set: NSSet?) {
+        guard let set = set else { return }
+        for object in set {
+            switch object {
+            case let managedObject as NSManagedObject:
+                self.delete(managedObject)
+            default:
+                fatalError("I'm trying to delete a non managed object!")
+            }
+        }
+    }
+    
+    func performChangesAndWait(save shouldSave: Bool, block: @escaping () -> Void) {
+        performAndWait {
+            block()
+            if shouldSave {
+                self.saveOrRollback()
+            }
+        }
+    }
+    
+    @discardableResult func saveOrRollback() -> Bool {
+        do {
+            try save()
+            return true
+        } catch {
+            rollback()
+            return false
+        }
     }
 }

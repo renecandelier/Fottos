@@ -9,34 +9,25 @@
 import UIKit
 import CoreData
 
-class ExploreCollectionViewController: UICollectionViewController {
-    
-    var categories: [Category] = [] {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+class ExploreCollectionViewController: UICollectionViewController, ExploreViewModelDelegate {
     
     var mainContext: NSManagedObjectContext?
-
+    var viewModel: ExploreViewModel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mainContext = Store.shareInstance?.persistentContainer.viewContext
+        viewModel = ExploreViewModel(delegate: self, context: mainContext)
         navigationController?.hideShadow()
         addInsets()
-        fetchConfig()
     }
-    
-    func fetchConfig() {
-        FectConfigFeed().fetchConfig { (json, error) in
-            asyncMain {
-                self.categories = Config.shared.categories
-            }
-        }
-    }
-    
+
     func addInsets() {
         collectionView.contentInset = UIEdgeInsets(top: 20.0, left: 8.0, bottom: 0.0, right: 8.0)
+    }
+    
+    func categoriesUpdated() {
+        updateCollectionView()
     }
     
     func updateCollectionView() {
@@ -52,12 +43,12 @@ class ExploreCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categories.count
+        return viewModel.categories.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as! CategoryCollectionViewCell
-        let category = categories[indexPath.row]
+        let category = viewModel.categoryAtIndex(indexPath.row)
         if let url = URL(string: category.image),
             url.isValid {
             cell.imageView.dowloadFromServer(url: url) { (image, _) in
@@ -79,16 +70,10 @@ class ExploreCollectionViewController: UICollectionViewController {
         if segue.identifier == ThumbnailCollectionViewController.className {
             guard let thumbnailCollectionViewController = segue.destination as? ThumbnailCollectionViewController else { return }
             let cellRow = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
-            let categoryTitle = categories[cellRow].title
+            let categoryTitle = viewModel.titleAtIndex(cellRow)
             thumbnailCollectionViewController.searchText = categoryTitle
-            createSearch(context: mainContext, title: categoryTitle)
+            viewModel.createSearch(context: mainContext, title: categoryTitle)
         }
-    }
-    
-    func createSearch(context: NSManagedObjectContext?, title: String) {
-        guard let context = context else { return }
-        Search.addNew(context: context, title: title)
-        Store.shareInstance?.saveContext()
     }
 }
 
@@ -100,7 +85,7 @@ extension ExploreCollectionViewController: UIViewControllerPreviewingDelegate {
         let thumnailPreview = ThumbnailCollectionViewController()
         
         let cellRow = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
-        thumnailPreview.searchText = categories[cellRow].title
+        thumnailPreview.searchText = viewModel.titleAtIndex(cellRow)
         return thumnailPreview
     }
     

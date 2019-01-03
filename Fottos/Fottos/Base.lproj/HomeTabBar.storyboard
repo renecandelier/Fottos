@@ -43,19 +43,56 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nqd-6i-MRp">
                                 <rect key="frame" x="0.0" y="116" width="414" height="571"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8oT-7n-NMI">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="29"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="25"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="jDI-wd-veF">
-                                    <rect key="frame" x="0.0" y="72" width="414" height="1"/>
+                                    <rect key="frame" x="0.0" y="145" width="414" height="1"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsViewController" id="aIW-DY-fbx">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="57" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aIW-DY-fbx" id="abp-1w-7T3">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FetchPerPageUITableViewCell" id="ZAK-nr-ODh" customClass="FetchPerPageUITableViewCell" customModule="Fottos" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="101" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZAK-nr-ODh" id="JIP-uD-oM7">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Xjr-w0-FvB">
+                                                    <rect key="frame" x="281" y="8.6666666666666661" width="113" height="27.333333333333336"/>
+                                                    <segments>
+                                                        <segment title="25"/>
+                                                        <segment title="50"/>
+                                                        <segment title="100"/>
+                                                    </segments>
+                                                    <color key="tintColor" red="0.100070335" green="0.73665314910000002" blue="0.61070448160000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="amountSegmentControlSelected:" destination="jh4-Zk-pSq" eventType="valueChanged" id="JDg-2d-FUu"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Xjr-w0-FvB" firstAttribute="trailing" secondItem="JIP-uD-oM7" secondAttribute="trailingMargin" id="dYt-ib-ETw"/>
+                                                <constraint firstItem="Xjr-w0-FvB" firstAttribute="centerY" secondItem="JIP-uD-oM7" secondAttribute="centerY" id="wXd-cl-mJc"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Xjr-w0-FvB" secondAttribute="bottom" constant="-2" id="ycP-rl-GvC"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="amountSegmentControl" destination="Xjr-w0-FvB" id="6Me-R8-vGe"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

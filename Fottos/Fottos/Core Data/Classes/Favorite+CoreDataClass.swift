@@ -35,6 +35,11 @@ public class Favorite: NSManagedObject, Photo, ManagedObjectType {
         return true
     }
     
+    static func removeAll(context: NSManagedObjectContext) {
+        let emptyPredicate = NSPredicate(value: true)
+        deleteObjects(withPredicate: emptyPredicate, inContext: context, save: true)
+    }
+    
     private static func getPhoto(context: NSManagedObjectContext, url: String) -> Photo? {
         let allSavedPhotos = Favorite.fetchAll(context: context)
         return allSavedPhotos.filter { $0.url == url }.first
