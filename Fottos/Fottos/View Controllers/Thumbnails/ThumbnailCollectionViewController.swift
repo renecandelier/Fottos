@@ -105,7 +105,7 @@ class ThumbnailCollectionViewController: UICollectionViewController, UICollectio
             if !isLoadingCell(for: indexPath) {
                 if let photoURL = viewModel.photo(at: indexPath.row).url, let url = URL(string: photoURL), url.isValid {
                     
-                    cell.imageView.dowloadFromServer(url: url, indexPath: indexPath, completion: { image in
+                    cell.imageView.dowloadFromServer(url: url, indexPath: indexPath, completion: { (image, _) in
                         asyncMain {
                             
                             if let image = image {

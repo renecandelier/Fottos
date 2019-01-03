@@ -9,8 +9,8 @@
 import Foundation
 
 protocol Named {
-    var className: String {get}
-    static var className: String {get}
+    var className: String { get }
+    static var className: String { get }
 }
 
 extension NSObject: Named {

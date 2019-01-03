@@ -1,0 +1,65 @@
+{
+    "version": "1.0",
+    "autoUpdateConfig": true,
+    "autoUpdateConfigInterval": 600,
+    "prefetchEnabled": true,
+    "categories": [
+        {"title": "Travel",
+            "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Travel.jpg"
+        },
+        {
+            "title": "Cars",
+            "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Cars.png"
+        },
+        {
+            "title": "Sneakers",
+            "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Sneakers.jpg"
+        },
+        {
+            "title": "Food",
+            "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Food.jpg"
+        },
+        {
+            "title": "Sports",
+            "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Sports.jpg"
+        },
+        {
+            "title": "Fashion",
+            "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Fashion.jpg"
+        },
+        {
+            "title": "Fitness",
+            "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Fitness.jpg"
+        },
+        {
+            "title": "Drinks",
+            "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Drinks.jpg"
+        },
+        {
+            "title": "Nature",
+            "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Nature.jpg"
+        }
+    ],
+    "endpoints": {
+        "photoDownload": {
+            "type": "build",
+            "url": "https://{farm}.staticflickr.com/{server}/{owner}_{secret}.jpg"
+        },
+        "photoSearch": {
+            "type": "components",
+            "url": "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=:key&text=:text&per_page=:result&format=json&nojsoncallback=1",
+            "host": "api.flickr.com",
+            "scheme": "https",
+            "path": "/services/rest/",
+            "queryItems": {
+                "method": "flickr.photos.search",
+                "api_key": "1508443e49213ff84d566777dc211f2a",
+                "format": "json",
+                "nojsoncallback": "1",
+                "per_page": "25",
+                "text": "",
+                "page": "1"
+            }
+        }
+    }
+}
