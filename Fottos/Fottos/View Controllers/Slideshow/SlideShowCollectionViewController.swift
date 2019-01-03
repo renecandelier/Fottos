@@ -80,7 +80,7 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         cell.doubleTap = updatePhoto
         if let photoURL = photo?.url, let url = URL(string: photoURL), url.isValid {
             cell.titleLabel.text = photo?.title ?? ""
-            cell.imageView.dowloadFromServer(url: url) { image in
+            cell.imageView.dowloadFromServer(url: url) { (image, _) in
                 guard let image = image else { return }
                 cell.imageView.image = image
             }

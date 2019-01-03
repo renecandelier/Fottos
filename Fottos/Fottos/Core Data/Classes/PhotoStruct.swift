@@ -24,18 +24,27 @@ struct PhotoStruct: Photo {
     }
     
     var imageURL: URL? {
-        guard let url = buildURL(), url.isValid else { return .none }
+        guard let url = getEndpoint?.url, url.isValid else { return .none }
         return url
     }
     
     var url: String? {
-        return imageURL?.absoluteString
+        return getEndpoint?.url?.absoluteString
     }
-    
-    private func buildURL() -> URL? {
+
+    private var getEndpoint: Endpoint? {
+        guard let photoDownloadEndpoint = Config.shared.photoDownloadEndpoint else { return .none }
+        
         guard let farm = farm, let server = server, let secret = secret, let imageId = imageId else { return .none }
-        return URL(string:"https://farm\(farm).staticflickr.com/\(server)/\(imageId)_\(secret).jpg")
+        
+        let replacementTokens = ["{farm}": "\(farm)",
+            "{server}": server,
+            "{imageId}": imageId,
+            "{secret}":secret]
+
+        return Endpoint(urlPath: photoDownloadEndpoint.url, replacementTokens: replacementTokens)
     }
+
 }
 
 

@@ -11,7 +11,11 @@ import CoreData
 
 class ExploreCollectionViewController: UICollectionViewController {
     
-    var categories = ["Travel", "Cars", "Sneakers", "Food", "Sports", "Fashion", "Fitness", "Drinks", "Nature"]
+    var categories: [Category] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     var mainContext: NSManagedObjectContext?
 
@@ -20,6 +24,15 @@ class ExploreCollectionViewController: UICollectionViewController {
         mainContext = Store.shareInstance?.persistentContainer.viewContext
         navigationController?.hideShadow()
         addInsets()
+        fetchConfig()
+    }
+    
+    func fetchConfig() {
+        FectConfigFeed().fetchConfig { (json, error) in
+            asyncMain {
+                self.categories = Config.shared.categories
+            }
+        }
     }
     
     func addInsets() {
@@ -44,30 +57,38 @@ class ExploreCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as! CategoryCollectionViewCell
-        cell.imageView.image = UIImage(named: categories[indexPath.row])
-        cell.titleLabel.text = categories[indexPath.row]
+        let category = categories[indexPath.row]
+        if let url = URL(string: category.image),
+            url.isValid {
+            cell.imageView.dowloadFromServer(url: url) { (image, _) in
+                asyncMain {
+                    if let image = image {
+                        cell.imageView.image = image
+                    }
+                }
+            }
+        }
+        
+        cell.titleLabel.text = category.title
         return cell
     }
     
-    // MARK: - UICollectionViewDelegate
-
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        performSegue(withIdentifier: ThumbnailCollectionViewController.className, sender: self)
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == ThumbnailCollectionViewController.className {
+            guard let thumbnailCollectionViewController = segue.destination as? ThumbnailCollectionViewController else { return }
+            let cellRow = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
+            let categoryTitle = categories[cellRow].title
+            thumbnailCollectionViewController.searchText = categoryTitle
+            createSearch(context: mainContext, title: categoryTitle)
+        }
     }
     
     func createSearch(context: NSManagedObjectContext?, title: String) {
         guard let context = context else { return }
         Search.addNew(context: context, title: title)
         Store.shareInstance?.saveContext()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ThumbnailCollectionViewController.className {
-            guard let thumbnailCollectionViewController = segue.destination as? ThumbnailCollectionViewController else { return }
-            let cellRow = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
-            thumbnailCollectionViewController.searchText = categories[cellRow]
-            createSearch(context: mainContext, title: categories[cellRow])
-        }
     }
 }
 
@@ -79,7 +100,7 @@ extension ExploreCollectionViewController: UIViewControllerPreviewingDelegate {
         let thumnailPreview = ThumbnailCollectionViewController()
         
         let cellRow = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
-        thumnailPreview.searchText = categories[cellRow]
+        thumnailPreview.searchText = categories[cellRow].title
         return thumnailPreview
     }
     

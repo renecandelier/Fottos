@@ -19,6 +19,7 @@ class SearchViewController: UIViewController, SearchViewModelDelegate, UISearchR
 
     var mainContext: NSManagedObjectContext?
     private var viewModel: SearchViewModel!
+    var searchController: UISearchController!
     
     // MARK:- Outlets
 
@@ -35,16 +36,23 @@ class SearchViewController: UIViewController, SearchViewModelDelegate, UISearchR
         viewModel = SearchViewModel(delegate: self, context: mainContext)
         viewModel.updateRecentSearchTerms()
         setupSearchBar()
+        // TODO: Dismiss keyboard when tapping view
+//        addViewTapGesture()
     }
     
-    // MARK:- Search Bar
+    func addViewTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTap))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    // MARK: - Search Bar
     
     fileprivate func setupSearchBar() {
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationController?.hideShadow()
         definesPresentationContext = true
         
-        let searchController = UISearchController(searchResultsController: nil)
+        searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -72,19 +80,30 @@ class SearchViewController: UIViewController, SearchViewModelDelegate, UISearchR
     }
     
     func resetSearchBar(_ searchBar: UISearchBar) {
-        navigationItem.searchController?.searchBar.text = nil
-        searchBar.endEditing(true)
-        searchBar.showsCancelButton = false
-        navigationItem.searchController?.searchBar.resignFirstResponder()
+        clearSearchBarText()
+        dimissKeyboard()
     }
     
-    // MARK:- SearchViewModelDelegate
+    func clearSearchBarText() {
+        navigationItem.searchController?.searchBar.text = nil
+    }
+    
+    func dimissKeyboard() {
+        navigationItem.searchController?.searchBar.endEditing(true)
+        navigationItem.searchController?.searchBar.showsCancelButton = false
+    }
+    
+    @objc func viewTap() {
+        dimissKeyboard()
+    }
+    
+    // MARK: - SearchViewModelDelegate
     
     func reloadRecentSearchTerms() {
         tableView.reloadData()
     }
     
-    // MARK:- Navigation
+    // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ThumbnailCollectionViewController.className {
@@ -92,12 +111,12 @@ class SearchViewController: UIViewController, SearchViewModelDelegate, UISearchR
             thumbnailCollectionViewController.searchText = viewModel.searchText
         }
     }
-
+    
 }
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     
-    // MARK:- Table View
+    // MARK: - Table View
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.searchTermsCount

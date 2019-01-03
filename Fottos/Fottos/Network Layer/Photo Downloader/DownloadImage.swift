@@ -14,7 +14,7 @@ protocol Photo {
     var title: String? { get set }
 }
 
-struct PhotoDownload: RequestType {
+struct DownloadImage: RequestType {
     
     private let imagePrefix = "image"
     let url: URL
@@ -22,7 +22,6 @@ struct PhotoDownload: RequestType {
     var requestData: RequestData? {
         return RequestData(url: url, dataType: .Data)
     }
-    
     
     func dowloadFromServer(completionHandler: @escaping (UIImage?, Error?) -> Void) {
         

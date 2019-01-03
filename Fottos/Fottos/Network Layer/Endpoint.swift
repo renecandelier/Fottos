@@ -13,33 +13,85 @@ import Foundation
 //    let urlComponents: URLComponents
 //}
 
+typealias ReplacementTokens = [String: String]
+
+enum EndPointType {
+    case build
+    case components
+}
+
 struct Endpoint {
-    let path: String
-    let urlQueryItems: [URLQueryItem]
-    var replacementTokens: [String: String]?
-//    var type: Type = .build
+    var scheme: String?
+    var host: String?
+    var path: String
+    var urlQueryItems: [URLQueryItem]?
+    var replacementTokens: ReplacementTokens?
+    var type: EndPointType
+    
+    init(_ searchPhotos: SearchPhotos, dynamicQueryItems: [String : String]) {
+        host = searchPhotos.host
+        scheme = searchPhotos.scheme
+        path = searchPhotos.path
+        type = .components
+        var queryItems = searchPhotos.queryItems
+        queryItems.combine(dynamicQueryItems)
+        
+        urlQueryItems = getQueryItems(queryItems)
+    }
+    
+    init(urlPath path: String, replacementTokens: ReplacementTokens) {
+        self.path = path
+        type = .build
+        self.replacementTokens = replacementTokens
+    }
 }
 
 extension Endpoint {
     
-//    enum Type {
-//        case build
-//        case components
-//    }
-    
     var url: URL? {
+        switch type {
+        case .build:
+            guard let endPointURL = endPointURL else { return .none }
+            return endPointURL
+        case .components:
+            return componentsURL
+        }
+    }
+    
+    func getQueryItems(_ queryDictionary: [String: String]?) -> [URLQueryItem]? {
+        guard let queryDictionary = queryDictionary else { return .none }
+        var quertItems = [URLQueryItem]()
+        
+        queryDictionary.forEach {
+            let newItem = URLQueryItem(name: $0.key, value: $0.value)
+            quertItems.append(newItem)
+        }
+        
+        return quertItems
+    }
+    
+    var componentsURL: URL? {
         var components = URLComponents()
         components.path = path
-        components.host = "api.flickr.com"
-        components.scheme = "https"
+        components.host = host
+        components.scheme = scheme
         components.queryItems = urlQueryItems
         return components.url
     }
     
-//    func buildURL(replacementTokens: [String: String]) -> URL {
-//        var urlPath = path
-//        for (key, value) in replacementTokens {
-//            populatedEndPoint = populatedEndPoint.replacingOccurrences(of: "\(key)", with: value)
-//        }
-//    }
+    private var endPointURL: URL? {
+        return URL(string: populatedEndPoint)
+    }
+    
+    var populatedEndPoint: String {
+        var populatedEndPoint = path
+        
+        if let replacementTokens = replacementTokens {
+            for (key, value) in replacementTokens {
+                populatedEndPoint = populatedEndPoint.replacingOccurrences(of: "\(key)", with: value)
+            }
+        }
+        return populatedEndPoint
+    }
+    
 }

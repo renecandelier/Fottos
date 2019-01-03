@@ -25,6 +25,7 @@ public class Favorite: NSManagedObject, Photo, ManagedObjectType {
 
         Favorite.create(inContext: context) { favorite in
             favorite.url = image.url
+            favorite.title = image.title
         }
     }
     

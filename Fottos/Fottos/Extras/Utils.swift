@@ -11,6 +11,11 @@ import UIKit
 
 var emptyString = ""
 
+var appVersionNumber: String {
+    return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+}
+
+
 extension URL {
     var isValid:  Bool {
         return UIApplication.shared.canOpenURL(self)
@@ -36,6 +41,13 @@ struct Keys {
     
     struct QueryItems {
         static let method = "method"
+        static let apiKey = "api_key"
+        static let jsonCallback = "nojsoncallback"
+        static let format = "format"
+        static let perPage = "per_page"
+        static let text = "text"
+        static let contentType = "content_type"
+        static let media = "media"
         private init () {}
     }
     private init () {}
@@ -44,20 +56,23 @@ struct Keys {
 let imageCache = NSCache<NSString, UIImage>()
 
 extension UIImageView {
-    func dowloadFromServer(url: URL, indexPath: IndexPath? = nil, completion:  @escaping (UIImage?) -> Void) {
+    func dowloadFromServer(url: URL, indexPath: IndexPath? = nil, completion:  @escaping (UIImage?, Error?) -> Void) {
         
         if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
             asyncMain {
-                completion(cachedImage)
+                completion(cachedImage, nil)
             }
             return
         }
         
-        PhotoDownload(url: url).dowloadFromServer { (image, error) in
+        DownloadImage(url: url).dowloadFromServer { (image, error) in
+            if let error = error {
+                completion(nil, error)
+            }
             if let image = image {
                 asyncMain() {
                     imageCache.setObject(image, forKey: url.absoluteString as NSString)
-                    completion(image)
+                    completion(image, nil)
                 }
             }
         }
@@ -88,4 +103,30 @@ extension UINavigationController {
     func hideShadow() {
         self.navigationBar.setValue(true, forKey: "hidesShadow")
     }
+}
+
+extension HTTPURLResponse {
+    var hasSuccessStatusCode: Bool {
+        return 200...299 ~= statusCode
+    }
+}
+
+extension String {
+    var bundleValue: String? {
+        let value = Bundle.main.object(forInfoDictionaryKey: self) as? String
+        return (value?.isEmpty == false) ? value : nil
+    }
+}
+
+extension Dictionary {
+    mutating func combine(_ other: Dictionary) {
+        for (key, value) in other {
+            updateValue(value, forKey: key)
+        }
+    }
+}
+
+var applicationDocumentsDirectory: URL {
+    let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    return urls[urls.count-1]
 }

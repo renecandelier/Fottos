@@ -17,6 +17,7 @@ public struct URLSessionNetworkDispatcher: NetworkDispatcher {
     private init() {}
     
     public func dispatch(requestData: RequestData, completionHandler: @escaping NetworkResponseCompletionHandler) {
+        
         var urlRequest: URLRequest
         
         do {
@@ -29,11 +30,17 @@ public struct URLSessionNetworkDispatcher: NetworkDispatcher {
         urlRequest.httpMethod = requestData.method.rawValue
         
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            
             if let error = error {
                 completionHandler(nil, nil, error)
                 return
             }
-            //let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.hasSuccessStatusCode else {
+                completionHandler(nil, nil, NetworkError.network)
+                return
+            }
+            
             guard let data = data else {
                 completionHandler(nil, nil, NetworkError.noData)
                 return
