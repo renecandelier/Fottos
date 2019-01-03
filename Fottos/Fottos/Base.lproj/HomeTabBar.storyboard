@@ -73,6 +73,9 @@
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Xjr-w0-FvB">
                                                     <rect key="frame" x="281" y="8.6666666666666661" width="113" height="27.333333333333336"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="113" id="8i9-oy-s3s"/>
+                                                    </constraints>
                                                     <segments>
                                                         <segment title="25"/>
                                                         <segment title="50"/>
@@ -86,6 +89,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Xjr-w0-FvB" firstAttribute="trailing" secondItem="JIP-uD-oM7" secondAttribute="trailingMargin" id="dYt-ib-ETw"/>
+                                                <constraint firstItem="Xjr-w0-FvB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JIP-uD-oM7" secondAttribute="leading" constant="20" symbolic="YES" id="uJU-2p-cQk"/>
                                                 <constraint firstItem="Xjr-w0-FvB" firstAttribute="centerY" secondItem="JIP-uD-oM7" secondAttribute="centerY" id="wXd-cl-mJc"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Xjr-w0-FvB" secondAttribute="bottom" constant="-2" id="ycP-rl-GvC"/>
                                             </constraints>

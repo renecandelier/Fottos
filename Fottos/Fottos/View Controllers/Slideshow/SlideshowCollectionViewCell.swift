@@ -34,6 +34,7 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        addRoundCorners()
         addShadow()
         addDoubleTap()
     }

@@ -20,7 +20,6 @@ final class ThumbnailViewModel {
     var photos: [Photo] = []
     private var searchText: String?
     private var currentPage = 1
-    private var totalPhotos = 0
     
     private weak var delegate: ThumbnailViewModelDelegate?
 
@@ -32,17 +31,12 @@ final class ThumbnailViewModel {
     }
     
     func loadPreloadedPhotos(_ photos: [Photo]?) {
-        self.totalPhotos = photos?.count ?? 0
         self.photos = photos ?? []
         self.delegate?.reloadCollectionView()
     }
     
     var currentCount: Int {
         return photos.count
-    }
-    
-    var totalCount: Int {
-        return totalPhotos
     }
     
     func photo(at index: Int) -> Photo {
@@ -81,7 +75,6 @@ final class ThumbnailViewModel {
             asyncMain {
                 self.currentPage += 1
                 self.isFetchInProgress = false
-                self.totalPhotos = pagedPhotoResponse.total
                 let newPhotos = pagedPhotoResponse.photos
                 self.photos.append(contentsOf: newPhotos)
                 

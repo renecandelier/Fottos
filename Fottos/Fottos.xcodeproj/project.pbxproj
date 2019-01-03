@@ -28,6 +28,7 @@
 		8A40626921DDB68C00CE62A8 /* SearchPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A40626821DDB68C00CE62A8 /* SearchPhotos.swift */; };
 		8A40626B21DDD06500CE62A8 /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A40626A21DDD06500CE62A8 /* ExploreViewModel.swift */; };
 		8A40626D21DE538000CE62A8 /* FetchPerPageUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A40626C21DE538000CE62A8 /* FetchPerPageUITableViewCell.swift */; };
+		8A40626F21DE9CC900CE62A8 /* ThumbnailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A40626E21DE9CC900CE62A8 /* ThumbnailCollectionViewCell.swift */; };
 		8A460D0521CB487A00327259 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A460D0421CB487A00327259 /* AppDelegate.swift */; };
 		8A460D0A21CB487A00327259 /* HomeTabBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A460D0821CB487A00327259 /* HomeTabBar.storyboard */; };
 		8A460D1221CB487B00327259 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A460D1021CB487B00327259 /* LaunchScreen.storyboard */; };
@@ -102,6 +103,7 @@
 		8A40626821DDB68C00CE62A8 /* SearchPhotos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotos.swift; sourceTree = "<group>"; };
 		8A40626A21DDD06500CE62A8 /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 		8A40626C21DE538000CE62A8 /* FetchPerPageUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerPageUITableViewCell.swift; sourceTree = "<group>"; };
+		8A40626E21DE9CC900CE62A8 /* ThumbnailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCollectionViewCell.swift; sourceTree = "<group>"; };
 		8A460D0121CB487A00327259 /* Fottos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fottos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A460D0421CB487A00327259 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A460D0921CB487A00327259 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/HomeTabBar.storyboard; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				8AABB9FB21D3EC4A00C5CA92 /* Thumbnail.storyboard */,
 				8A050F9021D00A620045953C /* ThumbnailCollectionViewController.swift */,
 				8AC1669E21D65E4D0094D9E2 /* ThumbnailViewModel.swift */,
+				8A40626E21DE9CC900CE62A8 /* ThumbnailCollectionViewCell.swift */,
 			);
 			path = Thumbnails;
 			sourceTree = "<group>";
@@ -564,6 +567,7 @@
 				8AC166F321D7C1950094D9E2 /* Search+CoreDataClass.swift in Sources */,
 				8A050F9421D00FB80045953C /* FavoritesViewController.swift in Sources */,
 				8AF0451621CD6E3C00B5EE38 /* Utils.swift in Sources */,
+				8A40626F21DE9CC900CE62A8 /* ThumbnailCollectionViewCell.swift in Sources */,
 				8A40626921DDB68C00CE62A8 /* SearchPhotos.swift in Sources */,
 				8AF0450E21CC812300B5EE38 /* RequestData.swift in Sources */,
 				8A40626721DD589000CE62A8 /* PhotoDownload.swift in Sources */,

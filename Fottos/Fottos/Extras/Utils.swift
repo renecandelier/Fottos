@@ -86,16 +86,19 @@ func asyncMain(_ block: @escaping () -> Void) {
 }
 
 extension UICollectionViewCell {
+    
     func addShadow() {
-        contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 10
-        contentView.layer.masksToBounds = true
-        
         layer.masksToBounds = false
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.3
         layer.shadowOffset = CGSize(width: 0, height: 0)
         layer.shadowRadius = contentView.layer.cornerRadius
+    }
+    
+    func addRoundCorners() {
+        contentView.backgroundColor = .clear
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
     }
 }
 
