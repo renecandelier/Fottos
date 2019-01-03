@@ -86,4 +86,8 @@ class Config {
         return configDictionary[ConfigKeys.endpoint] as? EndpointDictionary
     }
     
+    var fetchPerPage: Int {
+        return FetchPerPage.getAmount()
+    }
+    
 }

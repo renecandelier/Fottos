@@ -64,7 +64,7 @@ final class ThumbnailViewModel {
         
         isFetchInProgress = true
         
-        let photoSearch = PhotoSearch(searchTerm: searchText, page: currentPage, amountPerPage: 25)
+        let photoSearch = PhotoSearch(searchTerm: searchText, page: currentPage, amountPerPage: Config.shared.fetchPerPage)
         
         photoSearch.fetchPhotos { [weak self] (pagedPhotoResponse, error) in
             guard let self = self else { return }

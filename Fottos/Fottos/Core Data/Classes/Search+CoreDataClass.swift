@@ -22,4 +22,9 @@ public class Search: NSManagedObject, ManagedObjectType {
     static func fetchAll(context: NSManagedObjectContext) -> [String] {
         return fetch(inContext: context).compactMap { $0.title }
     }
+    
+    static func removeAll(context: NSManagedObjectContext) {
+        let emptyPredicate = NSPredicate(value: true)
+        deleteObjects(withPredicate: emptyPredicate, inContext: context, save: true)
+    }
 }
