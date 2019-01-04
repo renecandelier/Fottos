@@ -15,12 +15,12 @@ protocol SearchViewModelDelegate: class {
 
 final class SearchViewModel {
     
-    // MARK:- Constants
+    // MARK: - Constants
 
     typealias SearchTerms = [String]
     let emptySearchTermsPlaceholder = "No Recent Searches 😞"
 
-    // MARK:- Properties
+    // MARK: - Properties
     
     var searchTerms: SearchTerms = []
     var searchText = ""

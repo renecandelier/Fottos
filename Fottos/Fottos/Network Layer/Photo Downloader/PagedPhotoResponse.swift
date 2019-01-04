@@ -17,6 +17,6 @@ struct PagedPhotoResponse {
         guard let photosArray = photosDictionary[Keys.photo] as? [PhotoDictionary] else { return nil }
         total = Int(photosDictionary[Keys.total] as? String ?? "0") ?? 0
         page = photosDictionary[Keys.page] as? Int ?? 0
-        photos = photosArray.compactMap { PhotoStruct($0) }
+        photos = photosArray.compactMap { PhotoMetadata($0) }
     }
 }

@@ -23,6 +23,7 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
     let outlinedHeart = UIImage(imageLiteralResourceName: "LikeOutlined")
     var context: NSManagedObjectContext?
     var doubleTap: ((_ : Photo?) -> Void)?
+    var longPress: ((_ : UIImage?, _ : String?) -> Void)?
     
     var photo: Photo? {
         didSet {
@@ -34,8 +35,10 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        addRoundCorners()
         addShadow()
         addDoubleTap()
+        addLongPressGesture()
     }
     
     private func addDoubleTap() {
@@ -44,6 +47,12 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
         self.addGestureRecognizer(doubleTapGestureRecognizer)
     }
     
+    private func addLongPressGesture() {
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(sharePhoto))
+        longPress.minimumPressDuration = 0.5
+        self.addGestureRecognizer(longPress)
+    }
+    // TODO: clean?
     override func prepareForReuse() {
         photo = nil
         titleLabel.isHidden = true
@@ -67,6 +76,11 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
     func updateSavedPhoto() {
         doubleTap?(photo)
         updateLikeButtonImage()
+    }
+    
+    @objc
+    func sharePhoto() {
+        longPress?(imageView?.image, photo?.title)
     }
     
     func updateLikeButtonImage() {

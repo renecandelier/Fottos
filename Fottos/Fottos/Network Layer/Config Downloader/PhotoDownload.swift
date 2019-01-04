@@ -11,6 +11,9 @@ import Foundation
 typealias PhotoDownloadDictionary = [String: String]
 
 struct PhotoDownload {
+    
+    // MARK: - Properties
+    
     var url = ""
     var buildType: EndPointType = .build
     

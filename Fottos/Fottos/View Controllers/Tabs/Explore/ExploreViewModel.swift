@@ -15,6 +15,8 @@ protocol ExploreViewModelDelegate: class {
 
 final class ExploreViewModel {
     
+    // MARK: - Properties
+    
     weak var delegate: ExploreViewModelDelegate?
     var context: NSManagedObjectContext?
     var categories: [Category] = [] {

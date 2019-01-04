@@ -11,11 +11,11 @@ import CoreData
 
 class FavoritesViewController: UIViewController, FavoritesViewModelDelegate {
 
-    // MARK:- Outlets
+    // MARK: - Outlets
     
     @IBOutlet weak var emptyFavoritresLabel: UILabel!
     
-    // MARK:- Properties
+    // MARK: - Properties
 
     var mainContext: NSManagedObjectContext?
     weak var thumbnailCollectionViewController: ThumbnailCollectionViewController?

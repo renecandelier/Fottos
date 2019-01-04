@@ -42,9 +42,6 @@ struct FectConfigFeed: RequestType {
             if let json = json {
                 Config.shared.updateConfig(json)
             }
-//            guard let photoDictionary = json, let pagedPhotoResponse = PhotoParser.parse(photoDictionary) else {
-//                return  completion(nil, ApiError.parsingFailure)
-//            }
             
             completion(json, .none)
         }

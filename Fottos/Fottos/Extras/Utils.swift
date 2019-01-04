@@ -11,23 +11,6 @@ import UIKit
 
 var emptyString = ""
 
-var appVersionNumber: String {
-    return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-}
-
-
-extension URL {
-    var isValid:  Bool {
-        return UIApplication.shared.canOpenURL(self)
-    }
-}
-
-extension Int {
-    var toString: String {
-        return self.description
-    }
-}
-
 struct Keys {
     static let photos = "photos"
     static let photo = "photo"
@@ -51,6 +34,23 @@ struct Keys {
         private init () {}
     }
     private init () {}
+}
+
+var appVersionNumber: String {
+    return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+}
+
+
+extension URL {
+    var isValid:  Bool {
+        return UIApplication.shared.canOpenURL(self)
+    }
+}
+
+extension Int {
+    var toString: String {
+        return self.description
+    }
 }
 
 let imageCache = NSCache<NSString, UIImage>()
@@ -79,6 +79,28 @@ extension UIImageView {
     }
 }
 
+func dowloadImage(url: URL, indexPath: IndexPath? = nil, completion:  @escaping (UIImage?, Error?) -> Void) {
+    
+    if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
+        asyncMain {
+            completion(cachedImage, nil)
+        }
+        return
+    }
+    
+    DownloadImage(url: url).dowloadFromServer { (image, error) in
+        if let error = error {
+            completion(nil, error)
+        }
+        if let image = image {
+            asyncMain() {
+                imageCache.setObject(image, forKey: url.absoluteString as NSString)
+                completion(image, nil)
+            }
+        }
+    }
+}
+
 func asyncMain(_ block: @escaping () -> Void) {
     DispatchQueue.main.async {
         block()
@@ -86,16 +108,19 @@ func asyncMain(_ block: @escaping () -> Void) {
 }
 
 extension UICollectionViewCell {
+    
     func addShadow() {
-        contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 10
-        contentView.layer.masksToBounds = true
-        
         layer.masksToBounds = false
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.3
         layer.shadowOffset = CGSize(width: 0, height: 0)
         layer.shadowRadius = contentView.layer.cornerRadius
+    }
+    
+    func addRoundCorners() {
+        contentView.backgroundColor = .clear
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
     }
 }
 

@@ -35,6 +35,7 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         scrollToItem(viewModel?.currentPage ?? 0)
     }
     
+    // TODO: Clean
     func setCollectionViewLayout() {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         
@@ -51,6 +52,7 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         collectionView?.decelerationRate = .fast
     }
     
+    // TODO: Clean
     func scrollToItem(_ item: Int) {
         if item < self.collectionView.numberOfItems(inSection: 0) {
             asyncMain({  [weak self] in
@@ -78,8 +80,10 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         let photo = viewModel?.photoAtIndex(indexPath.row)
         cell.photo = photo
         cell.doubleTap = updatePhoto
+        cell.longPress = sharePhoto
         if let photoURL = photo?.url, let url = URL(string: photoURL), url.isValid {
             cell.titleLabel.text = photo?.title ?? ""
+            // TODO: Move this to VM
             cell.imageView.dowloadFromServer(url: url) { (image, _) in
                 guard let image = image else { return }
                 cell.imageView.image = image
@@ -87,6 +91,14 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         }
         
         return cell
+    }
+    
+    func sharePhoto(image: UIImage?, title: String?) {
+        
+        if let image = image, let title = title {
+            let vc = UIActivityViewController(activityItems: [title, image], applicationActivities: [])
+            present(vc, animated: true, completion: nil)
+        }
     }
     
     @IBAction func likeButtonTapped(_ sender: UIButton) {
@@ -106,7 +118,7 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
             selectedCell.titleLabel.isHidden = !selectedCell.titleLabel.isHidden
         }
     }
-    
+    // TODO: Clean
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 
         let pageWidth = Float(itemWidth + itemSpacing)

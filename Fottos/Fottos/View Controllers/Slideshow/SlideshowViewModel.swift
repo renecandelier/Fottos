@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 import UIKit
 
+// TODO: is needed?
 protocol SlideshowViewModelDelegate: class {
     
 }

@@ -66,7 +66,7 @@ final class SettingsViewModel {
     func savePerPageAmount(_ amount: Int) {
         FetchPerPage.save(amount)
     }
-    
+    // TODO: generic alert
     private func showCacheAlert() {
         let cacheAlert = getAlert(title: "Clear Cache", message: "All cache has been cleared", actionTitle: "OK")
         delegate?.presentAlert(cacheAlert)
