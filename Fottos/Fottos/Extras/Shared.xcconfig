@@ -9,4 +9,5 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-FLICKR_API_KEY = 1508443e49213ff84d566777dc211f2a
+FLICKR_API_KEY = 2334b237eb3d59ffba9ec0a61a8242fc
+FLICKR_SECRET = a20ca7dd8605cc80

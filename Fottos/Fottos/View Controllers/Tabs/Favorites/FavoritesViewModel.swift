@@ -15,12 +15,13 @@ protocol FavoritesViewModelDelegate: class {
 
 final class FavoritesViewModel {
     
-    // MARK:- Properties
+    // MARK: - Properties
 
     var mainContext: NSManagedObjectContext?
     weak var delegate: FavoritesViewModelDelegate?
     
-    // MARK:- Constants
+    // MARK: - Constants
+    
     let emptySearchTermsPlaceholder = "No photos saved to your favorites 😞"
 
     init(delegate: FavoritesViewModelDelegate?, context: NSManagedObjectContext?) {

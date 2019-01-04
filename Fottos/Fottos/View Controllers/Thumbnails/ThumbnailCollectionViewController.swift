@@ -11,11 +11,12 @@ import UIKit
 
 class ThumbnailCollectionViewController: UICollectionViewController {
     
+    // MARK: - Properties
+    
     var viewModel: ThumbnailViewModel!
     var searchText: String?
     var preLoadedPhotos: [Photo]?
-    var indexCache: [Int: UIImage] = [:]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = ThumbnailViewModel(searchText: searchText, delegate: self, photos: preLoadedPhotos ?? [])
@@ -26,9 +27,10 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        indexCache.removeAll()
+        viewModel.indexCache.removeAll()
     }
     
+    // TODO: Clean 
     func setupCollectionView() {
         collectionView.contentInset = UIEdgeInsets(top: 20.0, left: 8.0, bottom: 20.0, right: 8.0)
 
@@ -78,17 +80,14 @@ extension ThumbnailCollectionViewController: ThumbnailViewModelDelegate {
             return
         }
         collectionView?.insertItems(at: newIndexPathsToReload)
-
-//        collectionView?.performBatchUpdates({
-//            collectionView?.insertItems(at: newIndexPathsToReload)
-//            let indexPathsToReload = visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
-//            collectionView.reloadItems(at: indexPathsToReload)
-//        })
-        
+    }
+    
+    func reloadItems(_ indexPaths: [IndexPath]) {
+        self.collectionView.reloadItems(at: indexPaths)
     }
     
     func onFetchFailed(with reason: Error?) {
-        
+        // TODO: Show error
     }
 }
 
@@ -101,39 +100,19 @@ extension ThumbnailCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.photos.count
+        // TODO: Handle scaffolding
+//        if viewModel.currentCount == 0 { self.collectionView.isScrollEnabled = false }
+        return viewModel.currentCount
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ThumbnailCollectionViewCell.className, for: indexPath) as! ThumbnailCollectionViewCell
         
-        if let imageDownloaded = indexCache[indexPath.row] {
+        if let imageDownloaded = viewModel.indexCache[indexPath.row] {
             cell.imageView.image = imageDownloaded
         } else {
-            if !isLoadingCell(for: indexPath) {
-                if let photoURL = viewModel.photo(at: indexPath.row).url, let url = URL(string: photoURL), url.isValid {
-                    
-                    cell.imageView.dowloadFromServer(url: url, indexPath: indexPath, completion: { (image, _) in
-                        asyncMain {
-                            
-                            if let image = image {
-                                self.indexCache[indexPath.row] = image
-                                self.collectionView.reloadItems(at: [indexPath])
-                                
-                                //                                let isCellImage = self.indexCache.contains(where: { (image) -> Bool in
-                                //                                    return self.indexCache[indexPath.row] != nil
-                                //                                })
-                                //                                if isCellImage {
-                                //                                    self.collectionView.reloadItems(at: [indexPath])
-                                //                                }
-                            }
-                            
-                        }
-                    })
-                    
-                }
-            }
+            viewModel.getImage(for: indexPath)
         }
         return cell
     }
@@ -152,12 +131,8 @@ extension ThumbnailCollectionViewController: UICollectionViewDataSourcePrefetchi
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         
-        if indexPaths.contains(where: isLoadingCell) {
+        if indexPaths.contains(where: viewModel.isLoadingCell) {
             viewModel.loadPhotos()
         }
-    }
-    
-    func isLoadingCell(for indexPath: IndexPath) -> Bool {
-        return indexPath.row >= viewModel.currentCount - 1
     }
 }

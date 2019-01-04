@@ -12,6 +12,9 @@ typealias SearchPhotosDictionary = [String: Any]
 typealias QueryItems = [String: String]
 
 struct SearchPhotos {
+
+    // MARK: - Properties
+
     var urlBuildType: EndPointType = .components
     var queryItems: QueryItems = [:]
     var url = ""

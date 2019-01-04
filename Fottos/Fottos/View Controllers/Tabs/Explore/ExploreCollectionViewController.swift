@@ -11,6 +11,8 @@ import CoreData
 
 class ExploreCollectionViewController: UICollectionViewController, ExploreViewModelDelegate {
     
+    // MARK: - Properties
+    
     var mainContext: NSManagedObjectContext?
     var viewModel: ExploreViewModel!
     
@@ -49,6 +51,7 @@ class ExploreCollectionViewController: UICollectionViewController, ExploreViewMo
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as! CategoryCollectionViewCell
         let category = viewModel.categoryAtIndex(indexPath.row)
+        // TODO: Move this to VM
         if let url = URL(string: category.image),
             url.isValid {
             cell.imageView.dowloadFromServer(url: url) { (image, _) in
@@ -80,6 +83,9 @@ class ExploreCollectionViewController: UICollectionViewController, ExploreViewMo
 extension ExploreCollectionViewController: UIViewControllerPreviewingDelegate {
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        // TODO: Finish Peeking with Save or Share options
+        
         //        guard let indexPath = collectionView?.indexPathForItem(at:location) else { return nil }
         //        guard  let cell2 = collectionView.cellForItem(at: indexPath) else { return nil }
         let thumnailPreview = ThumbnailCollectionViewController()

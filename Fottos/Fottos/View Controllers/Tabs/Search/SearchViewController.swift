@@ -37,7 +37,7 @@ class SearchViewController: UIViewController, SearchViewModelDelegate, UISearchR
         viewModel.updateRecentSearchTerms()
         setupSearchBar()
         // TODO: Dismiss keyboard when tapping view
-//        addViewTapGesture()
+        // addViewTapGesture()
     }
     
     func addViewTapGesture() {
@@ -47,6 +47,7 @@ class SearchViewController: UIViewController, SearchViewModelDelegate, UISearchR
     
     // MARK: - Search Bar
     
+    // TODO: possibly reduce this
     fileprivate func setupSearchBar() {
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationController?.hideShadow()
@@ -66,9 +67,9 @@ class SearchViewController: UIViewController, SearchViewModelDelegate, UISearchR
         }
     }
     
-    func updateSearchResults(for searchController: UISearchController) {
-        
-    }
+    // MARK: - UISearchResultsUpdating
+    
+    func updateSearchResults(for searchController: UISearchController) { }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         viewModel.searchText = searchBar.text ?? ""
@@ -118,12 +119,12 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Table View
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.searchTermsCount
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.searchTermsCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

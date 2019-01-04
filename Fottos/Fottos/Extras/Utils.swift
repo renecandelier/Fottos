@@ -11,23 +11,6 @@ import UIKit
 
 var emptyString = ""
 
-var appVersionNumber: String {
-    return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-}
-
-
-extension URL {
-    var isValid:  Bool {
-        return UIApplication.shared.canOpenURL(self)
-    }
-}
-
-extension Int {
-    var toString: String {
-        return self.description
-    }
-}
-
 struct Keys {
     static let photos = "photos"
     static let photo = "photo"
@@ -53,6 +36,23 @@ struct Keys {
     private init () {}
 }
 
+var appVersionNumber: String {
+    return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+}
+
+
+extension URL {
+    var isValid:  Bool {
+        return UIApplication.shared.canOpenURL(self)
+    }
+}
+
+extension Int {
+    var toString: String {
+        return self.description
+    }
+}
+
 let imageCache = NSCache<NSString, UIImage>()
 
 extension UIImageView {
@@ -74,6 +74,28 @@ extension UIImageView {
                     imageCache.setObject(image, forKey: url.absoluteString as NSString)
                     completion(image, nil)
                 }
+            }
+        }
+    }
+}
+
+func dowloadImage(url: URL, indexPath: IndexPath? = nil, completion:  @escaping (UIImage?, Error?) -> Void) {
+    
+    if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
+        asyncMain {
+            completion(cachedImage, nil)
+        }
+        return
+    }
+    
+    DownloadImage(url: url).dowloadFromServer { (image, error) in
+        if let error = error {
+            completion(nil, error)
+        }
+        if let image = image {
+            asyncMain() {
+                imageCache.setObject(image, forKey: url.absoluteString as NSString)
+                completion(image, nil)
             }
         }
     }

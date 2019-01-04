@@ -43,7 +43,7 @@ class Config {
 
     private init() {
         let path = applicationDocumentsDirectory.appendingPathComponent(Config.configJson)
-        
+        // TODO: Remove duplication
         if let data = try? Data(contentsOf: path), let json = try? JSONSerialization.jsonObject(with: data, options: []) as? ConfigDictionary, let unwrappedJson = json {
             configDictionary = unwrappedJson
         } else {

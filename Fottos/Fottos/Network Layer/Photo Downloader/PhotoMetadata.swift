@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PhotoStruct: Photo {
+struct PhotoMetadata: Photo {
     let farm: Int?
     let server: String?
     let imageId: String?
@@ -38,9 +38,9 @@ struct PhotoStruct: Photo {
         guard let farm = farm, let server = server, let secret = secret, let imageId = imageId else { return .none }
         
         let replacementTokens = ["{farm}": "\(farm)",
-            "{server}": server,
-            "{imageId}": imageId,
-            "{secret}":secret]
+                                 "{server}": server,
+                                 "{imageId}": imageId,
+                                 "{secret}":secret]
 
         return Endpoint(urlPath: photoDownloadEndpoint.url, replacementTokens: replacementTokens)
     }
