@@ -39,6 +39,7 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
         addShadow()
         addDoubleTap()
         addLongPressGesture()
+        likeButton.accessibilityIdentifier = "Like"
     }
     
     private func addDoubleTap() {

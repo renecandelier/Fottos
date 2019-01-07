@@ -175,20 +175,17 @@ final class ThumbnailViewModel: AlertPresentation {
     }
 
     func getFlowLayout() -> UICollectionViewFlowLayout {
+        
         let flowLayout = UICollectionViewFlowLayout()
+        let cellSpacing: CGFloat = 20
+        let cellPerRow: CGFloat = 2
+        let size = floor(screenWidth/cellPerRow) - cellSpacing
         
-        let itemSpacing: CGFloat = 2
-        let itemsInOneLine: CGFloat = 2
+        flowLayout.itemSize = CGSize(width: size, height: size)
+        flowLayout.minimumLineSpacing = cellSpacing
         
-        let width = UIScreen.main.bounds.size.width - itemSpacing * CGFloat(itemsInOneLine - 2)
-        
-        flowLayout.itemSize = CGSize(width: floor(width/2.2), height: width/2.2)
-        flowLayout.minimumInteritemSpacing = 2
-        flowLayout.minimumLineSpacing = 20
         return flowLayout
     }
     
-    func presentAlert(_ alertController: UIAlertController) {
-        
-    }
+    func presentAlert(_ alertController: UIAlertController) { }
 }

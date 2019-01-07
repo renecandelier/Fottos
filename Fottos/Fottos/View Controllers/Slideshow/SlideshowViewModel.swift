@@ -75,17 +75,21 @@ final class SlideshowViewModel {
     }
     
     func slideshowCollectionViewFlowLayout(height colletionViewHeight: CGFloat) -> UICollectionViewFlowLayout {
+        
         let layout = UICollectionViewFlowLayout()
         
-        itemWidth =  UIScreen.main.bounds.width - collectionMargin * 2.0
-        itemHeight = (colletionViewHeight - collectionMargin - itemWidth)
+        itemWidth =  screenWidth - (collectionMargin * 2.0)
+        itemHeight = (colletionViewHeight - itemWidth)
+        
         layout.sectionInset = UIEdgeInsets(top: itemHeight/2, left: 0, bottom: itemHeight/2, right: 0)
         layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
+        
         layout.headerReferenceSize = CGSize(width: collectionMargin, height: 0)
         layout.footerReferenceSize = CGSize(width: collectionMargin, height: 0)
         
         layout.minimumLineSpacing = itemSpacing
         layout.scrollDirection = .horizontal
+        
         return layout
     }
 }

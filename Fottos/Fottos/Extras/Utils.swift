@@ -40,6 +40,9 @@ var appVersionNumber: String {
     return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
 }
 
+var screenWidth: CGFloat {
+    return UIScreen.main.bounds.size.width
+}
 
 extension URL {
     var isValid:  Bool {
