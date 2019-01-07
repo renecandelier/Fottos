@@ -16,7 +16,7 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     var viewModel: ThumbnailViewModel!
     var searchText: String?
     var preLoadedPhotos: [Photo]?
-    let spiner = UIActivityIndicatorView(style: .gray)
+    let activitySpinner = UIActivityIndicatorView(style: .gray)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,14 +46,14 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     }
     
     func addActivityIndicator() {
-        view.addSubview(spiner)
-        spiner.center = view.center
-        spiner.startAnimating()
-        spiner.hidesWhenStopped = true
+        view.addSubview(activitySpinner)
+        activitySpinner.center = view.center
+        activitySpinner.startAnimating()
+        activitySpinner.hidesWhenStopped = true
     }
     
     func stopActivityIndicator() {
-        spiner.stopAnimating()
+        activitySpinner.stopAnimating()
     }
     
     func reloadCollectionView() {

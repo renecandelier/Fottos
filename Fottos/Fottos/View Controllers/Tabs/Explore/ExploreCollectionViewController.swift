@@ -15,7 +15,7 @@ class ExploreCollectionViewController: UICollectionViewController, ExploreViewMo
     
     var mainContext: NSManagedObjectContext?
     var viewModel: ExploreViewModel!
-    let spiner = UIActivityIndicatorView(style: .gray)
+    let activitySpinner = UIActivityIndicatorView(style: .gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +31,14 @@ class ExploreCollectionViewController: UICollectionViewController, ExploreViewMo
     }
     
     func addActivityIndicator() {
-        view.addSubview(spiner)
-        spiner.center = view.center
-        spiner.startAnimating()
-        spiner.hidesWhenStopped = true
+        view.addSubview(activitySpinner)
+        activitySpinner.center = view.center
+        activitySpinner.startAnimating()
+        activitySpinner.hidesWhenStopped = true
     }
     
     func stopActivityIndicator() {
-        spiner.stopAnimating()
+        activitySpinner.stopAnimating()
     }
     
     // MARK: - ExploreViewModelDelegate
