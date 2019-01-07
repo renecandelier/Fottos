@@ -17,16 +17,20 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
     var viewModel: SlideshowViewModel!
     var currentPage = 0
     var photos: [Photo]?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mainContext = Store.shareInstance?.persistentContainer.viewContext
         viewModel = SlideshowViewModel(photos: photos, currentPage: currentPage, delegate: self, context: mainContext)
-        setCollectionViewLayout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setCollectionViewLayout()
         scrollToItem(viewModel?.currentPage ?? 0)
     }
     
@@ -65,7 +69,8 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         cell.doubleTap = updatePhoto
         cell.longPress = sharePhoto
         cell.titleLabel.text = photo?.title ?? ""
-        
+        cell.accessibilityIdentifier = "Slideshow Cell \(indexPath.row)"
+
         guard let imageDownloaded = viewModel.indexImageCache.image(at: indexPath.row) else {
             viewModel.getImage(for: indexPath)
             return cell
@@ -117,7 +122,6 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         collectionView.reloadItems(at: indexPaths)
     }
     
-    // TODO: Clean
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
         let pageWidth = Float(viewModel.itemWidth + viewModel.itemSpacing)
@@ -129,9 +133,7 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
             newPage = floor( (targetXContentOffset - Float(pageWidth) / 2) / Float(pageWidth)) + 1.0
         } else {
             newPage = Float(velocity.x > 0 ? viewModel.currentPage + 1 : viewModel.currentPage - 1)
-            if newPage < 0 {
-                newPage = 0
-            }
+            if newPage < 0 { newPage = 0 }
             if (newPage > contentWidth / pageWidth) {
                 newPage = ceil(contentWidth / pageWidth) - 1.0
             }

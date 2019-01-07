@@ -26,9 +26,52 @@ class FottosUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testOpenTravel() {
+        let app = XCUIApplication()
+        let collectionViewsQuery = app.collectionViews
+        collectionViewsQuery.cells["Category Cell 0"].images["Category Image"].tap()
+        XCTAssert(app.navigationBars["Travel"].exists)
     }
+    
+    func testLikePhoto() {
+        let app = XCUIApplication()
+        let collectionViewsQuery = app.collectionViews
+        collectionViewsQuery.cells["Category Cell 0"].images["Category Image"].tap()
+        collectionViewsQuery.cells["Thumbnail Cell 1"].images["Category Image"].tap()
+        collectionViewsQuery.cells["Slideshow Cell 1"].buttons["Like"].tap()
+        XCUIApplication().tabBars.buttons["Favorites"].tap()
+        XCTAssert(!app.staticTexts["No photos saved to your favorites 😞"].exists)
+    }
+    
+    func testOpenFavoritesTab() {
+        let app = XCUIApplication()
+        app.tabBars.buttons["Favorites"].tap()
+        XCTAssert(app.navigationBars["Favorites"].exists)
+    }
+    
+    func testClearFavorites() {
+        
+        let app = XCUIApplication()
+        let tabBarsQuery = app.tabBars
+        tabBarsQuery.buttons["Settings"].tap()
+        app.tables/*@START_MENU_TOKEN@*/.staticTexts["Remove all saved favorites"]/*[[".cells.staticTexts[\"Remove all saved favorites\"]",".staticTexts[\"Remove all saved favorites\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.alerts["Favorites"].buttons["OK"].tap()
+        tabBarsQuery.buttons["Favorites"].tap()
+        XCTAssert(app.staticTexts["No photos saved to your favorites 😞"].exists)
+        
+    }
+    
+    func testSavePhotoToFavorites() {
+        
+        let app = XCUIApplication()
+        let collectionViewsQuery = app.collectionViews
+        collectionViewsQuery.cells["Category Cell 0"].images["Category Image"].tap()
+        collectionViewsQuery.cells["Thumbnail Cell 0"].images["Category Image"].tap()
+        collectionViewsQuery.cells["Slideshow Cell 0"]/*@START_MENU_TOKEN@*/.buttons["Like"]/*[[".buttons[\"LikeOutlined\"]",".buttons[\"Like\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.buttons["Close"].tap()
+        app.tabBars.buttons["Favorites"].tap()
+        XCTAssert(!app.staticTexts["No photos saved to your favorites 😞"].exists)
 
+    }
+    
 }

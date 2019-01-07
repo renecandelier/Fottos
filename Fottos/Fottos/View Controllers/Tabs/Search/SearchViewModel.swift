@@ -70,7 +70,6 @@ final class SearchViewModel {
     }
     
     func filterContentForSearchText(_ searchText: String) {
-        if searchText.isEmpty { }
         filteredSearchTerms = searchTerms.filter { $0.contains(searchText)  }
         delegate?.reloadRecentSearchTerms()
     }

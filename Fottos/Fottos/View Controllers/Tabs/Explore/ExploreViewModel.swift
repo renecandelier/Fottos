@@ -28,10 +28,6 @@ final class ExploreViewModel {
         self.categories = Config.shared.categories
     }
     
-    var categoriesCount: Int {
-        return categories.count
-    }
-    
     // MARK: - Image Download
     
     func getImage(for indexPath: IndexPath) {
@@ -54,6 +50,10 @@ final class ExploreViewModel {
                 self.delegate?.reloadItems([indexPath], errorPresentation: .none)
             }
         })
+    }
+    
+    var categoriesCount: Int {
+        return categories.count
     }
     
     func categoryAtIndex(_ index: Int) -> Category {

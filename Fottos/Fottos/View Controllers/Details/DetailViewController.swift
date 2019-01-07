@@ -15,6 +15,7 @@ class DetailViewController: UIViewController {
     
     var photos: [Photo]?
     var currentPage = 0
+    var slideshowCollectionViewController: SlideshowCollectionViewController?
     
     @IBAction func swipeDismissView(_ sender: UIPanGestureRecognizer) {
         dismissView()
@@ -33,6 +34,7 @@ class DetailViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SlideshowCollectionViewController.className {
             guard let slideshowCollectionViewController = segue.destination as? SlideshowCollectionViewController else { return }
+            self.slideshowCollectionViewController = slideshowCollectionViewController
             slideshowCollectionViewController.currentPage = currentPage
             slideshowCollectionViewController.photos = photos
         }

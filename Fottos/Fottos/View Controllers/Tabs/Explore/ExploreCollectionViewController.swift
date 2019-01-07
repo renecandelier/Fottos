@@ -25,7 +25,7 @@ class ExploreCollectionViewController: UICollectionViewController, ExploreViewMo
         addInsets()
         addActivityIndicator()
     }
-
+    
     func addInsets() {
         collectionView.contentInset = UIEdgeInsets(top: 20.0, left: 8.0, bottom: 0.0, right: 8.0)
     }
@@ -65,19 +65,20 @@ class ExploreCollectionViewController: UICollectionViewController, ExploreViewMo
     }
     
     // MARK: - UICollectionViewDataSource
-
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.categoriesCount
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as! CategoryCollectionViewCell
         let category = viewModel.categoryAtIndex(indexPath.row)
-        
+        cell.accessibilityIdentifier = "Category Cell \(indexPath.row)"
+
         cell.titleLabel.text? = category.title.localize
         guard let imageDownloaded = viewModel.indexImageCache.image(at: indexPath.row) else {
             viewModel.getImage(for: indexPath)

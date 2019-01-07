@@ -17,7 +17,8 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     var searchText: String?
     var preLoadedPhotos: [Photo]?
     let activitySpinner = UIActivityIndicatorView(style: .gray)
-
+    var detailViewController: DetailViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = ThumbnailViewModel(searchText: searchText, delegate: self, photos: preLoadedPhotos ?? [])
@@ -31,6 +32,21 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.indexImageCache.clearCache()
+        refreshCurrentPosition()
+    }
+    
+    private func refreshCurrentPosition() {
+        guard let newPage = detailViewController?.slideshowCollectionViewController?.viewModel.currentPage, newPage > 0 else { return }
+        scrollToItem(newPage)
+    }
+    
+    func scrollToItem(_ item: Int) {
+        if item < collectionView.numberOfItems(inSection: 0) {
+            let indexPath = IndexPath(row: item, section: 0)
+            asyncMain {
+                self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
+            }
+        }
     }
     
     func setCollectionViewInsets() {
@@ -48,8 +64,8 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     func addActivityIndicator() {
         view.addSubview(activitySpinner)
         activitySpinner.center = view.center
-        activitySpinner.startAnimating()
         activitySpinner.hidesWhenStopped = true
+        activitySpinner.startAnimating()
     }
     
     func stopActivityIndicator() {
@@ -65,15 +81,14 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == DetailViewController.className {
-            if let detailViewController = segue.destination as? DetailViewController {
-                let cellRow = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
-                detailViewController.currentPage = cellRow
-                detailViewController.photos = viewModel.photos
-            }
-        }
+        guard segue.identifier == DetailViewController.className,
+            let detailViewController = segue.destination as? DetailViewController else { return }
+        let cellRow = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
+        self.detailViewController = detailViewController
+        detailViewController.currentPage = cellRow
+        detailViewController.photos = viewModel.photos
     }
-
+    
 }
 
 extension ThumbnailCollectionViewController: ThumbnailViewModelDelegate {
@@ -124,7 +139,8 @@ extension ThumbnailCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ThumbnailCollectionViewCell.className, for: indexPath) as! ThumbnailCollectionViewCell
-        
+        cell.accessibilityIdentifier = "Thumbnail Cell \(indexPath.row)"
+
         guard let cachedImage = viewModel.indexImageCache.image(at: indexPath.row) else {
             viewModel.getImage(for: indexPath)
             return cell
@@ -132,14 +148,6 @@ extension ThumbnailCollectionViewController {
         cell.imageView.image = cachedImage
         return cell
     }
-    
-    // MARK: - UICollectionViewDelegate
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard viewModel.currentCount > 0 else { return }
-        performSegue(withIdentifier: DetailViewController.className, sender: self)
-    }
-    
 }
 
 extension ThumbnailCollectionViewController: UICollectionViewDataSourcePrefetching {
