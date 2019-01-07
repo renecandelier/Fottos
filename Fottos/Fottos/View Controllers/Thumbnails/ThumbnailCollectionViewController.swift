@@ -16,40 +16,44 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     var viewModel: ThumbnailViewModel!
     var searchText: String?
     var preLoadedPhotos: [Photo]?
-    
+    let spiner = UIActivityIndicatorView(style: .gray)
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = ThumbnailViewModel(searchText: searchText, delegate: self, photos: preLoadedPhotos ?? [])
         collectionView.prefetchDataSource = self
-        setupCollectionView()
+        setCollectionViewInsets()
+        setupCollectionViewLayout()
         setNavigationTitle(searchText)
+        addActivityIndicator()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.indexCache.removeAll()
+        viewModel.indexImageCache.clearCache()
     }
     
-    // TODO: Clean 
-    func setupCollectionView() {
+    func setCollectionViewInsets() {
         collectionView.contentInset = UIEdgeInsets(top: 20.0, left: 8.0, bottom: 20.0, right: 8.0)
-
-        let flow = collectionViewLayout as! UICollectionViewFlowLayout
-        
-        let itemSpacing: CGFloat = 2
-        let itemsInOneLine: CGFloat = 2
-        
-        flow.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        
-        let width = UIScreen.main.bounds.size.width - itemSpacing * CGFloat(itemsInOneLine - 2)
-        
-        flow.itemSize = CGSize(width: floor(width/2.2), height: width/2.2)
-        flow.minimumInteritemSpacing = 2
-        flow.minimumLineSpacing = 20
+    }
+    
+    func setupCollectionViewLayout() {
+        collectionView.collectionViewLayout = viewModel.getFlowLayout()
     }
     
     func setNavigationTitle(_ title: String?) {
         navigationItem.title = title
+    }
+    
+    func addActivityIndicator() {
+        view.addSubview(spiner)
+        spiner.center = view.center
+        spiner.startAnimating()
+        spiner.hidesWhenStopped = true
+    }
+    
+    func stopActivityIndicator() {
+        spiner.stopAnimating()
     }
     
     func reloadCollectionView() {
@@ -75,6 +79,7 @@ class ThumbnailCollectionViewController: UICollectionViewController {
 extension ThumbnailCollectionViewController: ThumbnailViewModelDelegate {
     
     func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?) {
+        stopActivityIndicator()
         guard let newIndexPathsToReload = newIndexPathsToReload else {
             reloadCollectionView()
             return
@@ -82,26 +87,37 @@ extension ThumbnailCollectionViewController: ThumbnailViewModelDelegate {
         collectionView?.insertItems(at: newIndexPathsToReload)
     }
     
-    func reloadItems(_ indexPaths: [IndexPath]) {
-        self.collectionView.reloadItems(at: indexPaths)
+    func reloadItems(_ indexPaths: [IndexPath]?, errorPresentation: ErrorPresentation?) {
+        
+        if let errorAlert = errorPresentation?.alert  {
+            presentAlert(errorAlert)
+            return
+        }
+        
+        guard let indexPaths = indexPaths else { return }
+        collectionView.reloadItems(at: indexPaths)
     }
     
-    func onFetchFailed(with reason: Error?) {
-        // TODO: Show error
+    func onFetchFailed(errorPresentation: ErrorPresentation?) {
+        stopActivityIndicator()
+        guard let errorAlert = errorPresentation?.alert else { return }
+        presentAlert(errorAlert)
+    }
+    
+    func presentAlert(_ alertController: UIAlertController) {
+        present(alertController, animated: true, completion: nil)
     }
 }
 
 extension ThumbnailCollectionViewController {
     
-    // MARK: UICollectionViewDataSource
+    // MARK: - UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // TODO: Handle scaffolding
-//        if viewModel.currentCount == 0 { self.collectionView.isScrollEnabled = false }
         return viewModel.currentCount
     }
     
@@ -109,17 +125,18 @@ extension ThumbnailCollectionViewController {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ThumbnailCollectionViewCell.className, for: indexPath) as! ThumbnailCollectionViewCell
         
-        if let imageDownloaded = viewModel.indexCache[indexPath.row] {
-            cell.imageView.image = imageDownloaded
-        } else {
+        guard let cachedImage = viewModel.indexImageCache.image(at: indexPath.row) else {
             viewModel.getImage(for: indexPath)
+            return cell
         }
+        cell.imageView.image = cachedImage
         return cell
     }
     
     // MARK: - UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard viewModel.currentCount > 0 else { return }
         performSegue(withIdentifier: DetailViewController.className, sender: self)
     }
     
@@ -127,7 +144,7 @@ extension ThumbnailCollectionViewController {
 
 extension ThumbnailCollectionViewController: UICollectionViewDataSourcePrefetching {
     
-    // MARK: Prefetching
+    // MARK: - Prefetching
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         

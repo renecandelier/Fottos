@@ -1,15 +1,15 @@
 {
-    "version": "1.0",
+    "version": "1.1",
     "autoUpdateConfig": true,
     "autoUpdateConfigInterval": 600,
     "prefetchEnabled": true,
     "categories": [
-        {"title": "Travel",
+        {   "title": "Travel",
             "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Travel.jpg"
         },
         {
             "title": "Cars",
-            "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Cars.png"
+            "image": "https://s3.amazonaws.com/fottosapp/prod/1.0/images/Cars.jpg"
         },
         {
             "title": "Sneakers",
@@ -43,7 +43,7 @@
     "endpoints": {
         "photoDownload": {
             "type": "build",
-            "url": "https://{farm}.staticflickr.com/{server}/{owner}_{secret}.jpg"
+            "url": "https://farm{farm}.staticflickr.com/{server}/{imageId}_{secret}.jpg"
         },
         "photoSearch": {
             "type": "components",

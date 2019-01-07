@@ -18,5 +18,6 @@ extension Search {
     }
 
     @NSManaged public var title: String?
+    @NSManaged public var savedDate: Date?
 
 }

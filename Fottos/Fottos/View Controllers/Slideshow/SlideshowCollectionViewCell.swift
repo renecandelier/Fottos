@@ -52,14 +52,16 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
         longPress.minimumPressDuration = 0.5
         self.addGestureRecognizer(longPress)
     }
-    // TODO: clean?
+
     override func prepareForReuse() {
+       clean()
+    }
+    
+    func clean() {
         photo = nil
         titleLabel.isHidden = true
         likeButton.setImage(outlinedHeart, for: .normal)
-        if imageView != nil {
-            imageView.image = nil
-        }
+        imageView.image = nil
     }
     
     func rotateLikeImage(_ likeImage: UIImage?) -> UIImage {

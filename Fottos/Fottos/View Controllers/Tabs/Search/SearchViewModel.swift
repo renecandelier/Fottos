@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 protocol SearchViewModelDelegate: class {
     func reloadRecentSearchTerms()
@@ -17,13 +18,13 @@ final class SearchViewModel {
     
     // MARK: - Constants
 
-    typealias SearchTerms = [String]
-    let emptySearchTermsPlaceholder = "No Recent Searches 😞"
+    let emptySearchTermsPlaceholder = "No Recent Searches 😞".localize
 
     // MARK: - Properties
     
     var searchTerms: SearchTerms = []
     var searchText = ""
+    var filteredSearchTerms: SearchTerms = []
     
     private var mainContext: NSManagedObjectContext?
     private weak var delegate: SearchViewModelDelegate?
@@ -43,10 +44,9 @@ final class SearchViewModel {
         return searchTerms.count
     }
     
-    func searchTerm(at index: Int) -> String {
+    func searchTerm(at index: Int, isFiltering: Bool = false) -> String {
         if isSearchTermsEmpty { return emptySearchTermsPlaceholder }
-        
-        return searchTerms[index]
+        return !isFiltering ? searchTerms[index] : filteredSearchTerms[index]
     }
     
     func updateCurrentSearchTerm(from index: Int) {
@@ -68,4 +68,19 @@ final class SearchViewModel {
         Search.addNew(context: context, title: searchText)
         Store.shareInstance?.saveContext()
     }
+    
+    func filterContentForSearchText(_ searchText: String) {
+        if searchText.isEmpty { }
+        filteredSearchTerms = searchTerms.filter { $0.contains(searchText)  }
+        delegate?.reloadRecentSearchTerms()
+    }
+    
+    func isFiltering(_ searchController: UISearchController) -> Bool {
+        return searchController.isActive && !searchBarIsEmpty(searchController)
+    }
+    
+    func searchBarIsEmpty(_ searchController: UISearchController) -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+
 }

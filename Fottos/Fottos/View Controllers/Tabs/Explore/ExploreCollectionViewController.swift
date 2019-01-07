@@ -15,6 +15,7 @@ class ExploreCollectionViewController: UICollectionViewController, ExploreViewMo
     
     var mainContext: NSManagedObjectContext?
     var viewModel: ExploreViewModel!
+    let spiner = UIActivityIndicatorView(style: .gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,20 +23,45 @@ class ExploreCollectionViewController: UICollectionViewController, ExploreViewMo
         viewModel = ExploreViewModel(delegate: self, context: mainContext)
         navigationController?.hideShadow()
         addInsets()
+        addActivityIndicator()
     }
 
     func addInsets() {
         collectionView.contentInset = UIEdgeInsets(top: 20.0, left: 8.0, bottom: 0.0, right: 8.0)
     }
     
-    func categoriesUpdated() {
-        updateCollectionView()
+    func addActivityIndicator() {
+        view.addSubview(spiner)
+        spiner.center = view.center
+        spiner.startAnimating()
+        spiner.hidesWhenStopped = true
+    }
+    
+    func stopActivityIndicator() {
+        spiner.stopAnimating()
+    }
+    
+    // MARK: - ExploreViewModelDelegate
+    
+    func reloadItems(_ indexPaths: [IndexPath]?, errorPresentation: ErrorPresentation?) {
+        stopActivityIndicator()
+        if let errorAlert = errorPresentation?.alert  {
+            presentAlert(errorAlert)
+            return
+        }
+        
+        guard let indexPaths = indexPaths else { return }
+        collectionView.reloadItems(at: indexPaths)
     }
     
     func updateCollectionView() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
+    }
+    
+    func presentAlert(_ alertController: UIAlertController) {
+        present(alertController, animated: true)
     }
     
     // MARK: - UICollectionViewDataSource
@@ -45,25 +71,19 @@ class ExploreCollectionViewController: UICollectionViewController, ExploreViewMo
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.categories.count
+        return viewModel.categoriesCount
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.className, for: indexPath) as! CategoryCollectionViewCell
         let category = viewModel.categoryAtIndex(indexPath.row)
-        // TODO: Move this to VM
-        if let url = URL(string: category.image),
-            url.isValid {
-            cell.imageView.dowloadFromServer(url: url) { (image, _) in
-                asyncMain {
-                    if let image = image {
-                        cell.imageView.image = image
-                    }
-                }
-            }
-        }
         
-        cell.titleLabel.text = category.title
+        cell.titleLabel.text? = category.title.localize
+        guard let imageDownloaded = viewModel.indexImageCache.image(at: indexPath.row) else {
+            viewModel.getImage(for: indexPath)
+            return cell
+        }
+        cell.imageView.image = imageDownloaded
         return cell
     }
     
@@ -71,31 +91,13 @@ class ExploreCollectionViewController: UICollectionViewController, ExploreViewMo
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ThumbnailCollectionViewController.className {
+            
             guard let thumbnailCollectionViewController = segue.destination as? ThumbnailCollectionViewController else { return }
+            
             let cellRow = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
             let categoryTitle = viewModel.titleAtIndex(cellRow)
             thumbnailCollectionViewController.searchText = categoryTitle
             viewModel.createSearch(context: mainContext, title: categoryTitle)
         }
-    }
-}
-
-extension ExploreCollectionViewController: UIViewControllerPreviewingDelegate {
-    
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-        
-        // TODO: Finish Peeking with Save or Share options
-        
-        //        guard let indexPath = collectionView?.indexPathForItem(at:location) else { return nil }
-        //        guard  let cell2 = collectionView.cellForItem(at: indexPath) else { return nil }
-        let thumnailPreview = ThumbnailCollectionViewController()
-        
-        let cellRow = collectionView.indexPathsForSelectedItems?.first?.row ?? 0
-        thumnailPreview.searchText = viewModel.titleAtIndex(cellRow)
-        return thumnailPreview
-    }
-    
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-        
     }
 }

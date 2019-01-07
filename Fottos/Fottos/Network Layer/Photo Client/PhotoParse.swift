@@ -8,8 +8,6 @@
 
 import Foundation
 
-typealias PhotoDictionary = [String: Any]
-
 struct PhotoParser {
     static func parse(_ photoJson: PhotoDictionary) -> PagedPhotoResponse? {
         

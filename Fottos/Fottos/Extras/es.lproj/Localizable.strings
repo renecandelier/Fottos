@@ -1,0 +1,28 @@
+/* 
+  Localizable.strings
+  Fottos
+
+  Created by Rene Candelier on 1/4/19.
+  Copyright © 2019 Novus Mobile. All rights reserved.
+*/
+
+"Travel" = "Viajar";
+"Cars" = "Carros";
+"Food" = "Comida";
+"Sneakers" = "Zapatos";
+"Sports" = "Deportes";
+"Fashion" = "Moda";
+"Fitness" = "Gymnasio";
+"Drinks" = "Bebidas";
+"Nature" = "Naturaleza";
+"No photos saved to your favorites 😞" = "No existen fotos en tus favoritos 😞";
+"No Recent Searches 😞" = "No hay busquedas recientes 😞";
+"Remove all saved favorites" = "Borrar fotos de mis favoritos";
+"Recent Search Terms" = "Términos de búsqueda recientes";
+"All saved favorites have been removed" = "Todos los favoritos guardados han sido eliminados";
+"Delete all recent search terms" = "Borrar todas las busques recientes";
+"Clear Cache" = "Borrar Cache";
+"All cache has been cleared" = "Todo el caché ha sido borrado";
+"Fetch per page" = "Descargar por página";
+"Food, Sneakers, Cats..." = "Comida, Zapatos, Gatos... ";
+"OK" = "OK";

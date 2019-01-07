@@ -8,9 +8,6 @@
 
 import Foundation
 
-typealias SearchPhotosDictionary = [String: Any]
-typealias QueryItems = [String: String]
-
 struct SearchPhotos {
 
     // MARK: - Properties

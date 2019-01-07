@@ -1,0 +1,42 @@
+
+/* Class = "UINavigationItem"; title = "Favorites"; ObjectID = "3zI-SJ-YPm"; */
+"3zI-SJ-YPm.title" = "Favoritos";
+
+/* Class = "UINavigationItem"; title = "Explore"; ObjectID = "4yr-ko-0Rv"; */
+"4yr-ko-0Rv.title" = "Explorar";
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "8oB-Sg-c05"; */
+"8oB-Sg-c05.title" = "Configuración";
+
+/* Class = "UINavigationItem"; title = "Search"; ObjectID = "9zb-fO-3U3"; */
+"9zb-fO-3U3.title" = "Buscar";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "ANp-nt-TdU"; */
+"ANp-nt-TdU.title" = "Configuración";
+
+/* Class = "UITabBarItem"; title = "Favorites"; ObjectID = "XMW-g0-8hj"; */
+"XMW-g0-8hj.title" = "Favoritos";
+
+/* Class = "UISegmentedControl"; Xjr-w0-FvB.segmentTitles[0] = "25"; ObjectID = "Xjr-w0-FvB"; */
+"Xjr-w0-FvB.segmentTitles[0]" = "25";
+
+/* Class = "UISegmentedControl"; Xjr-w0-FvB.segmentTitles[1] = "50"; ObjectID = "Xjr-w0-FvB"; */
+"Xjr-w0-FvB.segmentTitles[1]" = "50";
+
+/* Class = "UISegmentedControl"; Xjr-w0-FvB.segmentTitles[2] = "100"; ObjectID = "Xjr-w0-FvB"; */
+"Xjr-w0-FvB.segmentTitles[2]" = "100";
+
+/* Class = "UITabBarItem"; title = "Search"; ObjectID = "b56-cE-wrc"; */
+"b56-cE-wrc.title" = "Buscar";
+
+/* Class = "UITabBarItem"; title = "Explore"; ObjectID = "bah-Bc-pKS"; */
+"bah-Bc-pKS.title" = "Explorar";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "bj6-sr-huK"; */
+"bj6-sr-huK.text" = "Label";
+
+/* Class = "UILabel"; text = "  Recent"; ObjectID = "qbU-W4-1BE"; */
+"qbU-W4-1BE.text" = "  Recientes";
+
+/* Class = "UILabel"; text = " "; ObjectID = "zXS-fM-PMB"; */
+"zXS-fM-PMB.text" = " ";

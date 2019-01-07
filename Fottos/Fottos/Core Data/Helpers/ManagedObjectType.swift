@@ -14,15 +14,23 @@ protocol ManagedObjectType: class {
 }
 
 extension ManagedObjectType where Self: NSManagedObject {
-
+    
+    static var sortDate: [NSSortDescriptor] {
+        let sectionSortDescriptor = NSSortDescriptor(key: "savedDate", ascending: false)
+        return [sectionSortDescriptor]
+    }
+    
     @discardableResult static func create(inContext context: NSManagedObjectContext, configure: (Self) -> Void) -> Self {
         let createdObject: Self = context.insertObject()
         configure(createdObject)
         return createdObject
     }
     
-    static func fetch(inContext context: NSManagedObjectContext, configurationBlock: (NSFetchRequest<NSFetchRequestResult>) -> Void = { _ in }) -> [Self] {
+    static func fetch(inContext context: NSManagedObjectContext, isSorted: Bool = true, configurationBlock: (NSFetchRequest<NSFetchRequestResult>) -> Void = { _ in }) -> [Self] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: self.className)
+        if isSorted {
+            request.sortDescriptors = sortDate
+        }
         configurationBlock(request)
         var result: [Self] = []
         context.performAndWait {

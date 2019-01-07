@@ -9,8 +9,8 @@
 import Foundation
 import CoreData
 
-protocol ExploreViewModelDelegate: class {
-    func categoriesUpdated()
+protocol ExploreViewModelDelegate: class, AlertPresentation {
+    func reloadItems(_ indexPaths: [IndexPath]?, errorPresentation: ErrorPresentation?)
 }
 
 final class ExploreViewModel {
@@ -19,16 +19,41 @@ final class ExploreViewModel {
     
     weak var delegate: ExploreViewModelDelegate?
     var context: NSManagedObjectContext?
-    var categories: [Category] = [] {
-        didSet {
-            delegate?.categoriesUpdated()
-        }
-    }
+    var indexImageCache = IndexPhotoCache()
+    var categories = [Category]()
     
     init(delegate: ExploreViewModelDelegate?, context: NSManagedObjectContext?) {
         self.delegate = delegate
         self.context = context
-        fetchConfig()
+        self.categories = Config.shared.categories
+    }
+    
+    var categoriesCount: Int {
+        return categories.count
+    }
+    
+    // MARK: - Image Download
+    
+    func getImage(for indexPath: IndexPath) {
+        if let url = imageUrlAtIndex(indexPath.row), url.isValid {
+            fetchImage(url: url, indexPath: indexPath)
+        }
+    }
+    
+    func fetchImage(url: URL, indexPath: IndexPath) {
+        dowloadImage(url: url, indexPath: indexPath, completion: { (image, error) in
+            asyncMain {
+                
+                if let error = error {
+                    self.delegate?.reloadItems(.none, errorPresentation: self.delegate?.getErrorPresentation(error: error))
+                    return
+                }
+                
+                guard let image = image else { return }
+                self.indexImageCache.saveImage(image: image, index: indexPath.row)
+                self.delegate?.reloadItems([indexPath], errorPresentation: .none)
+            }
+        })
     }
     
     func categoryAtIndex(_ index: Int) -> Category {
@@ -39,12 +64,8 @@ final class ExploreViewModel {
         return categories[index].title
     }
     
-    func fetchConfig() {
-        FectConfigFeed().fetchConfig { (json, error) in
-            asyncMain {
-                self.categories = Config.shared.categories
-            }
-        }
+    func imageUrlAtIndex(_ index: Int) -> URL? {
+        return URL(string: categoryAtIndex(index).image)
     }
     
     func createSearch(context: NSManagedObjectContext?, title: String) {

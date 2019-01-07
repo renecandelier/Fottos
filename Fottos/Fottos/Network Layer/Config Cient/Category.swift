@@ -8,8 +8,6 @@
 
 import Foundation
 
-typealias CategoryDictionary = [String: String]
-
 struct Category {
     var title = ""
     var image = ""

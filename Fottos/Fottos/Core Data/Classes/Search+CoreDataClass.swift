@@ -15,7 +15,9 @@ public class Search: NSManagedObject, ManagedObjectType {
     static func addNew(context: NSManagedObjectContext, title: String) {
         guard !fetchAll(context: context).contains(title) else { return }
         Search.create(inContext: context) { search in
+            let savedDate = Date()
             search.title = title
+            search.savedDate = savedDate
         }
     }
     
