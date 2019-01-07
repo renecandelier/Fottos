@@ -48,7 +48,7 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="kR0-nK-O99" id="2gz-ak-2sZ"/>
-                                    <segue destination="tot-fP-Bs5" kind="presentation" identifier="DetailViewController" id="qP3-v2-LGe"/>
+                                    <segue destination="tot-fP-Bs5" kind="presentation" identifier="DetailViewController" id="XZs-wb-Vj3"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

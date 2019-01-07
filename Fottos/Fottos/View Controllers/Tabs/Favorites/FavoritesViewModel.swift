@@ -22,7 +22,7 @@ final class FavoritesViewModel {
     
     // MARK: - Constants
     
-    let emptySearchTermsPlaceholder = "No photos saved to your favorites 😞"
+    let emptySearchTermsPlaceholder = "No photos saved to your favorites 😞".localize
 
     init(delegate: FavoritesViewModelDelegate?, context: NSManagedObjectContext?) {
         self.delegate = delegate

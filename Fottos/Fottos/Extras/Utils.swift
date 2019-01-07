@@ -55,30 +55,6 @@ extension Int {
 
 let imageCache = NSCache<NSString, UIImage>()
 
-extension UIImageView {
-    func dowloadFromServer(url: URL, indexPath: IndexPath? = nil, completion:  @escaping (UIImage?, Error?) -> Void) {
-        
-        if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
-            asyncMain {
-                completion(cachedImage, nil)
-            }
-            return
-        }
-        
-        DownloadImage(url: url).dowloadFromServer { (image, error) in
-            if let error = error {
-                completion(nil, error)
-            }
-            if let image = image {
-                asyncMain() {
-                    imageCache.setObject(image, forKey: url.absoluteString as NSString)
-                    completion(image, nil)
-                }
-            }
-        }
-    }
-}
-
 func dowloadImage(url: URL, indexPath: IndexPath? = nil, completion:  @escaping (UIImage?, Error?) -> Void) {
     
     if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
@@ -154,4 +130,26 @@ extension Dictionary {
 var applicationDocumentsDirectory: URL {
     let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     return urls[urls.count-1]
+}
+
+extension String {
+    func localize(comment: String = "") -> String {
+        return NSLocalizedString(self, comment: comment)
+    }
+    
+    var localize: String {
+        return NSLocalizedString(self, comment: "")
+    }
+}
+
+extension Array where Array == [String] {
+    var localize: [String] {
+        return self.compactMap { $0.localize }
+    }
+}
+extension URL {
+    func serializeJSON<T>(type: T.Type) -> T? {
+        guard let data = try? Data(contentsOf: self), let json = try? JSONSerialization.jsonObject(with: data, options: []) as? T else { return .none }
+        return json
+    }
 }

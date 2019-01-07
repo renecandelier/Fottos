@@ -365,10 +365,7 @@
                                 <connections>
                                     <outlet property="imageView" destination="deC-OH-oET" id="HAH-9i-ofT"/>
                                     <outlet property="titleLabel" destination="zXS-fM-PMB" id="mQ6-pA-Tgc"/>
-                                    <segue destination="6zN-HV-12G" kind="show" identifier="ThumbnailCollectionViewController" id="DQV-M0-Xug">
-                                        <segue key="commit" inheritsFrom="parent" id="x5i-kv-qvF"/>
-                                        <segue key="preview" inheritsFrom="commit" id="1bG-nR-ylh"/>
-                                    </segue>
+                                    <segue destination="6zN-HV-12G" kind="show" identifier="ThumbnailCollectionViewController" id="DQV-M0-Xug"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -425,7 +422,4 @@
         <image name="search" width="25" height="25"/>
         <image name="settings" width="25" height="25"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="DQV-M0-Xug"/>
-    </inferredMetricsTieBreakers>
 </document>

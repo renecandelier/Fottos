@@ -19,4 +19,6 @@ extension Favorite {
 
     @NSManaged public var url: String?
     @NSManaged public var title: String?
+    @NSManaged public var savedDate: Date?
+
 }

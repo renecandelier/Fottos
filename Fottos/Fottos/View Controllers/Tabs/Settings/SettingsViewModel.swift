@@ -10,16 +10,43 @@ import Foundation
 import UIKit
 import CoreData
 
-protocol SettingsViewModelDelegate: class {
+protocol AlertPresentation {
     func presentAlert(_ alertController:UIAlertController)
 }
 
-final class SettingsViewModel {
+extension AlertPresentation {
+    
+    func getAlertController(title: String, message: String, actionTitle: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let dismiss = UIAlertAction(title: actionTitle, style: .default, handler: nil)
+        alert.addAction(dismiss)
+        return alert
+    }
+    
+    func getErrorPresentation(error: Error) -> ErrorPresentation {
+        return ErrorPresentation(error: error, alert: getErrorAlert(from: error))
+    }
+    
+    func getErrorAlert(from error: Error) -> ErrorAlert {
+        let errorAlert = getAlertController(title: "Error", message: error.localizedDescription, actionTitle: "OK")
+        return errorAlert
+    }
+}
+
+protocol SettingsViewModelDelegate: class, AlertPresentation {
+
+}
+
+final class SettingsViewModel: AlertPresentation {
     
     // MARK: - Properties
     
     weak var delegate: SettingsViewModelDelegate?
-    var options = ["Fetch per page", "Remove all saved favorites", "Delete all recent search terms", "Clear Cache"]
+    var options = ["Fetch per page",
+                   "Remove all saved favorites",
+                   "Delete all recent search terms",
+                   "Clear Cache"].localize
+    
     var context: NSManagedObjectContext?
     
     init(delegate: SettingsViewModelDelegate, context: NSManagedObjectContext?) {
@@ -66,27 +93,32 @@ final class SettingsViewModel {
     func savePerPageAmount(_ amount: Int) {
         FetchPerPage.save(amount)
     }
-    // TODO: generic alert
+    
+    func getFetchPerPageCell(tableView: UITableView, indexPath: IndexPath) -> FetchPerPageUITableViewCell {
+        let fetchPerPageCell = tableView.dequeueReusableCell(withIdentifier: FetchPerPageUITableViewCell.className, for: indexPath) as! FetchPerPageUITableViewCell
+        fetchPerPageCell.amountSegmentControl.selectedSegmentIndex = perPageAmount
+        return fetchPerPageCell
+    }
+    
+    // MARK: Alerts
+    
     private func showCacheAlert() {
-        let cacheAlert = getAlert(title: "Clear Cache", message: "All cache has been cleared", actionTitle: "OK")
-        delegate?.presentAlert(cacheAlert)
+        let cacheAlert = getAlertController(title: "Clear Cache".localize, message: "All cache has been cleared".localize, actionTitle: "OK".localize)
+        presentAlert(cacheAlert)
     }
     
     private func showFavoritesAlert() {
-        let favoritesAlert = getAlert(title: "Favorites", message: "All saved favorites have been removed", actionTitle: "OK")
-        delegate?.presentAlert(favoritesAlert)
+        let favoritesAlert = getAlertController(title: "Favorites".localize, message: "All saved favorites have been removed".localize, actionTitle: "OK".localize)
+        presentAlert(favoritesAlert)
     }
     
     private func showRecentSearchAlert() {
-        let recentSearchAlert = getAlert(title: "Recent Search Terms", message: "All saved search terms have been removed", actionTitle: "OK")
-        delegate?.presentAlert(recentSearchAlert)
+        let recentSearchAlert = getAlertController(title: "Recent Search Terms".localize, message: "All saved search terms have been removed".localize, actionTitle: "OK".localize)
+        presentAlert(recentSearchAlert)
     }
     
-    private func getAlert(title: String, message: String, actionTitle: String) -> UIAlertController {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let dismiss = UIAlertAction(title: actionTitle, style: .default, handler: nil)
-        alert.addAction(dismiss)
-        return alert
+    func presentAlert(_ alert: UIAlertController) {
+        delegate?.presentAlert(alert)
     }
     
 }

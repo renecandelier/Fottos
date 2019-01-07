@@ -8,13 +8,6 @@
 
 import Foundation
 
-//protocol EndpointComponents {
-//    let path: String
-//    let urlComponents: URLComponents
-//}
-
-typealias ReplacementTokens = [String: String]
-
 enum EndPointType {
     case build
     case components

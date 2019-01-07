@@ -32,15 +32,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.optionsCount
     }
-    // TODO: Clean
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: UITableViewCell
+        
+        var cell = tableView.dequeueReusableCell(withIdentifier: self.className, for: indexPath)
+       
         if indexPath.row == 0 {
-             let fetchPerPageCell = tableView.dequeueReusableCell(withIdentifier: FetchPerPageUITableViewCell.className, for: indexPath) as! FetchPerPageUITableViewCell
-            fetchPerPageCell.amountSegmentControl.selectedSegmentIndex = viewModel.perPageAmount
-            cell = fetchPerPageCell
-        } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: self.className, for: indexPath)
+            cell = viewModel.getFetchPerPageCell(tableView: tableView, indexPath: indexPath)
         }
         cell.textLabel?.text = viewModel.textForIndex(indexPath.row)
 

@@ -8,8 +8,6 @@
 
 import Foundation
 
-typealias PhotoDownloadDictionary = [String: String]
-
 struct PhotoDownload {
     
     // MARK: - Properties

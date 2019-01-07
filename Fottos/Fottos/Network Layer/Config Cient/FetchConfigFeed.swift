@@ -36,14 +36,17 @@ struct FectConfigFeed: RequestType {
 
     func fetchConfig(completion: @escaping (JsonDictionary?, Error?) -> Void) {
         
-        execute { (json, _, _, error) in
+        execute { (jsonFromServer, _, _, _) in
             
-            if let error = error { return completion(nil, error) }
-            if let json = json {
-                Config.shared.updateConfig(json)
-            }
-            
-            completion(json, .none)
+            let configJson = jsonFromServer ?? self.localJSON
+            Config.shared.updateConfig(configJson)
+            completion(configJson, .none)
         }
+    }
+    
+    var localJSON: ConfigDictionary {
+        guard let jsonURL = Bundle.main.url(forResource: "config", withExtension: "json"),
+            let json = jsonURL.serializeJSON(type: ConfigDictionary.self) else { return [:] }
+        return json
     }
 }

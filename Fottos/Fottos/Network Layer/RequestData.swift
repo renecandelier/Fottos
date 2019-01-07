@@ -8,12 +8,6 @@
 
 import Foundation
 
-public typealias NetworkCompletionHandler = ((JsonDictionary?, Data?, URLResponse?, Error?) -> Void)
-public typealias NetworkResponseCompletionHandler = ((Data?, URLResponse?, Error?) -> Void)
-public typealias JsonDictionary = [String: Any]
-public typealias Parameters = [String: Any]
-public typealias Components = (key: String, value: String)
-
 public enum DataType {
     case JSON
     case Data

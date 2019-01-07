@@ -12,6 +12,10 @@ import CoreData
 
 public class Favorite: NSManagedObject, Photo, ManagedObjectType {
     
+    static func defaultPredicate(usingIdentifier identifier: String) -> NSPredicate {
+        return NSPredicate(format: "identifier == %@", identifier)
+    }
+    
     static func fetchAll(context: NSManagedObjectContext) -> [Photo] {
         return fetch(inContext: context)
     }
@@ -24,8 +28,11 @@ public class Favorite: NSManagedObject, Photo, ManagedObjectType {
         }
 
         Favorite.create(inContext: context) { favorite in
+            let savedDate = Date()
+
             favorite.url = image.url
             favorite.title = image.title
+            favorite.savedDate = savedDate
         }
     }
     

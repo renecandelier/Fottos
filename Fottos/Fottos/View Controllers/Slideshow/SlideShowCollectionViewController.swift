@@ -11,11 +11,6 @@ import CoreData
 
 class SlideshowCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, SlideshowViewModelDelegate {
     
-    let collectionMargin = CGFloat(16)
-    let itemSpacing = CGFloat(10)
-    var itemHeight = CGFloat(322)
-    var itemWidth = CGFloat(0)
-    
     // MARK: - Properties
     
     var mainContext: NSManagedObjectContext?
@@ -35,30 +30,17 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         scrollToItem(viewModel?.currentPage ?? 0)
     }
     
-    // TODO: Clean
     func setCollectionViewLayout() {
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        
-        itemWidth =  UIScreen.main.bounds.width - collectionMargin * 2.0
-        itemHeight = (collectionView.bounds.height - collectionMargin - itemWidth)
-        layout.sectionInset = UIEdgeInsets(top: itemHeight/2, left: 0, bottom: itemHeight/2, right: 0)
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
-        layout.headerReferenceSize = CGSize(width: collectionMargin, height: 0)
-        layout.footerReferenceSize = CGSize(width: collectionMargin, height: 0)
-
-        layout.minimumLineSpacing = itemSpacing
-        layout.scrollDirection = .horizontal
-        collectionView?.collectionViewLayout = layout
+        collectionView?.collectionViewLayout = viewModel.slideshowCollectionViewFlowLayout(height: collectionView.bounds.height)
         collectionView?.decelerationRate = .fast
     }
     
-    // TODO: Clean
     func scrollToItem(_ item: Int) {
-        if item < self.collectionView.numberOfItems(inSection: 0) {
-            asyncMain({  [weak self] in
-                guard let self = self else { return }
-                self.collectionView.scrollToItem(at: IndexPath(row: item, section: 0), at: .centeredHorizontally, animated: false)
-            })
+        if item < collectionView.numberOfItems(inSection: 0) {
+            let indexPath = IndexPath(row: item, section: 0)
+            asyncMain {
+                self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+            }
         }
     }
     
@@ -77,18 +59,18 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SlideshowCollectionViewCell.className, for: indexPath) as! SlideshowCollectionViewCell
         
         cell.context = mainContext
+        
         let photo = viewModel?.photoAtIndex(indexPath.row)
         cell.photo = photo
         cell.doubleTap = updatePhoto
         cell.longPress = sharePhoto
-        if let photoURL = photo?.url, let url = URL(string: photoURL), url.isValid {
-            cell.titleLabel.text = photo?.title ?? ""
-            // TODO: Move this to VM
-            cell.imageView.dowloadFromServer(url: url) { (image, _) in
-                guard let image = image else { return }
-                cell.imageView.image = image
-            }
+        cell.titleLabel.text = photo?.title ?? ""
+        
+        guard let imageDownloaded = viewModel.indexImageCache.image(at: indexPath.row) else {
+            viewModel.getImage(for: indexPath)
+            return cell
         }
+        cell.imageView.image = imageDownloaded
         
         return cell
     }
@@ -118,14 +100,31 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
             selectedCell.titleLabel.isHidden = !selectedCell.titleLabel.isHidden
         }
     }
+    
+    // MARK: - SlideshowViewModelDelegate
+    
+    func presentAlert(_ alertController: UIAlertController) {
+        present(alertController, animated: true)
+    }
+    
+    func reloadItems(_ indexPaths: [IndexPath]?, errorPresentation: ErrorPresentation?) {
+        if let errorAlert = errorPresentation?.alert  {
+            presentAlert(errorAlert)
+            return
+        }
+        
+        guard let indexPaths = indexPaths else { return }
+        collectionView.reloadItems(at: indexPaths)
+    }
+    
     // TODO: Clean
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-
-        let pageWidth = Float(itemWidth + itemSpacing)
+        
+        let pageWidth = Float(viewModel.itemWidth + viewModel.itemSpacing)
         let targetXContentOffset = Float(targetContentOffset.pointee.x)
-        let contentWidth = Float(collectionView.contentSize.width  )
+        let contentWidth = Float(collectionView.contentSize.width)
         var newPage = Float(viewModel.currentPage)
-
+        
         if velocity.x == 0 {
             newPage = floor( (targetXContentOffset - Float(pageWidth) / 2) / Float(pageWidth)) + 1.0
         } else {
@@ -137,7 +136,7 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
                 newPage = ceil(contentWidth / pageWidth) - 1.0
             }
         }
-
+        
         viewModel.currentPage = Int(newPage)
         let point = CGPoint (x: CGFloat(newPage * pageWidth), y: targetContentOffset.pointee.y)
         targetContentOffset.pointee = point

@@ -20,7 +20,7 @@ class FavoritesViewController: UIViewController, FavoritesViewModelDelegate {
     var mainContext: NSManagedObjectContext?
     weak var thumbnailCollectionViewController: ThumbnailCollectionViewController?
     var viewModel: FavoritesViewModel?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         mainContext = Store.shareInstance?.persistentContainer.viewContext
@@ -48,6 +48,7 @@ class FavoritesViewController: UIViewController, FavoritesViewModelDelegate {
     func updateEmptyFavoritesLabel() {
         thumbnailCollectionViewController?.reloadCollectionView()
         emptyFavoritresLabel.isHidden = !(viewModel?.favoritePhotos?.isEmpty ?? false)
+        thumbnailCollectionViewController?.stopActivityIndicator()
         emptyFavoritresLabel.text = viewModel?.emptySearchTermsPlaceholder ?? ""
     }
     
@@ -56,11 +57,8 @@ class FavoritesViewController: UIViewController, FavoritesViewModelDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ThumbnailCollectionViewController.className {
             
-            guard let destinationThumbnailCollectionViewController = segue.destination as? ThumbnailCollectionViewController else {
-                    return
-            }
-            
-            self.thumbnailCollectionViewController = destinationThumbnailCollectionViewController
+            guard let destinationThumbnailCollectionViewController = segue.destination as? ThumbnailCollectionViewController else { return }
+            thumbnailCollectionViewController = destinationThumbnailCollectionViewController
             destinationThumbnailCollectionViewController.preLoadedPhotos = viewModel?.favoritePhotos
         }
     }

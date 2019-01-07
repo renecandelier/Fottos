@@ -9,14 +9,36 @@
 import Foundation
 import UIKit
 
-protocol ThumbnailViewModelDelegate: class {
-    func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?)
-    func onFetchFailed(with reason: Error?)
-    func reloadCollectionView()
-    func reloadItems(_ indexPaths: [IndexPath])
+struct ErrorPresentation {
+    var error: Error?
+    var alert: ErrorAlert?
 }
 
-final class ThumbnailViewModel {
+protocol ThumbnailViewModelDelegate: class, AlertPresentation {
+    func onFetchCompleted(with newIndexPathsToReload: [IndexPath]?)
+    func onFetchFailed(errorPresentation: ErrorPresentation?)
+    func reloadCollectionView()
+    func reloadItems(_ indexPaths: [IndexPath]?, errorPresentation: ErrorPresentation?)
+}
+
+struct IndexPhotoCache {
+    
+    private var indexCache = [Int: UIImage]()
+    
+    func image(at index: Int) -> UIImage? {
+        return indexCache[index]
+    }
+    
+    mutating func saveImage(image: UIImage, index: Int) {
+        indexCache[index] = image
+    }
+    
+    mutating func clearCache() {
+       indexCache.removeAll()
+    }
+}
+
+final class ThumbnailViewModel: AlertPresentation {
     
     // MARK: - Constants
     
@@ -24,13 +46,13 @@ final class ThumbnailViewModel {
 
     // MARK: - Properties
     
-    private var isFetchInProgress = false
-    var photos: [Photo] = []
+    private weak var delegate: ThumbnailViewModelDelegate?
+    var isFetchInProgress = false
     private var searchText: String?
     private var currentPage = 1
-    var indexCache: [Int: UIImage] = [:]
-    private weak var delegate: ThumbnailViewModelDelegate?
-
+    var photos = [Photo]()
+    var indexImageCache = IndexPhotoCache()
+    
     init(searchText: String?, delegate: ThumbnailViewModelDelegate?, photos: [Photo] = []) {
         self.photos = photos
         self.delegate = delegate
@@ -43,16 +65,17 @@ final class ThumbnailViewModel {
         self.delegate?.reloadCollectionView()
     }
     
+    func updateFetchIsInProgress() {
+        isFetchInProgress = !isFetchInProgress
+    }
+    
     var currentCount: Int {
-        // TODO: Handle scaffolding
-//        if photos.count == 0 { return 10 }
         return photos.count
     }
     
     var startPrefetchAmount: Int {
         return currentCount - prefetchAmount
     }
-    
     
     func photo(at index: Int) -> Photo {
         return photos[index]
@@ -71,40 +94,48 @@ final class ThumbnailViewModel {
         loadPreloadedPhotos(photos)
     }
     
-    // TODO: Reduce
+    private func incrementCurrentPage() {
+        currentPage += 1
+    }
+    
     func downloadPhotos() {
         
         guard !isFetchInProgress, let searchText = searchText else { return }
         
-        isFetchInProgress = true
+        updateFetchIsInProgress()
         
         let photoSearch = PhotoSearch(searchTerm: searchText, page: currentPage, amountPerPage: Config.shared.fetchPerPage)
         
         photoSearch.fetchPhotos { [weak self] (pagedPhotoResponse, error) in
             guard let self = self else { return }
             
-            self.isFetchInProgress = false
+            self.updateFetchIsInProgress()
             
-            if error != nil {
-                self.isFetchInProgress = false
-                self.delegate?.onFetchFailed(with: error)
+            if let error = error {
+                self.delegate?.onFetchFailed(errorPresentation: self.getErrorPresentation(error: error))
+                return
             }
             
             guard let pagedPhotoResponse = pagedPhotoResponse else { return }
-            
             asyncMain {
-                self.currentPage += 1
-                self.isFetchInProgress = false
-                let newPhotos = pagedPhotoResponse.photos
-                self.photos.append(contentsOf: newPhotos)
-                
-                if pagedPhotoResponse.page > 1 {
-                    let indexPathsToReload = self.calculateIndexPathsToReload(from: newPhotos)
-                    self.delegate?.onFetchCompleted(with: indexPathsToReload)
-                } else {
-                    self.delegate?.onFetchCompleted(with: .none)
-                }
+                self.incrementCurrentPage()
+                self.showNewPhotos(pagedPhotoResponse: pagedPhotoResponse)
             }
+        }
+    }
+    
+    func addNewPhotos(_ newPhotos: [Photo]) {
+        photos.append(contentsOf: newPhotos)
+    }
+    
+    func showNewPhotos(pagedPhotoResponse: PagedPhotoResponse) {
+        let newPhotos = pagedPhotoResponse.photos
+        addNewPhotos(newPhotos)
+        if pagedPhotoResponse.page > 1 {
+            let indexPathsToReload = calculateIndexPathsToReload(from: newPhotos)
+            delegate?.onFetchCompleted(with: indexPathsToReload)
+        } else {
+            delegate?.onFetchCompleted(with: .none)
         }
     }
     
@@ -116,14 +147,18 @@ final class ThumbnailViewModel {
         }
     }
     
-    // TODO: SHOW error
     func fetchImage(url: URL, indexPath: IndexPath) {
-        dowloadImage(url: url, indexPath: indexPath, completion: { (image, _) in
+        dowloadImage(url: url, indexPath: indexPath, completion: { (image, error) in
             asyncMain {
-                if let image = image {
-                    self.indexCache[indexPath.row] = image
-                    self.delegate?.reloadItems([indexPath])
+                
+                if let error = error {
+                    self.delegate?.reloadItems(.none, errorPresentation: self.getErrorPresentation(error: error))
+                    return
                 }
+                
+                guard let image = image else { return }
+                self.indexImageCache.saveImage(image: image, index: indexPath.row)
+                self.delegate?.reloadItems([indexPath], errorPresentation: .none)
             }
         })
     }
@@ -137,5 +172,23 @@ final class ThumbnailViewModel {
     func isLoadingCell(for indexPath: IndexPath) -> Bool {
         if currentCount < prefetchAmount { return false }
         return indexPath.row >= startPrefetchAmount
+    }
+
+    func getFlowLayout() -> UICollectionViewFlowLayout {
+        let flowLayout = UICollectionViewFlowLayout()
+        
+        let itemSpacing: CGFloat = 2
+        let itemsInOneLine: CGFloat = 2
+        
+        let width = UIScreen.main.bounds.size.width - itemSpacing * CGFloat(itemsInOneLine - 2)
+        
+        flowLayout.itemSize = CGSize(width: floor(width/2.2), height: width/2.2)
+        flowLayout.minimumInteritemSpacing = 2
+        flowLayout.minimumLineSpacing = 20
+        return flowLayout
+    }
+    
+    func presentAlert(_ alertController: UIAlertController) {
+        
     }
 }

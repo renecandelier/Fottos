@@ -28,7 +28,6 @@ public struct URLSessionNetworkDispatcher: NetworkDispatcher {
         }
         
         urlRequest.httpMethod = requestData.method.rawValue
-        
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
             
             if let error = error {

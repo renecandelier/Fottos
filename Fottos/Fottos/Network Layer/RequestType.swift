@@ -13,13 +13,14 @@ public protocol RequestType {
 }
 
 public extension RequestType {
-    public func execute(dispatcher: NetworkDispatcher = URLSessionNetworkDispatcher.instance,
-                        completionHandler: @escaping NetworkCompletionHandler) {
+    public func execute(dispatcher: NetworkDispatcher = URLSessionNetworkDispatcher.instance, completionHandler: @escaping NetworkCompletionHandler) {
         
         guard let requestData = requestData else { return completionHandler(nil, nil, nil, ApiError.invalidRequestData) }
         
         dispatcher.dispatch(requestData: requestData) { (responseData, response, error) in
+            
             if let error = error { completionHandler(nil, nil, nil, error); return  }
+
             guard let responseData = responseData else { return completionHandler(nil, nil, nil, error) }
             
             if requestData.dataType == .Data {
@@ -38,11 +39,8 @@ public extension RequestType {
     
     private func getJson(_ data: Data) throws -> JsonDictionary? {
         do {
-            
-            let json = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDictionary ?? [:]
-            
+            let json = try JSONSerialization.jsonObject(with: data, options: []) as? JsonDictionary ?? .none
             return json
-            
         } catch let error {
             throw error
         }
