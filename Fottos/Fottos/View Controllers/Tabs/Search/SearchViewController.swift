@@ -141,6 +141,9 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell = tableView.cellForRow(at: indexPath)
+        guard !viewModel.isCellEmptyState(selectedCell) else { return }
+        
         viewModel.updateCurrentSearchTerm(from: indexPath.row)
         performSegue(withIdentifier: ThumbnailCollectionViewController.className, sender: self)
     }
