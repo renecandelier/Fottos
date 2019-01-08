@@ -9,6 +9,13 @@ This project uses [gitflow](http://nvie.com/posts/a-successful-git-branching-mod
 - Use predefined search terms to load photos from the Explore tab.
 - Search photos from the Search tab using the search bar. 
 - Saves prior search terms and presented them as quick search options in the search tab.
+- Share/ save photos when performing a long when on the photo under the slide show. 
+- Double tap a photo in the slideshow in order to save to your favorites. 
+- Clear cache under the settings screen. 
+- Remove all saved search terms from the settings screen. 
+- Delete all photos saved to your favorites. 
+- Change the amount of photos you would like to load per page under the settings screen.
+- Infinite scrolling. 
 
 # Project requirements
 
