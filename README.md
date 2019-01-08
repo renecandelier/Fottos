@@ -1,5 +1,5 @@
-# CNNgo Android/Fire TV
-This is the Android TV and Amazon Fire TV codebase for CNNgo. Android and Fire TV are distinguished using product flavors and build variants.
+# Fottos
+This app is a fun way to explore photos using the flickr search API.
 
 ## Development
 This project uses [gitflow](http://nvie.com/posts/a-successful-git-branching-model/) and requires code reviews for every pull request.
