@@ -39,10 +39,13 @@ final class SearchViewModel {
     }
     
     var searchTermsCount: Int {
-        if isSearchTermsEmpty { return 1 }
-
-        return searchTerms.count
+        return isSearchTermsEmpty ? 1 : searchTerms.count
     }
+    
+    func isCellEmptyState(_ cell: UITableViewCell?) -> Bool {
+        return cell?.textLabel?.text == emptySearchTermsPlaceholder
+    }
+
     
     func searchTerm(at index: Int, isFiltering: Bool = false) -> String {
         if isSearchTermsEmpty { return emptySearchTermsPlaceholder }

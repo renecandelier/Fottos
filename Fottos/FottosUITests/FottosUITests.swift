@@ -33,14 +33,21 @@ class FottosUITests: XCTestCase {
         XCTAssert(app.navigationBars["Travel"].exists)
     }
     
+    func testOpenCarsCategory() {
+        let app = XCUIApplication()
+        let collectionViewsQuery = app.collectionViews
+        collectionViewsQuery.cells["Category Cell 1"].images["Category Image"].tap()
+        XCTAssert(app.navigationBars["Cars"].exists)
+    }
+    
     func testLikePhoto() {
         let app = XCUIApplication()
         let collectionViewsQuery = app.collectionViews
         collectionViewsQuery.cells["Category Cell 0"].images["Category Image"].tap()
         collectionViewsQuery.cells["Thumbnail Cell 1"].images["Category Image"].tap()
         collectionViewsQuery.cells["Slideshow Cell 1"].buttons["Like"].tap()
-        XCUIApplication().tabBars.buttons["Favorites"].tap()
-        XCTAssert(!app.staticTexts["No photos saved to your favorites 😞"].exists)
+        app.buttons["Close"].tap()
+        XCTAssert(app.navigationBars["Travel"].exists)
     }
     
     func testOpenFavoritesTab() {
@@ -74,4 +81,39 @@ class FottosUITests: XCTestCase {
 
     }
     
+    func testClearSearchTerms() {
+        
+        let app = XCUIApplication()
+        app.collectionViews.cells["Category Cell 0"].images["Category Image"].tap()
+        
+        let tabBarsQuery = app.tabBars
+        tabBarsQuery.buttons["Settings"].tap()
+        
+        let tablesQuery = app.tables
+        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Delete all recent search terms"]/*[[".cells.staticTexts[\"Delete all recent search terms\"]",".staticTexts[\"Delete all recent search terms\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.alerts["Recent Search Terms"].buttons["OK"].tap()
+        tabBarsQuery.buttons["Search"].tap()
+        XCTAssert(tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["No Recent Searches 😞"]/*[[".cells.staticTexts[\"No Recent Searches 😞\"]",".staticTexts[\"No Recent Searches 😞\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.exists)
+        
+    }
+    
+    func testSearchTermAdded() {
+        
+        let app = XCUIApplication()
+        
+        let tabBarsQuery = app.tabBars
+        tabBarsQuery.buttons["Settings"].tap()
+        
+        let tablesQuery = app.tables
+        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Delete all recent search terms"]/*[[".cells.staticTexts[\"Delete all recent search terms\"]",".staticTexts[\"Delete all recent search terms\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.alerts["Recent Search Terms"].buttons["OK"].tap()
+        
+        tabBarsQuery.buttons["Explore"].tap()
+        app.collectionViews.cells["Category Cell 0"].images["Category Image"].tap()
+
+        tabBarsQuery.buttons["Search"].tap()
+        XCTAssert(!tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["No Recent Searches 😞"]/*[[".cells.staticTexts[\"No Recent Searches 😞\"]",".staticTexts[\"No Recent Searches 😞\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.exists)
+        
+    }
+
 }

@@ -39,11 +39,12 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     }
     
     func scrollToItem(_ item: Int) {
-        if item < collectionView.numberOfItems(inSection: 0) {
-            let indexPath = IndexPath(row: item, section: 0)
-            asyncMain {
-                self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
-            }
+        let indexPath = IndexPath(row: item, section: 0)
+        
+        guard item < collectionView.numberOfItems(inSection: 0), collectionView.cellForItem(at: indexPath) != nil else { return }
+        
+        asyncMain {
+            self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
         }
     }
     
