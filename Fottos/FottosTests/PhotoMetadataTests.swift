@@ -17,10 +17,6 @@ class PhotoMetaDataTest: XCTestCase {
                                             Keys.farm: 5,
                                             Keys.title: "Figura Funko POP Ni No Kuni Roland with Higgledy"]
     
-    override func setUp() {
-        
-    }
-    
     func testValidPhotoMetaDataURL() {
         let photoMetaData = PhotoMetadata(photoDictionary)
         let imageURL = photoMetaData.imageURL
