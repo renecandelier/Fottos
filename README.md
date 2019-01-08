@@ -4,6 +4,8 @@ This app is a fun way to explore photos using the flickr search API.
 ## Development
 This project uses [gitflow](http://nvie.com/posts/a-successful-git-branching-model/) and requires code reviews for every pull request.
 
+## Features
+
 # Project requirements
 
 Fottos project requires:
