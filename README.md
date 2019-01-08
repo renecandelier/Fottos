@@ -1,3 +1,9 @@
+# CNNgo Android/Fire TV
+This is the Android TV and Amazon Fire TV codebase for CNNgo. Android and Fire TV are distinguished using product flavors and build variants.
+
+## Development
+This project uses [gitflow](http://nvie.com/posts/a-successful-git-branching-model/) and requires code reviews for every pull request.
+
 # Project requirements
 
 Fottos project requires:
@@ -41,3 +47,10 @@ For more information regarding our Git branching model please see Vincent Driess
 We strongly advise anyone to write unit tests for all features and bug fixes. No matter how small they are. 
 
 There countless resources online about unit testing. 
+
+## Code style and API design
+
+* All code must be written in Swift 4.0+
+* Follow Swift's [API Design Guidelines](https://swift.org/documentation/api-design-guidelines/)
+* Generally-followed style guide [Swift Style Guide](https://github.com/github/swift-style-guide)
+* All warnings are treated as error and should be resolved immediately (including Interface Builder warnings)
