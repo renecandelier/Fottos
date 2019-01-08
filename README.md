@@ -1,9 +1,6 @@
 # Fottos
 This app is a fun way to explore photos using the flickr search API.
 
-## Development
-This project uses [gitflow](http://nvie.com/posts/a-successful-git-branching-model/) and requires code reviews for every pull request.
-
 ## Features
 
 - Use predefined search terms to load photos from the Explore tab.
@@ -19,6 +16,14 @@ This project uses [gitflow](http://nvie.com/posts/a-successful-git-branching-mod
 - Infinite scrolling. 
 - App is localized to have Spanish translation. 
 
+# Architecture
+
+The app is based off the config file below:
+
+https://s3.amazonaws.com/fottosapp/prod/1.1/config.json
+
+Search terms and photos saved to favorites are saved locally using Core Data. 
+
 # Project requirements
 
 Fottos project requires:
@@ -29,17 +34,12 @@ Fottos project requires:
 
 - Because we use CocoaPods when opening the application for the first time select `Fottos.xcworkspace` and not `Fottos.xcodeproj`.
 
-# Architecture
-
-The app is based off the config file below:
-
-https://s3.amazonaws.com/fottosapp/prod/1.1/config.json
-
-Search terms and photos saved to favorites are saved locally using Core Data. 
-
 # Contribution guidelines
 
 Here we will outline standards for contributing to the Fottos project.
+
+## Development
+This project uses [gitflow](http://nvie.com/posts/a-successful-git-branching-model/) and requires code reviews for every pull request.
 
 ## Quick Do's and Don't's
 
