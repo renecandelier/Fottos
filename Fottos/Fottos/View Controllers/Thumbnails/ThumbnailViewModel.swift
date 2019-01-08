@@ -21,23 +21,6 @@ protocol ThumbnailViewModelDelegate: class, AlertPresentation {
     func reloadItems(_ indexPaths: [IndexPath]?, errorPresentation: ErrorPresentation?)
 }
 
-struct IndexPhotoCache {
-    
-    private var indexCache = [Int: UIImage]()
-    
-    func image(at index: Int) -> UIImage? {
-        return indexCache[index]
-    }
-    
-    mutating func saveImage(image: UIImage, index: Int) {
-        indexCache[index] = image
-    }
-    
-    mutating func clearCache() {
-       indexCache.removeAll()
-    }
-}
-
 final class ThumbnailViewModel: AlertPresentation {
     
     // MARK: - Constants
@@ -51,7 +34,6 @@ final class ThumbnailViewModel: AlertPresentation {
     private var searchText: String?
     private var currentPage = 1
     var photos = [Photo]()
-    var indexImageCache = IndexPhotoCache()
     
     init(searchText: String?, delegate: ThumbnailViewModelDelegate?, photos: [Photo] = []) {
         self.photos = photos
@@ -81,8 +63,9 @@ final class ThumbnailViewModel: AlertPresentation {
         return photos[index]
     }
     
-    func photoUrl(at index: Int) -> String? {
-        return photo(at: index).url
+    func photoUrl(at index: Int) -> URL? {
+        guard let stringURL = photo(at: index).url, let url = URL(string: stringURL), url.isValid else { return .none }
+        return url
     }
     
     func loadPhotos(_ photos: [Photo]? = nil) {
@@ -137,30 +120,6 @@ final class ThumbnailViewModel: AlertPresentation {
         } else {
             delegate?.onFetchCompleted(with: .none)
         }
-    }
-    
-    func getImage(for indexPath: IndexPath) {
-        if !isLoadingCell(for: indexPath) {
-            if let photoURL = photoUrl(at: indexPath.row), let url = URL(string: photoURL), url.isValid {
-                fetchImage(url: url, indexPath: indexPath)
-            }
-        }
-    }
-    
-    func fetchImage(url: URL, indexPath: IndexPath) {
-        dowloadImage(url: url, indexPath: indexPath, completion: { (image, error) in
-            asyncMain {
-                
-                if let error = error {
-                    self.delegate?.reloadItems(.none, errorPresentation: self.getErrorPresentation(error: error))
-                    return
-                }
-                
-                guard let image = image else { return }
-                self.indexImageCache.saveImage(image: image, index: indexPath.row)
-                self.delegate?.reloadItems([indexPath], errorPresentation: .none)
-            }
-        })
     }
     
     private func calculateIndexPathsToReload(from newPhotos: [Photo]) -> [IndexPath] {

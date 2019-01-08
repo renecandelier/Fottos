@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ThumbnailCollectionViewController: UICollectionViewController {
     
     // MARK: - Properties
@@ -31,7 +30,6 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.indexImageCache.clearCache()
         refreshCurrentPosition()
     }
     
@@ -140,12 +138,8 @@ extension ThumbnailCollectionViewController {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ThumbnailCollectionViewCell.className, for: indexPath) as! ThumbnailCollectionViewCell
         cell.accessibilityIdentifier = "Thumbnail Cell \(indexPath.row)"
-
-        guard let cachedImage = viewModel.indexImageCache.image(at: indexPath.row) else {
-            viewModel.getImage(for: indexPath)
-            return cell
-        }
-        cell.imageView.image = cachedImage
+        guard let photoURL = viewModel.photoUrl(at: indexPath.row) else { return cell }
+        cell.configure(photoURL)
         return cell
     }
 }

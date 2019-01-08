@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Nuke
 
 class ThumbnailCollectionViewCell: UICollectionViewCell {
     
@@ -17,6 +18,10 @@ class ThumbnailCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         addRoundCorners()
+    }
+    
+    func configure(_ url: URL) {
+        Nuke.loadImage(with: url, into: imageView)
     }
     
     func clean() {

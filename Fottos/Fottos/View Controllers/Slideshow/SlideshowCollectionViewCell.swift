@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Nuke
 
 class SlideshowCollectionViewCell: UICollectionViewCell {
     
@@ -25,13 +26,23 @@ class SlideshowCollectionViewCell: UICollectionViewCell {
     var doubleTap: ((_ : Photo?) -> Void)?
     var longPress: ((_ : UIImage?, _ : String?) -> Void)?
     
-    var photo: Photo? {
-        didSet {
-            loadHeartImage()
-        }
-    }
+    var photo: Photo?
     
     // MARK: - Configuration
+    
+    func configure(photo: Photo?, context: NSManagedObjectContext?) {
+        self.context = context
+        self.photo = photo
+        loadHeartImage()
+        titleLabel.text = photo?.title ?? ""
+        guard let photoURL = photoURL else { return }
+        Nuke.loadImage(with: photoURL, into: imageView)
+    }
+    
+    var photoURL: URL? {
+        guard let photoURL = photo?.url else { return .none }
+        return URL(string: photoURL)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

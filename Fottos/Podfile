@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'Fottos' do
+  use_frameworks!
+
+  # Pods for Fottos
+
+ pod 'Nuke'
+
+  target 'FottosTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'FottosUITests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

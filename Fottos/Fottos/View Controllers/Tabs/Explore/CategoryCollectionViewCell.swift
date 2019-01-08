@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Nuke
 
 class CategoryCollectionViewCell: UICollectionViewCell {
     
@@ -15,6 +16,10 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     
+    // MARK: - Properties
+    
+    var category: Category?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         addRoundCorners()
@@ -22,6 +27,18 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Configuration
+    
+    func configure(_ category: Category) {
+        titleLabel.text? = category.title.localize
+        self.category = category
+        guard let url = photoUrl else { return }
+        Nuke.loadImage(with: url, into: imageView)
+    }
+    
+    var photoUrl: URL? {
+        guard let category = category, let url = URL(string: category.image), url.isValid else { return .none }
+        return url
+    }
     
     func clean() {
         imageView.image = nil

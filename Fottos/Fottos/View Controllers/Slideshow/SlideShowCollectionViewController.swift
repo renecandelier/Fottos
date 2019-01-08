@@ -62,20 +62,11 @@ class SlideshowCollectionViewController: UICollectionViewController, UICollectio
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SlideshowCollectionViewCell.className, for: indexPath) as! SlideshowCollectionViewCell
         
-        cell.context = mainContext
-        
         let photo = viewModel?.photoAtIndex(indexPath.row)
-        cell.photo = photo
+        cell.configure(photo: photo, context: mainContext)
         cell.doubleTap = updatePhoto
         cell.longPress = sharePhoto
-        cell.titleLabel.text = photo?.title ?? ""
         cell.accessibilityIdentifier = "Slideshow Cell \(indexPath.row)"
-
-        guard let imageDownloaded = viewModel.indexImageCache.image(at: indexPath.row) else {
-            viewModel.getImage(for: indexPath)
-            return cell
-        }
-        cell.imageView.image = imageDownloaded
         
         return cell
     }
