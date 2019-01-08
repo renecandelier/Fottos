@@ -6,6 +6,10 @@ This project uses [gitflow](http://nvie.com/posts/a-successful-git-branching-mod
 
 ## Features
 
+- Use predefined search terms to load photos from the Explore tab.
+- Search photos from the Search tab using the search bar. 
+- Saves prior search terms and presented them as quick search options in the search tab.
+
 # Project requirements
 
 Fottos project requires:
