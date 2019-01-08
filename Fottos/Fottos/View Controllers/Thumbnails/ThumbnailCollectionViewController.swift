@@ -34,7 +34,7 @@ class ThumbnailCollectionViewController: UICollectionViewController {
     }
     
     private func refreshCurrentPosition() {
-        guard let newPage = detailViewController?.slideshowCollectionViewController?.viewModel.currentPage, newPage > 0 else { return }
+        guard let newPage = detailViewController?.slideshowCollectionViewController?.viewModel.currentPage, newPage > 0, viewModel.currentCount > 0 else { return }
         scrollToItem(newPage)
     }
     
