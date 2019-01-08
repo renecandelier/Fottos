@@ -17,6 +17,7 @@ This project uses [gitflow](http://nvie.com/posts/a-successful-git-branching-mod
 - Delete all photos saved to your favorites. 
 - Change the amount of photos you would like to load per page under the settings screen.
 - Infinite scrolling. 
+- App is localized to have Spanish translation. 
 
 # Project requirements
 
@@ -27,6 +28,14 @@ Fottos project requires:
 - [CocoaPods](https://cocoapods.org/) Version 1.0.1 or newer - A  dependency manager for Swift and Objective-C Cocoa projects.
 
 - Because we use CocoaPods when opening the application for the first time select `Fottos.xcworkspace` and not `Fottos.xcodeproj`.
+
+# Architecture
+
+The app is based off the config file below:
+
+https://s3.amazonaws.com/fottosapp/prod/1.1/config.json
+
+Search terms and photos saved to favorites are saved locally using Core Data. 
 
 # Contribution guidelines
 
