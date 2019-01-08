@@ -21,7 +21,7 @@ This project uses [gitflow](http://nvie.com/posts/a-successful-git-branching-mod
 
 Fottos project requires:
 
-- Xcode Version 9.4 or newer
+- Xcode Version 10 or newer
 
 - [CocoaPods](https://cocoapods.org/) Version 1.0.1 or newer - A  dependency manager for Swift and Objective-C Cocoa projects.
 
